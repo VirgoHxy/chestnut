@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			/* 总结
+			 * box-shadow设置阴影，总共有六个参数
+			 * h-shadow水平偏移（正值向右，负值向左）必需，v-shadow垂直偏移（正值向下，负值向上）必需
+			 * 可选： blur（模糊距离），spread（阴影大小，可负值），color（颜色），inset（内侧阴影）
+			 * 显示的阴影大小最后由偏移大小+阴影大小，偏移值不会改变，真正的阴影大小不会改变
+			 * 显示的阴影不占空间，一般只写前五个参数
+			 */
+			body {
+				margin: 20px;
+			}
+			.demo {
+				display: table-cell;
+				width: 200px;
+				height: 200px;
+				background: #009688;
+				color: #fff;
+				vertical-align: middle;
+				text-align: center;
+			}
+			/*立体阴影*/
+			/*这时的阴影大小为10px*/
+			.shadow1 {
+				box-shadow: 10px 10px 0 0px #666;
+			}
+			/*这时的阴影大小为16px*/
+			.shadow2 {
+				box-shadow: 10px 10px 0 6px #666;
+			}
+			/*这时的阴影大小为20px*/
+			.shadow3 {
+				box-shadow: 10px 10px 0 10px #666;
+			}
+			/*这时的阴影大小为30px*/
+			.shadow4 {
+				box-shadow: 10px 10px 0 20px #666;
+			}
+			/*单边不虚化阴影*/
+			.right-shadow {
+				box-shadow: 6px 0 0 0 #666;
+			}
+			.left-shadow {
+				box-shadow: -6px 0 0 0 #666;
+			}
+			.bottom-shadow {
+				box-shadow: 0 6px 0 0 #666;
+			}
+			.top-shadow {
+				box-shadow: 0 -6px 0 0 #666;
+			}
+			/*单边虚化阴影*/
+			#demo .right-shadow {
+				box-shadow: 4px 0 8px -2px rgba(0,0,0,0.3);  
+			}
+			#demo .left-shadow {
+				box-shadow: -4px 0 8px -2px rgba(0,0,0,0.3);  
+			}
+			#demo .bottom-shadow {
+				box-shadow: 0 4px 8px -2px rgba(0,0,0,0.3);  
+			}
+			#demo .top-shadow {
+				box-shadow: 0 -4px 8px -2px rgba(0,0,0,0.3);  
+			}
+		</style>
+	</head>
+	<body>
+		<p>这里都是阴影大小小于偏移大小，所以上方和左方没有阴影</p>
+		<div class="demo shadow1">显示的阴影大小10px（10px+0）</div>
+		<br><br>
+		<div class="demo shadow2">显示的阴影大小16px（10px+6px）</div>
+		<br><br>
+		<div class="demo shadow3">显示的阴影大小20px（10px+10px）</div>
+		<br>
+		<p>这里是阴影大小大于偏移大小，所以上方和左方存在阴影</p>
+		<div class="demo shadow4">显示的阴影大小30px（10px+20px）</div>
+		<p>单边阴影</p>		
+		<div class="demo right-shadow">水平正偏移</div>
+		<br>	
+		<div class="demo left-shadow">水平负偏移</div>
+		<br>	
+		<div class="demo bottom-shadow">垂直正偏移</div>
+		<br>	
+		<div class="demo top-shadow">垂直负偏移</div>
+		<br>
+		<p>单边虚化阴影</p>
+		<div id="demo">
+			<div class="demo right-shadow">水平正偏移</div>
+			<br>	
+			<div class="demo left-shadow">水平负偏移</div>
+			<br>	
+			<div class="demo bottom-shadow">垂直正偏移</div>
+			<br>	
+			<div class="demo top-shadow">垂直负偏移</div>			
+		</div>
+	</body>
+</html>

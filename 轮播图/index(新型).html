@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			#carousel {
+				position: relative;
+				max-width: 1226px;
+				height: 691px;
+				margin: 0 auto;
+			}
+			.half {
+				width: 50%;
+				height: 100%;
+			}
+			.carousel-ctnr {
+				position: relative;
+				float: left;
+				overflow: hidden;
+				height: 100%;
+			}
+			.carousel-cont {
+				position: absolute;
+				top: 0;
+				transition: top .6s ease-in;
+				-webkit-transition: top .6s ease-in;
+				width: 100%;
+			}
+			#carousel-right .carousel-cont {
+				top: -4146px;
+			}
+			.bg-list a {
+				display: block;
+				height: 100%;
+			}
+			.bg-list li {
+				float: left;
+				width: 100%;
+				height: 691px;
+			}
+			.ctrl-list {
+				position: absolute;
+			    z-index: 10;
+				top: 50%;
+				right: 0;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+				-ms-transform: translateY(-50%);
+				width: 50px;
+				color: #fff;
+				font-size: 16px;
+				cursor: pointer;
+			    user-select: none;
+			    -moz-user-select: none;
+			    -webkit-user-select: none;
+			    -ms-user-select: none;
+			}
+			.ctrl-list li {
+				position: relative;
+				display: block;
+			}
+			.ctrl-list span {
+				position: relative;
+				z-index: 1;
+				display: inline-block;
+				width: 100%;
+				padding: 5px 0;
+			}
+			.ctrl-list img {
+				position: absolute;
+				top: 8px;
+				left: 50px;
+				transition: left .3s ease-in;
+				-webkit-transition: left .3s ease-in;
+			}
+			.ctrl-list .ctrl-curr {
+				visibility: visible;
+				left: 14px!important;
+			}
+			.ctrl-list .img-curr {
+				left: 24px;
+			}
+			.ctrl-btn {
+				position: absolute;
+				top: 50%;
+			    right: 25px;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+				-ms-transform: translateY(-50%);
+				width: 40px;
+				height: 182px;
+			}
+			.carousel-btn {
+			    position: absolute;
+			    z-index: 1;
+			    width: 40px;
+			    height: 40px;
+			    line-height: 40px;
+			    text-align: center;
+			    font-size: 40px;
+			    color: #fff;
+			    text-decoration: none;
+			    border-radius: 4px;
+			}
+			.carousel-btn:hover {
+				background-color: rgba(0,0,0,0.1);
+			}
+			.pre-btn{
+			    top: -40px;
+			}
+			.next-btn{
+			    top: 100%;
+			}
+		</style>
+		<script src="js/worker-timer.js"></script>
+	</head>
+	<body>
+		<div id="carousel">
+			<div id="carousel-left" class="half carousel-ctnr">
+				<div class="carousel-cont">
+					<ul class="bg-list bg-left">
+						<li><a href="http://www.baidu.com#1"></a></li>
+						<li><a href="http://www.baidu.com#2"></a></li>
+						<li><a href="http://www.baidu.com#3"></a></li>
+						<li><a href="http://www.baidu.com#4"></a></li>
+						<li><a href="http://www.baidu.com#5"></a></li>
+						<li><a href="http://www.baidu.com#6"></a></li>
+						<li><a href="http://www.baidu.com#7"></a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="carousel-right" class="half carousel-ctnr">
+				<div class="carousel-cont">
+					<ul class="bg-list bg-right">
+						<li><a href="http://www.baidu.com#7"></a></li>
+						<li><a href="http://www.baidu.com#6"></a></li>
+						<li><a href="http://www.baidu.com#5"></a></li>
+						<li><a href="http://www.baidu.com#4"></a></li>
+						<li><a href="http://www.baidu.com#3"></a></li>
+						<li><a href="http://www.baidu.com#2"></a></li>
+						<li><a href="http://www.baidu.com#1"></a></li>
+					</ul>
+				</div>
+			</div>
+			<ul class="ctrl-list">
+				<li><span>1</span><img class="ctrl-curr" src="img/arrow.png"/></li>
+				<li><span>2</span><img src="img/arrow.png" width="40px" height="10px"/></li>
+				<li><span>3</span><img src="img/arrow.png" width="40px" height="10px"/></li>
+				<li><span>4</span><img src="img/arrow.png" width="40px" height="10px"/></li>
+				<li><span>5</span><img src="img/arrow.png" width="40px" height="10px"/></li>
+				<li><span>6</span><img src="img/arrow.png" width="40px" height="10px"/></li>
+				<li><span>7</span><img src="img/arrow.png" width="40px" height="10px"/></li>
+			</ul>
+		    <!--按钮-->
+		    <div class="ctrl-btn">
+			    <a href="javascirpt:;" class="pre-btn carousel-btn icon-up"></a>
+			    <a href="javascirpt:;" class="next-btn carousel-btn icon-down"></a>
+		    </div>
+		</div>
+		<script type="text/javascript">
+			var	carousel = document.getElementById('carousel'),
+				leftCtnr = document.getElementsByClassName('carousel-ctnr')[0],
+				rightCtnr = document.getElementsByClassName('carousel-ctnr')[1],
+				leftCont = document.getElementsByClassName('carousel-cont')[0],
+				rightCont = document.getElementsByClassName('carousel-cont')[1],
+				bgLeftLi = document.querySelectorAll('.bg-left li'),
+				bgRightLi = document.querySelectorAll('.bg-right li'),
+				ctrlList = document.querySelector('.ctrl-list'),
+				ctrlLi = document.querySelectorAll('.ctrl-list li'),
+				ctrlImg = document.querySelectorAll('.ctrl-list img'),
+				prevBtn = document.querySelector('.pre-btn'),
+				nextBtn = document.querySelector('.next-btn'),
+				contHeight = leftCont.offsetHeight-691,
+				len = bgLeftLi.length - 1,
+				oldIndex = newIndex = 0,
+				scrollFlag = carouselFlag = true;
+			for (var i = len; i >= 0; i--) {
+			    bgLeftLi[i].style.cssText = "background: url(img/"+(i+1)+".jpg) 0 0 no-repeat;background-size: 1226px 691px;";
+			}
+			for (var i = len,num = 1; i >= 0; i--) {
+			    bgRightLi[i].style.cssText = "background: url(img/"+(num)+".jpg) -613px 0 no-repeat;background-size: 1226px 691px;";
+				num++;
+			}
+			function fnScoll(ctnr,leftCont,rightCont){
+				//滚动处理程序
+					scrollFunc = function(e) {
+					    var ev = e || window.event,
+					   		contTop_l = parseInt(leftCont.offsetTop),
+					    	contTop_r = parseInt(rightCont.offsetTop);
+					    if(scrollFlag&&contTop_l%691==0){
+					    	scrollFlag = false;
+						    if (ev.wheelDelta) {
+						    	//向下
+						        if (ev.wheelDelta<0) {
+						        	leftCont.style.top = (contTop_l-691)+"px";
+						        	rightCont.style.top = (contTop_r+691)+"px";	
+						        	oldIndex<len ? newIndex = oldIndex + 1 : newIndex = 0;	
+									ctrlImg[oldIndex].classList.remove('ctrl-curr');
+									ctrlImg[newIndex].classList.add('ctrl-curr');
+						        	oldIndex = newIndex;
+						            if (Math.abs(parseInt(leftCont.offsetTop))>=contHeight) {
+						            	leftCont.style.top = "0";
+						            	rightCont.style.top = -contHeight+"px";
+						            }
+						        } else {
+						        	leftCont.style.top = (contTop_l+691)+"px";
+						        	rightCont.style.top = (contTop_r-691)+"px";
+						        	oldIndex>0 ? newIndex = oldIndex - 1 : newIndex = len;			        	
+									ctrlImg[oldIndex].classList.remove('ctrl-curr');
+									ctrlImg[newIndex].classList.add('ctrl-curr');
+						        	oldIndex = newIndex;
+						            if (parseInt(leftCont.offsetTop)>=0) {
+						        		leftCont.style.top = -contHeight+"px";
+						        		rightCont.style.top = "0";
+						            }
+						        }
+						    } else if (ev.detail) { //ff
+						    	//向下
+						        if (ev.detail<0) {
+						        	leftCont.style.top = (contTop_l-691)+"px";
+						        	rightCont.style.top = (contTop_r+691)+"px";	
+						        	oldIndex<len ? newIndex = oldIndex + 1 : newIndex = 0;	
+									ctrlImg[oldIndex].classList.remove('ctrl-curr');
+									ctrlImg[newIndex].classList.add('ctrl-curr');
+						        	oldIndex = newIndex;
+						            if (Math.abs(parseInt(leftCont.offsetTop))>=contHeight) {
+						            	leftCont.style.top = "0";
+						            	rightCont.style.top = -contHeight+"px";
+						            }
+						        } else {
+						        	leftCont.style.top = (contTop_l+691)+"px";
+						        	rightCont.style.top = (contTop_r-691)+"px";
+						        	oldIndex>0 ? newIndex = oldIndex - 1 : newIndex = 0;			        	
+									ctrlImg[oldIndex].classList.remove('ctrl-curr');
+									ctrlImg[newIndex].classList.add('ctrl-curr');
+						        	oldIndex = newIndex;
+						            if (parseInt(leftCont.offsetTop)>=0) {
+						        		leftCont.style.top = -contHeight+"px";
+						        		rightCont.style.top = "0";
+						            }
+						        }
+						    }
+						    setTimeout(function(){
+					    		scrollFlag = true;
+						    },800);
+						}
+					    //阻止默认事件
+					    ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+					    //阻止冒泡
+					    ev.stopPropagation ? ev.stopPropagation() : ev.cancleBubble = true;
+					}
+				//注册滑动
+				if (ctnr.addEventListener) {
+				    ctnr.addEventListener('DOMMouseScroll', scrollFunc, false);
+				}
+				ctnr.onmousewheel = scrollFunc;				
+			}
+			fnScoll(carousel,leftCont,rightCont);
+			function fnOverAndOut(e){
+				var ev = e || window.event,
+					target = ev.target || ev.srcElement,
+					type = ev.type,
+					targetText = parseInt(target.innerText),
+					tagName = target.nodeName.toLowerCase(),
+					top_l = parseInt(leftCont.offsetTop),
+		    		top_r = parseInt(rightCont.offsetTop);
+				if(tagName!="ul"){
+					if(tagName!="li"){
+						while(target.nodeName.toLowerCase()!="li"){
+							target = target.parentNode;
+						}
+					}
+		    		newIndex = [].indexOf.call(ctrlLi,target);
+					if(type=="mouseover"){
+						target.children[1].classList.add('img-curr');
+					} else if(type=="mouseout") {
+						target.children[1].classList.remove('img-curr');	
+					} else {
+						if(scrollFlag&&top_l==-oldIndex*691){
+							scrollFlag = false;
+							ctrlImg[oldIndex].classList.remove('ctrl-curr');
+							target.children[1].classList.add('ctrl-curr');
+				        	leftCont.style.top = (top_l-691*(newIndex-oldIndex))+"px";
+				        	rightCont.style.top = (top_r+691*(newIndex-oldIndex))+"px";
+				        	oldIndex = newIndex;
+						}
+					    setTimeout(function(){
+				    		scrollFlag = true;
+					    },800);
+					}
+				}
+			}
+			ctrlList.onmouseover = fnOverAndOut;
+			ctrlList.onmouseout = fnOverAndOut;
+			ctrlList.onclick = fnOverAndOut;
+			//上一张
+			prevBtn.onclick = function(){
+				var t_l = parseInt(leftCont.offsetTop),
+	    			t_r = parseInt(rightCont.offsetTop);
+				if(scrollFlag&&t_l==-oldIndex*691){
+		    		scrollFlag = false;
+		        	leftCont.style.top = (t_l+691)+"px";
+		        	rightCont.style.top = (t_r-691)+"px";		
+		        	oldIndex>0 ? newIndex = oldIndex - 1 : newIndex = len;	        	
+					ctrlImg[oldIndex].classList.remove('ctrl-curr');
+					ctrlImg[newIndex].classList.add('ctrl-curr');
+		        	oldIndex = newIndex;		
+		            if (parseInt(leftCont.offsetTop)>=0) {
+		        		leftCont.style.top = -contHeight+"px";
+		        		rightCont.style.top = "0";
+		            }	
+				}
+				setTimeout(function(){
+		    		scrollFlag = true;
+			    },800);
+			}
+			//下一张
+			function fnNext(){
+				var t_l = parseInt(leftCont.offsetTop),
+	    			t_r = parseInt(rightCont.offsetTop);
+				if(scrollFlag&&t_l==-oldIndex*691){
+		    		scrollFlag = false;
+		        	leftCont.style.top = (t_l-691)+"px";
+		        	rightCont.style.top = (t_r+691)+"px";
+		        	oldIndex<len ? newIndex = oldIndex + 1 : newIndex = 0;	
+					ctrlImg[oldIndex].classList.remove('ctrl-curr');
+					ctrlImg[newIndex].classList.add('ctrl-curr');
+		        	oldIndex = newIndex;							
+		            if (Math.abs(parseInt(leftCont.offsetTop))>=contHeight) {
+		            	leftCont.style.top = "0";
+		            	rightCont.style.top = -contHeight+"px";
+		            }		
+				}
+				setTimeout(function(){
+		    		scrollFlag = true;
+			    },800);
+			}
+			nextBtn.onclick = fnNext;
+		    //轮播方法
+			function fnImgCarousel(){
+				workerTimer.clearTimeout(carouselTimer);
+		        if(carouselFlag){
+					fnNext();
+		        	carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+		        	carouselFlag = true;
+		        } else {
+		        	workerTimer.clearTimeout(carouselTimer);
+		        	carouselFlag = false;
+		        }
+			}
+		    //轮播
+	    	carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+			//mouseover和mouseout
+			carousel.onmouseover = function(){
+				//停止定时器
+				workerTimer.clearTimeout(carouselTimer);
+		        carouselFlag = false;
+			}
+			carousel.onmouseout = function(){
+				//设置定时器
+				carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+		        carouselFlag = true;
+			}
+		</script>
+	</body>
+</html>

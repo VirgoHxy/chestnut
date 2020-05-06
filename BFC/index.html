@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.father {
+				display: inline-block;
+				width: 100px;
+				border: 1px solid #000;
+			}
+			.child {
+				width: 40px;
+				height: 40px;
+				background-color: #009688;
+				margin: 40px;
+				float: left;
+			}
+			.pre {
+				white-space: pre-wrap;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pre">
+<b>Box Formatting context：</b>
+<b>Box（盒子）</b>是一个页面布局的对象和基本单位，一个页面由很多个box组成的。display属性决定了这个box的类型，不同的类型将参与不同的Formatting context；
+block-level box，display: block、table、list-item;会生成block-level box，并且它们参与BFC（Block formatting context，直译“块级格式化上下文”）；
+inline-level box，display: inline、inline-block、inline-table;会生成inline-level box，并且它们参与IFC（Inline formatting context，直译“行内格式化上下文”）
+run-in  box，暂不清楚
+<b>Formatting context（格式化上下文）</b>是页面中一个渲染区域，它有自己一套渲染规则，它决定子元素如何定位，并决定它和其他元素的关系和相互作用。常见的有BFC和IFC(css2.1)，css3中增加了GFC和FFC
+<b>BFC（Block formatting context，直译“块级格式化上下文”）</b>是一个独立的渲染区域，只有block-level box参加，规定内部的block-level box如何布局，并且<b>BFC区域内部不会影响区域外界，也就是说内部子元素再怎么翻江倒海，都不会影响外部的元素。</b>
+
+它的产生条件：
+<!--
+	能用在自适应布局上的有：
+	display: inline-block;
+	overflow: hidden/auto;
+	display: table-cell;width: 9999px;
+	兼容最好的：
+	兼容ie8+
+	display: table-cell; width: 9999px;
+	兼容ie6/7
+    *display: inline-block; *width: auto;
+-->
+1.display: inline-block、table-cell、table-caption;
+2.overflow: auto、scroll、hidden;
+3.position: absolute、fixed;
+4.float: left、right;
+<b>根元素是最大的BFC区域。</b>
+
+它的布局规则（注意只有block-level box参加，这里的box指的是block-level box）：
+1.内部的box会在垂直方向上一个个放置；
+2.box垂直方向的距离由margin决定，属于同一个BFC的box垂直上的margin会发生堆叠；
+3.每个box的margin-box的左边与BFC元素（box的父元素，产生BFC的元素）的border-box左边相接触（对于从左向右的格式，否则相反），即使存在浮动也是；
+4.BFC的区域不会与flaot-box发生重叠；
+5.BFC的区域是页面上一个隔离的独立的容器，BFC区域外的元素不会影响容器内的元素，反之，容器内的元素也不会影响BFC区域外的元素；
+6.计算BFC的高度，float元素的高度也计算在内。
+		</div>
+		<br>
+		<div class="father">
+			<div class="child"></div>
+			<div class="child"></div>
+			<div class="child"></div>
+			<div class="child"></div>
+			<div class="child"></div>
+		</div>
+	</body>
+</html>

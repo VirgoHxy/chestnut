@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+				/*position: relative;*/
+				min-width: 777px;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.left-right {
+				width: 200px;
+				background: #f5f5f5;
+			} 
+			#left {
+				float: left;
+				/*position: absolute;
+				left: 0;*/
+			}
+			#right {
+				float: right;
+				/*position: absolute;
+				right: 0;*/
+			}
+			#content {
+				/*这里也可以是border padding*/
+				margin: 0 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="left" class="left-right">left</div>
+		<div id="right" class="left-right">right</div>
+		<div id="content">
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+		</div>
+		<!--
+			利用块状元素的流体特性加上float可以自适应布局，但这里有个缺陷就是每个的布局旁边的留白是不一样，所以流体元素的margin或padding或border的值是不一样的，而且宽度过小会把右侧栏挤下去（可以采用position解决，但是中间栏位置又出现偏差）
+			这里发现了一个问题，把float改为position:absolute;，出现高度并没有100%铺满父元素（body），这里解决办法是给父元素（body）加上一个position: relative;
+			模板网页 http://tat.lizhi110.com/
+		-->
+		<script type="text/javascript">
+			window.onload =function(){
+				var left = document.getElementById('left');
+				var right = document.getElementById('right');
+				left.style.height = document.body.clientHeight+'px';
+				right.style.height = document.body.clientHeight+'px';
+				window.onresize = function(){
+					left.style.height = document.body.clientHeight+'px';
+					right.style.height = document.body.clientHeight+'px';
+				}				
+			}
+		</script>
+	</body>
+</html>
+		

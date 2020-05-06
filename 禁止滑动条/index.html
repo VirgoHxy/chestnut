@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/jquery-1.11.1.js"></script>
+		<style type="text/css">
+			body {
+				height: 2000px;
+			}
+			#demo {
+				width: 200px;
+				height: 200px;
+				overflow: scroll;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo">
+			<br><br><br><br><br><br><br><br><br><br><br><br><br>
+		</div>
+		<script type="text/javascript">
+			//禁止外层滑动
+			$.fn.scrollUnique = function() {
+				return $(this).each(function() {
+					var eventType = 'mousewheel';
+					// navigator.userAgent.indexOf('Firefox') > -1
+					// document.mozHidden !== undefined
+					if(navigator.userAgent.indexOf('Firefox') > -1) {
+						eventType = 'DOMMouseScroll';
+					}
+					// console.log(eventType)
+					$(this).on(eventType, function(event) {
+						// 一些数据
+						var scrollTop = this.scrollTop,
+							scrollHeight = this.scrollHeight,
+							height = this.clientHeight;
+						var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta : -(event.originalEvent.detail || 0);
+						if((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop ? 0 : scrollHeight));
+						//向上滚 || 向下滚
+						//event.preventDefault();
+						var e = window.event || event;
+						if(e.stopPropagation) {
+							e.stopPropagation();
+						} else {
+							e.cancelBubble = true;
+						}
+						if(e.preventDefault) {
+							e.preventDefault();
+						} else {
+							e.returnValue = false;
+						}
+					});
+				});
+			}
+			//禁止滑动，需要依赖jquery，mousewheel和DOMMouseScroll这两个都是冒泡事件，所以在冒泡到document之前阻断就可以达到效果
+			//要禁止的元素.scrollUnique();
+			//file:///C:/Users/Administrator/Desktop/前程demo/index.html
+		</script>
+	</body>
+</html>

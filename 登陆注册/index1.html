@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/cssshake.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+		<script src="js/jquery-1.11.1.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+		<style type="text/css">
+			body {
+				background: #fff4d0 linear-gradient(180deg,#fff4d0 90%,#ddd 10%);
+				background-size: 1px 40px;
+			}
+			#wrapper {
+				position: relative;
+				width: 400px;
+				margin: 94px auto;
+				color: #444;
+			}
+			#wrapper>div {
+				text-align: center;
+				transition: all .4s ease-out;
+				-webkit-transition: all .4s ease-out;
+			}
+			#wrapper .fadeout {
+				visibility: hidden;
+				opacity: 0;
+			}
+			#wrapper [class$='hd'] {
+				position: relative;
+				display: inline-block;
+			}
+			#wrapper h1 {
+				font-size: 70px;
+			}
+			.text-shadow1 {
+				position: relative;
+				z-index: 2;
+				color: #fff;
+				text-shadow: 4px 4px #ff4777;
+			}
+			.text-shadow2 {
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				color: transparent;
+				text-shadow: -3px -3px #36e1f1;
+			}
+			#wrapper form {
+				position: relative;
+				margin-top: 20px;
+				font-size: 14px;
+				color: #444;
+			}
+			#wrapper form p {
+				position: relative;
+				margin-bottom: 36px;
+			}
+			#wrapper input {
+				width: 100%;
+				padding: 6px 0 6px 86px;
+				border: 10px solid #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				box-shadow: 0 0 0 1px #aaa inset,0 0 4px 1px #d6d6d6 inset,-2px 10px 0 #c0c0c0,2px 10px 0 #c0c0c0,-2px 0 #c0c0c0,2px 0 #c0c0c0,0 10px 0 #c0c0c0,-1px 13px 4px 0 #666,-2px 8px 8px 0 #777,-2px 2px 4px 0 #aaa,0 -1px #c0b5b5;
+				/*
+				 * box-shadow: 0 0 0 1px #aaa inset, input的border
+				 * 0 0 4px 1px #d6d6d6 inset, input的border的阴影
+				 * -2px 10px 0 #c0c0c0, input的左边白色阴影
+				 * 2px 10px 0 #c0c0c0, input的右边白色阴影
+				 * -2px 0 #c0c0c0, 补全input的左边白色阴影
+				 * 2px 0 #c0c0c0, 补全input的右边白色阴影
+				 * 0 10px 0 #c0c0c0, input的下边白色阴影
+				 * -1px 13px 4px 0 #666, input的左边和下边黑色阴影
+				 * -1px 8px 8px 0 #777, input的左边黑色阴影
+				 * -2px 4px 4px 0 #aaa,  补全input的左边黑色阴影
+				 * 0 -1px #c0b5b5; input的最上边border
+				*/
+ 				border-radius: 4px;
+				background-color: #fff;
+				outline: none;
+				font-size: 14px;
+				color: #444;
+			}
+			#wrapper input:hover {
+				background-color: #fbfbfb;
+			}
+			#wrapper input:focus {
+				background-color: #f6f6f6;
+			}
+			#wrapper input[type='submit'] {
+				display: inline-block;
+				width: 100px;
+				height: 40px;
+				box-shadow: -2px 8px 0 #7d9940,2px 8px 0 #7d9940,-2px 0 #5d9f48,2px 0 #5d9f48,0 8px 0 #7d9940,-1px 11px 4px 0 #666,-2px 8px 8px 0 #777,-2px 2px 4px 0 #aaa,0 -1px #5d9f48;
+				text-shadow: -1px 2px 0 #c4e184;
+				padding: 0;
+				border: none;
+				background: #c5e185 linear-gradient(180deg,#c5e185 15%,#a5c65c 100%);
+				color: #4c6e03;
+				font-size: 20px;
+				font-weight: 900;
+				cursor: pointer;
+			}
+			#wrapper input[type='submit']:hover, #wrapper input[type='submit']:focus {
+				background: #a5c65c;
+			}
+			.tip {
+				position: absolute;
+				left: 60px;
+				bottom: -40px;
+				z-index: 10;
+				padding: 10px 6px;
+				border: 1px solid #066a7544;
+				border-radius: 4px;
+				font-size: 12px;
+				background-color: #fff;
+			}
+			.tip:hover {    
+				-webkit-animation-play-state: paused;
+			    -ms-animation-play-state: paused;
+			    animation-play-state: paused;
+			}
+			.gap-triangle {
+				position: absolute;
+				width: 0;
+				height: 0;
+				border: 10px solid transparent;
+			}
+			.up-gap-triangle1 {
+				top: -21px;
+				left: 26px;
+				border-bottom-color: #066a7566;
+			}
+			.up-gap-triangle2 {
+				top: -20px;
+				left: 26px;
+				border-bottom-color: #fff;
+			}
+			#wrapper label[class^='icon'] {
+				position: absolute;
+				bottom: 0px;
+				left: 30px;
+				padding: 14px 20px;
+				background: #dd684f linear-gradient(180deg, #e78d7b 10%, #dd684f 100%);
+				box-shadow: 0 11px #b35642;
+				text-shadow: 0 3px rgba(0,0,0,0.3);
+				color: #fff;
+				font-size: 22px;
+			} 
+			#wrapper i[class^='icon'] {
+				position: absolute;
+				bottom: 10px;
+				right: 10px;
+				padding: 5px 8px;
+				color: #444;
+				font-size: 20px;
+				font-style: normal;
+				cursor: pointer;
+			}
+			#wrapper div[class$='foot'] {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				text-align: right;
+				border-radius: 4px;
+			}
+			.foot-ctnr {
+				position: relative;
+				bottom: 0;
+				padding: 0 20px;
+				color: #444;
+			    -webkit-transition: all .4s ease-out;
+     			transition: all .4s ease-out;
+			}
+			.foot-curr {
+				bottom: 20px;
+				visibility: hidden;
+				opacity: 0;
+			}
+			.foot-btn {
+				border: 1px solid #999;
+				padding: 6px 10px;
+				border-radius: 4px;
+				background-color: #fefefe;
+				color: #94c22f;
+				cursor: pointer;
+				outline: none;
+				transition: all .3s ease-out;
+				-webkit-transition: all .3s ease-out;
+			}
+			.foot-btn:hover, .foot-btn:focus {
+				background-color: #94c22f;
+				color: #fefefe;
+			}
+			.login-bd, .register-bd {
+				padding-bottom: 40px;
+			}
+			.keepPwd label {
+				font-size: 12px;
+			}
+			#wrapper .keepPwd {
+				text-align: left;
+				margin: -10px 0 0 20px;
+			}
+			#wrapper .keepPwd input {
+ 				box-shadow: none;		
+				width: 14px;
+				height: 14px;
+				vertical-align: middle;
+			}
+			.drop-down {
+				position: absolute;
+				z-index: 10;
+				bottom: 42px;
+				left: 48px;
+				transform: rotate(-90deg);
+				-webkit-transform: rotate(-90deg);
+				-ms-transform: rotate(-90deg);
+				color: #dd684f;
+				font-size: 30px;
+				cursor: pointer;
+			    -webkit-transition: all .4s cubic-bezier(.42,-1.32,.52,2.05);
+     			transition: all .4s cubic-bezier(.42,-1.32,.52,2.05);
+			}
+			.drop-curr {
+				transform: rotate(90deg);
+				-webkit-transform: rotate(90deg);
+				-ms-transform: rotate(90deg);
+			}
+			.login-foot .main-select {
+				float: left;
+				height: 26px;
+			}
+			.main-select a {
+				font-size: 22px;
+				line-height: 26px;
+				margin-right: 16px;
+				cursor: pointer;
+			}
+			.main-select li:nth-child(3) a {
+				color: #D32727;
+			}
+			.register {
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+			#wrapper .register-btn {
+				bottom: -60px!important;
+			}
+			.warn {
+				position: absolute;
+				right: 0;
+				bottom: 26px;
+				width: 34%;
+				height: 48px;
+				line-height: 16px;
+				overflow: hidden;
+				color: #f00;
+			}
+			.reg-warn {
+				bottom: -54px;
+			}
+		</style>
+		<style type="text/css">
+			.ui-menu .ui-menu-item {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="login">
+				<div class="login-hd">
+					<h1 class="text-shadow1">Login</h1>
+					<h1 class="text-shadow2">Login</h1>
+				</div>
+				<div class="login-bd">
+					<form action="" method="post" id='user-form'>
+						<p>
+							<label for="userId" class="icon-user2"></label>
+							<input type="text" name="userId" id="userId" placeholder="账号" autocomplete="off" />
+						</p>
+						<p>
+							<label for="userPwd" class="icon-pwd"></label>
+							<input type="password" name="userPwd" id="userPwd" placeholder="密码" />
+							<i class="icon-eyes-close"></i>
+						</p>
+						<p class="keepPwd">
+							<input type="checkbox" name="keepPwd" id="keepPwd" />
+							<label for="keepPwd">记住密码</label>
+						</p>
+						<input class="login-btn" type="submit" value="登录"/>
+					</form>
+				</div>
+				<div class="login-foot">
+					<div class="foot-ctnr">
+						<ul class="main-select">
+							<li><a href="" class="icon-qq"></a></li>
+							<li><a href="" class="icon-wechat"></a></li>
+							<li><a href="" class="icon-mobile-phone2"></a></li>
+						</ul>
+						还没有注册账号？
+						<button type="button" class="foot-btn reg-btn">点我注册</button>
+					</div>
+					<div class="drop-down icon-go"></div>
+				</div>
+			</div>
+			<div class="register fadeout">
+				<div class="register-hd">
+					<h1 class="text-shadow1">Reigister</h1>
+					<h1 class="text-shadow2">Reigister</h1>
+				</div>
+				<div class="register-bd">
+					<form action="" method="post" id='register-form'>
+						<p>
+							<label for="userId-reg" class="icon-user2"></label>
+							<input type="text" name="userId-reg" id="userId-reg" placeholder="手机号" autocomplete="off" />
+						</p>
+						<p>
+							<label for="userPwd-reg" class="icon-pwd"></label>
+							<input type="password" name="userPwd-reg" id="userPwd-reg" placeholder="密码" autocomplete="off" />
+							<i class="icon-eyes-close"></i>
+						</p>
+						<p>
+							<label for="userPwd2-reg" class="icon-pwd"></label>
+							<input type="password" name="userPwd2-reg" id="userPwd2-reg" placeholder="密码" autocomplete="off" />
+						</p>
+						<input class="register-btn" type="submit" value="注册"/>
+					</form>
+				</div>
+				<div class="register-foot">
+					<div class="foot-ctnr">
+						已经有了账号？
+						<button type="button" class="foot-btn login-btn">去登录</button>
+					</div>
+				</div>
+			</div>
+			<p class="warn"></p>
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var wrapper = document.getElementById('wrapper'),
+					login = document.getElementsByClassName('login')[0],
+					userForm = document.getElementById('user-form'),
+			    	userId = document.getElementById('userId'),
+			   		userPwd = document.getElementById('userPwd'),
+			   		keepPwd = document.getElementById('keepPwd'),
+			   		footCtnr = document.getElementsByClassName('foot-ctnr')[0],
+			   		dropDown = document.getElementsByClassName('drop-down')[0],
+					register = document.getElementsByClassName('register')[0],
+					registerForm = document.getElementById('register-form'),
+					warn = document.getElementsByClassName('warn')[0],
+					dropTimer;
+				function clearBlankNodes(ele){
+					var list = ele.childNodes;
+					for (var i = list.length - 1; i >= 0; i--) {
+						if (list[i].nodeType==3 && /\s/.test(list[i].nodeValue)) {
+							ele.removeChild(list[i]);
+						}
+					}
+				}
+				function fnTip(form,num,text){
+					var p = form.getElementsByTagName('p')[num],
+						tip = document.createElement('div'),
+						div = p.childNodes[p.childNodes.length-1];
+					p.normalize();
+					if(div.nodeName.toLowerCase()!="div"){
+						tip.className = 'tip shake-horizontal';
+						tip.innerHTML = text+'<div class="gap-triangle up-gap-triangle1"></div><div class="gap-triangle up-gap-triangle2"></div>';
+						p.appendChild(tip);
+						setTimeout(function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(div.nodeName.toLowerCase()=="div"){
+								p.removeChild(div);
+							}
+						},4000);
+					} else {
+						div.classList.add('shake-constant');
+						setTimeout(function(){
+							div.classList.remove('shake-constant');
+						},400);
+					}
+				}
+				function fnBlur(form,n,ph1,ph2,text1,text2,text3){
+					var p = registerForm.getElementsByTagName('p')[n],
+						div = p.childNodes[p.childNodes.length-1],
+						value = form.elements[n].value;
+					if(n==0){
+						form.elements[n].placeholder = ph1;
+						if(value==''){
+							fnTip(form,n,text1);
+						} else {
+							if(!/^1[34578]\d{9}$/.test(value)){
+								fnTip(form,n,text2);
+							} else {
+								if(div.nodeName.toLowerCase()=="div"){
+									p.removeChild(div);
+								}
+							}
+						}
+					} else {
+						form.elements[n].placeholder = ph2;
+						if(value==''){
+							fnTip(form,n,text3);
+						}
+					}
+				}
+				function fnDropDwon(){
+					clearTimeout(dropTimer);
+					if(!dropDown.classList.contains('drop-curr')){
+						dropTimer = setTimeout(function(){
+							dropDown.classList.add('drop-curr');
+							footCtnr.classList.add('foot-curr');
+						},6000)
+					}
+				}
+				fnDropDwon();
+				footCtnr.onmouseenter = function(){
+					clearTimeout(dropTimer);
+				}
+				footCtnr.onmouseleave = function(){
+					fnDropDwon();
+				}
+				wrapper.onclick = function(e){
+					var ev = e || window.event,
+						target = ev.target || ev.srcElement,
+						classList = target.classList,
+						className = target.className,
+						tagName = target.tagName.toLowerCase();
+					//login
+					if(tagName=='i'&&className.indexOf('eyes')!=-1){
+						var parent = target.parentNode;
+						clearBlankNodes(parent);
+						var input = parent.childNodes[1];
+						console.log(input);
+						if(input.type=='password'){
+							input.type = "text";
+						} else {
+							input.type = 'password';
+						}
+						target.classList.toggle('icon-eyes-close');
+						target.classList.toggle('icon-eyes-open');
+					}
+					if(classList.contains('drop-down')){
+						target.classList.toggle('drop-curr');
+						footCtnr.classList.toggle('foot-curr');
+						fnDropDwon();
+					}
+					if(classList.contains('foot-btn')){
+						login.classList.toggle('fadeout');
+						register.classList.toggle('fadeout');
+						setTimeout(function(){
+							if(classList.contains('login-btn')){
+								userForm.elements[0].focus();
+							} else {
+								registerForm.elements[0].focus();
+							}							
+						},400);
+						warn.classList.toggle('reg-warn');
+						warn.innerHTML = '';
+					}
+				}
+				//账号登录
+				userForm.onsubmit = function(e){
+					var ev = e || window.event,
+					userId = userForm.elements[0].value,
+					userPwd = userForm.elements[1].value,
+					flag = true,text,tempFlag = /^1[34578]\d{9}$/.test(userId);
+					if(userId=''||!tempFlag){
+						userForm.elements[0].focus();
+						text = '输入的账号不正确，请重新输入！';
+					} else {
+						userForm.elements[1].focus();
+						if(userPwd!=''){
+					        flag = false;
+						} else {
+							text = '输入的密码不正确，请重新输入！'; 
+						}
+					}
+					if(flag){
+						if(warn.innerHTML==''){
+							warn.innerHTML = text;
+							setTimeout(function(){
+								warn.innerHTML = '';
+							},3000);
+						}
+						ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+					}					
+				}
+				for (var i = 0; i < 2; i++) {
+					(function(n){
+						var num = n,
+							p = userForm.getElementsByTagName('p')[i];
+						p.normalize();
+						userForm.elements[n].oninput = function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(div.nodeName.toLowerCase()=="div"&&userForm.elements[i].value!=''){
+								p.removeChild(div);
+							}
+							if(n==0){
+								var userId = getCookie('userId'),
+							    	availableTags = [
+								    	userId
+								    ];
+							    $("#userId").autocomplete({
+							    	source: availableTags
+							    });
+								if(keepPwd.checked){
+									userForm.elements[1].value = '';
+									keepPwd.checked = false;
+								}
+							}
+						}						
+						userForm.elements[n].onfocus = function(){
+							userForm.elements[n].placeholder = '';
+						}
+						userForm.elements[n].onblur = function(){
+							fnBlur(userForm,num,'账号','密码','请填写账号！','请填写正确的账号！','请填写密码！');
+						}
+					})(i);
+				}
+				//注册
+				registerForm.onsubmit = function(e){
+					var ev = e || window.event,
+					userId = registerForm.elements[0].value,
+					pwd1 = registerForm.elements[1].value,
+					pwd2 = registerForm.elements[2].value,
+					flag = true,text,tempFlag = /^1[34578]\d{9}$/.test(userId);
+					for (var i = 0; i < 3; i++) {
+						if(registerForm.elements[i].value==''){
+							if(!tempFlag){
+								registerForm.elements[0].focus();
+							} else {
+								registerForm.elements[i].focus();
+							}
+							break;
+						}
+					}
+					if(tempFlag){
+						if(!/\s/.test(pwd1)&&pwd1!=''){
+							if(pwd1==pwd2){
+					        	//保存账号密码到cookie，有效期7天
+						        setCookie('userId', registerForm.elements[0].value, 7);
+						        setCookie('userPwd', registerForm.elements[1].value, 7);
+						        flag = false;
+							} else {
+								text = '两次密码输入不一致，请重新输入！'; 
+							}
+						} else {
+							text = '输入的密码为空或包含非法字符，请重新输入！'; 
+						}
+					} else {
+						text = '输入的手机号不正确，请重新输入！';
+					}
+					if(flag){
+						if(warn.innerHTML==''){
+							warn.innerHTML = text;
+							setTimeout(function(){
+								warn.innerHTML = '';
+							},3000);
+						}
+						ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+					}
+				}
+				for (var i = 0; i < 3; i++) {
+					(function(n){
+						var num = n,
+							p = registerForm.getElementsByTagName('p')[n];
+						p.normalize();
+						registerForm.elements[n].oninput = function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(n==2) {
+								var i = document.createElement('i'),
+									pwd1 = registerForm.elements[1].value,
+									pwd2 = this.value,
+									iconWarn = document.getElementsByClassName('icon-warn')[0],
+									iconFinish = document.getElementsByClassName('icon-finish')[0];
+								if(!/\s/.test(pwd1)){
+									if(pwd2.length<pwd1.length) {
+										if(iconWarn){
+											p.removeChild(iconWarn);
+										}
+										if(iconFinish){
+											p.removeChild(iconFinish);
+										} 
+									} else if(pwd2.length==pwd1.length) {
+										if(pwd2==pwd1){
+											if(iconWarn){
+												p.removeChild(iconWarn);
+											}
+											if(!iconFinish){
+												i.className = 'icon-finish';
+												i.innerHTML = "<span class='path1'></span><span class='path2'></span>";
+												p.appendChild(i);
+											}
+										} else {
+											if(iconFinish){
+												p.removeChild(iconFinish);
+											} 
+											if(!iconWarn){
+												i.className = 'icon-warn';
+												p.appendChild(i);
+											}
+										}									
+									} else {
+										if(iconFinish){
+											p.removeChild(iconFinish);
+										} 
+										if(!iconWarn){
+											i.className = 'icon-warn';
+											p.appendChild(i);
+										}
+									}
+								} else {
+									if(iconFinish){
+										p.removeChild(iconFinish);
+									} 
+									if(!iconWarn){
+										i.className = 'icon-warn';
+										p.appendChild(i);
+									}
+								}
+							}
+							if(div.nodeName.toLowerCase()=="div"){
+								p.removeChild(div);
+							}
+						}
+						registerForm.elements[n].onfocus = function(){
+							registerForm.elements[n].placeholder = '';
+						}
+						registerForm.elements[n].onblur = function(){
+							fnBlur(registerForm,num,'手机号','密码','请填写手机号！','请填写正确的手机号！','请填写密码！');
+						}
+					})(i);
+				}
+				userForm.elements[0].focus();
+				//记住密码
+			    //页面初始化时，如果密码cookie存在则填充
+			    if(getCookie('userPwd')&&getCookie('userId')) {
+			        userPwd.value = getCookie('userPwd');
+			        userId.value = getCookie('userId');
+			        keepPwd.checked = true;
+			    }
+			    //复选框勾选状态发生改变时，如果未勾选则清除cookie
+			    keepPwd.onchange = function() {
+			        if(!this.checked) {
+			            //delCookie('userId');
+			            delCookie('userPwd');
+			        }
+			    }
+			    //表单提交事件触发时，如果复选框是勾选状态则保存cookie
+			    userForm.addEventListener('submit',function() {
+			        //保存账号到cookie，有效期7天
+			        setCookie('userId', userId.value, 7);
+			        if(keepPwd.checked) {
+			            //保存密码到cookie，有效期7天
+			            setCookie('userPwd', userPwd.value, 7);
+			        }
+			    });
+			    //设置cookie
+				function setCookie(cname,cvalue,exdays) {
+					var d = new Date();
+					d.setTime(d.getTime()+(exdays*24*60*60*1000));
+					var expires = "expires="+d.toGMTString();
+					document.cookie = cname + "=" + cvalue + "; " + expires;
+				}
+			    //获取cookie
+				function getCookie(cname) {
+					var name = cname + "=",
+						ca = document.cookie.split(';');
+					for(var i=0; i<ca.length; i++) {
+						var c = ca[i].trim();
+				    	if (c.indexOf(name)==0) {
+				    		return c.substring(name.length,c.length);
+				    	}
+				  	}
+				  	return "";
+				}
+			    //删除cookie
+			    function delCookie(cname) {
+			        setCookie(cname, null, -1);
+			    }
+			}
+  	</script>
+	</body>
+</html>

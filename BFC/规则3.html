@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+				height: 1000px;
+				color: #fff;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.demo {
+				height: 100%;
+				background: #009688;
+			}
+			.float-left {
+				float: left;
+				background: #444400;
+				width: 200px;
+				height: 600px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="float-left">left</div>
+		<div class="demo">3.每个box的margin-box的左边与BFC元素（box的父元素，产生BFC的元素）的border-box左边相接触（对于从左向右的格式，否则相反），即使存在浮动也是；</div>
+		<!--虽然存在浮动的元素 但是demo元素的左边依然与BFC元素（这里是根元素）的左边接触-->
+	</body>
+</html>

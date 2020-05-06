@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>单列布局（留白）</title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			li {
+				display: inline-block;
+				list-style: none;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 1226px;/*关键代码*/
+				color: #fff;
+				background-color: #f5f5f5;
+			}
+			.layout {
+				position: relative;
+				max-width: 1226px;/*关键代码*/
+				margin: 0 auto;/*关键代码*/
+			}
+			#header {
+				background-color: #333;
+				height: 40px;
+				line-height: 40px;
+				white-space: nowrap;
+				font-size: 12px;
+			}
+			.hd-nav-list {
+				float: left;
+			}
+			.hd-nav-list li {
+				margin-right: 10px;
+			}
+			.hd-info {
+				margin-right: 140px;
+				float: right;
+			}
+			.hd-info li {
+				margin-right: 10px;
+			}
+			.hd-cart {
+				position: absolute;
+				right: 0;
+				background: #424242;
+				padding: 0 20px;
+			}
+			#content {
+				background-color: #fff;
+				color: #000;
+			}
+			#back-top {
+				display: none;
+				position: fixed;
+				top: 400px;
+				right: 2px;
+				z-index: 10;
+				width: 40px;
+				height: 40px;
+				text-align: center;
+				box-shadow: 0 0 6px #ddd;
+				border-radius: 4px;
+				background-color: #fff;
+				font-size: 30px;
+				cursor: pointer;
+				color: #444;
+				transition: all 0.3s linear;
+				-webkit-transition: all 0.3s linear;
+			}
+			#back-top:hover {
+				background: #444;
+				color: #fff;
+			}
+			#back-top:before {
+				line-height: 40px;
+			}
+			#back-top:hover:before {
+				content: '';
+			}
+			#back-top:hover:after {
+				display: block;
+				font-size: 14px;
+				width: 40px;
+				height: 40px;
+				content: '返回顶部';
+			}
+			img {
+				/*去除图片间隙*/
+				vertical-align: top;
+			}
+			#footer {
+				background-color: #fff;
+				color: #000;
+			}
+			.footer-list {
+				/*确定不会发生剪切 可以用overflow: hidden;来产生BFC*/
+				overflow: hidden;
+				padding: 20px;
+			}
+			.footer-list li {
+				width: 20%;
+				float: left;
+				text-align: center;
+			}
+			.footer-links {
+				border-top: 1px solid #ddd;
+				padding: 20px 0;
+				/*比overflow: hidden;安全点的产生BFC方法*/
+				display: table-cell;
+				width: 9999px;
+			}
+			dl {
+				float: left;
+				width: 13%;
+				height: 112px;
+			}
+			dt {
+				font-size: 18px;
+				margin-bottom: 18px;
+			}
+			dd {
+				font-size: 12px;
+				color: #666;
+				margin-bottom: 10px;
+			}
+			.footer-contact {
+				width: 22%;
+				height: 112px;
+				text-align: center;
+				display: table-cell;
+				vertical-align: middle;
+				padding: 0 40px;
+				border-left: 1px solid #ddd;
+				white-space: pre-line;
+			}
+			.btn {
+				margin: 10px 20px 0 20px;
+				border: 1px solid #ff6700;
+				color: #ff6700;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<div class="layout">
+				<ul class="hd-nav-list">
+					<li>小米商城</li>
+					<li>MIUI</li>
+					<li>IoT</li>
+					<li>云服务</li>
+					<li>金融</li>
+					<li>有品</li>
+					<li>小爱开放平台</li>
+					<li>政企服务</li>
+					<li>下载app</li>
+					<li>Select Region</li>
+				</ul>
+				<ul class="hd-info">
+					<li>登录</li>
+					<li>注册</li>
+					<li>消息通知</li>
+				</ul>
+				<div class="hd-cart">购物车（0）</div>
+			</div>
+		</div>
+		<div id="content" class="layout">
+			<div id="back-top" class="icon-up"></div>
+			<img src="img/1.jpg" width="1226px"/>
+			<img src="img/1.jpg" width="1226px"/>
+			<img src="img/1.jpg" width="1226px"/>
+			<img src="img/1.jpg" width="1226px"/>
+			<img src="img/1.jpg" width="1226px"/>
+			<img src="img/1.jpg" width="1226px"/>
+		</div>
+		<div id="footer">
+			<div class="layout">
+				<div class="footer-service">
+					<ul class="footer-list">
+						<li>预约维修服务</li>
+						<li>7天无理由退货</li>
+						<li>15天免费换货</li>
+						<li>满150元包邮</li>
+						<li>520余家售后网点</li>
+					</ul>
+				</div>
+				<div class="footer-links">
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<div class="footer-contact">
+						400-100-5678
+						周一至周日 8:00-18:00
+						（仅收市话费）
+						<div class="btn">联系客服</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			(function() {
+			    var lastTime = 0,
+			    	vendors = ['webkit', 'moz'];
+			    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+			        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+			        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // name has changed in Webkit
+			                                      window[vendors[x] + 'CancelRequestAnimationFrame'];
+			    }
+			    if (!window.requestAnimationFrame) {
+			        window.requestAnimationFrame = function(callback, element) {
+			            var currTime = new Date().getTime(),
+			           		timeToCall = Math.max(0, 16.7 - (currTime - lastTime)),
+			            	id = window.setTimeout(function() {
+				                callback(currTime + timeToCall);
+				            }, timeToCall);
+			            lastTime = currTime + timeToCall;
+			            return id;
+			        };
+			    }
+			    if (!window.cancelAnimationFrame) {
+			        window.cancelAnimationFrame = function(id) {
+			            clearTimeout(id);
+			        };
+			    }
+			}());
+			var topTimer,
+				backTop = document.getElementById('back-top');
+			window.onscroll = function(){
+				var top = document.body.scrollTop || document.documentElement.scrollTop,
+					topFlag = top > 1000;
+				if(topFlag){
+					backTop.style.display = "block";
+				} else {
+					backTop.style.display = "none";
+				}
+			}
+			backTop.addEventListener('click',function(){
+				//获取最开始的scrollTop和scrollLeft，这里使用requestAnimationFrame，建议使用
+				var oldTop = document.body.scrollTop || document.documentElement.scrollTop,
+					oldLeft = document.body.scrollLeft || document.documentElement.scrollLeft;
+				cancelAnimationFrame(topTimer);
+				topTimer = requestAnimationFrame(function fnBackTop(){
+					console.log(2);
+					//执行25次就到达顶部
+					var newTop = document.body.scrollTop || document.documentElement.scrollTop - oldTop/25,
+						backFlag = newTop > 0;
+					//窗口移动到指定位置，这里的实质还是改变了scrollTop，对比下推荐使用scrollTop
+					scrollTo(oldLeft,newTop);
+					if (backFlag){
+						topTimer = requestAnimationFrame(fnBackTop);
+					} else {
+						//停止定时器
+						cancelAnimationFrame(topTimer);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

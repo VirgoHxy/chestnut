@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.child {
+				background: #e00;
+				width: 140px;
+				height: 140px;
+				margin: 20px;
+				color: #fff;
+			}
+			.father {
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="child">2.box垂直方向的距离由margin决定，属于同一个BFC的box垂直上的margin会发生堆叠；</div>
+		<div class="father">
+			<div class="child"></div>
+		</div>
+		<!--这里新创建了一个BFC元素（father），属于同一个BFC的margin会产生重叠，第二个child元素属于了新的BFC，就不会在发生margin重叠-->
+	</body>
+</html>

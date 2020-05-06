@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<script src="js/worker-timer.js"></script>
+		<style type="text/css">
+			html, body {
+				background-color: #232425;
+			}
+			#watch {
+				position: relative;
+				width: 420px;
+				height: 420px;
+				margin: 60px auto 0 auto;
+				cursor: default;
+			    user-select: none;
+			    -moz-user-select: none;
+			    -webkit-user-select: none;
+			    -ms-user-select: none;
+			}
+			#watch>* {				
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+			}
+			.frame div {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				border: 1px solid #aaa;				
+			}
+			.frame .out {
+				width: 100%;
+				height: 100%;
+				margin: -210px 0 0 -210px;
+				background: #f4f4f4 linear-gradient(225deg, #d0d0d0 33%, #ddd 66%, #d0d0d0 100%);
+				border-radius: 210px;
+			}
+			.frame .in {
+				width: 400px;
+				height: 400px;
+				margin: -200px 0 0 -200px;
+				background: #f4f4f4 linear-gradient(180deg, #fcfcfc 10%, #c0c0c0 100%);
+				border-radius: 200px;
+				box-shadow: 2px 1px 16px 1px rgba(0,0,0,0.2) inset;
+			}
+			.marks {
+				width: 400px;
+				height: 400px;
+			}
+			.marks li {
+				display: block;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 4px;
+				height: 14px;
+				margin: -7px 0 0 -2px;
+				background-color: #929394;
+			}
+			.hour-points {
+				width: 300px;
+				height: 300px;
+			}
+			.hour-points li {
+				display: block;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 24px;
+				height: 24px;
+				line-height: 24px;
+				text-align: center;
+				margin: -12px 0 0 -12px;
+				font-size: 18px;
+				font-weight: bold;
+			}
+			.hour-points li:nth-child(1) {
+				transform: translate(70px, -121px);
+			}
+			.hour-points li:nth-child(2) {
+				transform: translate(121px, -70px);
+			}
+			.hour-points li:nth-child(3) {
+				transform: translate(140px, 0);
+			}
+			.hour-points li:nth-child(4) {
+				transform: translate(121px, 70px);
+			}
+			.hour-points li:nth-child(5) {
+				transform: translate(70px, 121px);
+			}
+			.hour-points li:nth-child(6) {
+				transform: translate(0, 140px);
+			}
+			.hour-points li:nth-child(7) {
+				transform: translate(-70px, 121px);
+			}
+			.hour-points li:nth-child(8) {
+				transform: translate(-121px, 70px);
+			}
+			.hour-points li:nth-child(9) {
+				transform: translate(-140px, 0);
+			}
+			.hour-points li:nth-child(10) {
+				transform: translate(-121px, -70px);
+			}
+			.hour-points li:nth-child(11) {
+				transform: translate(-70px, -121px);
+			}
+			.hour-points li:nth-child(12) {
+				transform: translate(0, -140px);
+			}
+			.hands {
+				width: 400px;
+				height: 400px;
+			}
+			.hands div {			
+				position: absolute;
+				left: 0;
+				top: 50%;
+				right: 0;
+				margin: auto;
+			}
+			.hour-hand {
+				z-index: 11;
+				background-color: #333333ee;
+				width: 10px;
+				height: 80px;
+				transform-origin: 5px 0;
+				animation: hourHand 43200s linear infinite;
+			}
+			.hour-hand:before {
+				content: '';
+				display: block;
+				position: absolute;
+				left: -6px;
+				bottom: -10px;
+				width: 22px;
+				height: 12px;
+				background-color: #333333ee;
+				border-radius: 12px 12px 0 0;
+			}
+			.hour-hand:after {
+				content: '';
+				display: block;
+				position: absolute;
+				left: -6px;
+				bottom: -51px;
+				border: 11px solid transparent;
+				border-top-color: #333333ee;
+				border-top-width: 30px;
+			}
+			.minute-hand {
+				transform: translateY(-20px);
+				z-index: 10;
+				background-color: #444444dd;
+				width: 10px;
+				height: 144px;
+				border-radius: 5px;
+				transform-origin: 5px 0;
+				animation: minuteHand 3600s linear infinite;
+			}
+			.second-hand {
+				transform: translateY(-30px);
+				z-index: 12;
+				background-color: #e00;
+				width: 4px;
+				height: 190px;
+				transform-origin: 2px 0;
+				border-radius: 0 0 4px 4px/0 0 190px 190px;
+				box-shadow: 0 0 1px 1px rgba(0,0,0,0.4);
+				animation: secondHand 60s steps(60, end) infinite;
+			}
+			.second-hand:before {
+				content: '';
+				display: block;
+				position: absolute;
+				left: -4px;
+				top: -30px;
+				width: 12px;
+				height: 32px;
+				background-color: #e00;
+				border-radius: 12px 12px 4px 4px/32px 32px;
+				box-shadow: 0 0 1px 1px rgba(0,0,0,0.4);
+			}
+			.circular {
+				width: 60px;
+				height: 60px;
+				border-radius: 30px;
+				background-color: rgba(60,60,60,0.1);
+			}
+			.red-cir {
+				position: relative;
+				z-index: 100;
+				width: 20px;
+				height: 20px;
+				margin: 20px 0 0 20px;
+				border-radius: 10px;
+				background-color: #d00;
+			}
+			.time {
+				top: 150px!important;
+				width: 168px;
+				height: 42px;
+				color: #eee;
+				border-radius: 6px;
+				background: #000;
+			}
+			.time>div {
+				position: absolute;
+				width: 41px;
+				height: 42px;
+				line-height: 42px;
+				text-align: center;
+				border-right: 1px solid #000;
+				overflow: hidden;
+				font-size: 14px;
+				background: #444 linear-gradient(180deg,#444 40%,#111 100%);
+			}
+			.hour-ctnr {
+				left: 0px;
+				border-radius: 6px 0 0 6px;
+			}
+			.minute-ctnr {
+				left: 42px;
+			}
+			.second-ctnr {
+				left: 84px;
+			}
+			.time-zone {
+				left: 126px;
+				border-radius: 0 6px 6px 0 ;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="watch">
+			<div class="frame">
+				<div class="out"></div>
+				<div class="in"></div>
+			</div>
+			<ul class="marks">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<ul class="hour-points">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+				<li>8</li>
+				<li>9</li>
+				<li>10</li>
+				<li>11</li>
+				<li>12</li>
+			</ul>
+			<div class="hands">
+				<div class="hour-hand">
+					
+				</div>
+				<div class="minute-hand">
+					
+				</div>
+				<div class="second-hand">
+					
+				</div>
+			</div>
+			<div class="circular">
+				<div class="red-cir"></div>
+			</div>
+			<div class="time">
+				<div class="hour-ctnr">00</div>
+				<div class="minute-ctnr">00</div>
+				<div class="second-ctnr">00</div>
+				<div class="time-zone">AM</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			window.onload = function(){
+				var marks = document.querySelectorAll('.marks li'),
+					hourHand = document.getElementsByClassName('hour-hand')[0],
+					minuteHand = document.getElementsByClassName('minute-hand')[0],
+					secondHand = document.getElementsByClassName('second-hand')[0],
+					time = document.getElementsByClassName('time')[0],
+					hour = document.getElementsByClassName('hour-ctnr')[0],
+					minute = document.getElementsByClassName('minute-ctnr')[0],
+					second = document.getElementsByClassName('second-ctnr')[0],
+					timeZone = document.getElementsByClassName('time-zone')[0],
+					markStr,n = 11,timer;
+				for (var i = marks.length+1; i >= 1; i--) {
+					var	temp = (i-1)*6,
+						num = 5*n+1;
+					if(i!=num){
+				    	markStr += ".marks li:nth-child("+i+"){transform: rotate("+temp+"deg) translateY(-184px);-ms-transform: rotate("+temp+"deg) translateY(-184px);-webkit-transform: rotate("+temp+"deg) translateY(-184px);}";					
+					} else {
+						marks[num-1].setAttribute('class','hour-marks');
+				   	 	markStr += ".marks li:nth-child("+num+"){height: 20px;margin-top: -10px;background-color: #676767;transform: rotate("+temp+"deg) translateY(-182px);-ms-transform: rotate("+temp+"deg) translateY(-182px);-webkit-transform: rotate("+temp+"deg) translateY(-182px);}";
+						n--;
+					}
+				}
+				function loadStylemarkString(css){
+					var s = document.createElement('style'),
+						head = document.getElementsByTagName('head')[0];
+					s.type = 'text/css';
+					try{
+						s.appendChild(document.createTextNode(css))
+					}catch(e){
+						s.styleSheet.cssText = css;
+					}
+					head.appendChild(s);
+				}
+				loadStylemarkString(markStr);
+				markStr = undefined;
+				(function(){
+					var myDate = new Date(),
+						timeStr = myDate.toLocaleTimeString();
+					if(timeStr.indexOf('下午')!=-1){
+						timeZone.innerHTML = "PM";
+						timeStr = timeStr.replace(/下午/,'');
+						var timeArr = timeStr.split(':');
+						timeArr[0] = parseInt(timeArr[0])+12;
+					} else {
+						timeStr = timeStr.replace(/上午/,'');
+						var timeArr = timeStr.split(':');
+						timeArr[0] = "0"+timeArr[0];
+					}
+					hour.innerHTML = timeArr[0];
+					minute.innerHTML = timeArr[1];
+					second.innerHTML = timeArr[2];
+					for (var i = 0,len = timeArr.length; i < len; i++) {
+					    timeArr[i] = parseInt(timeArr[i]);
+					}
+					var	hourDeg_from = (timeArr[0]-12+6)*30,
+						minuteDeg_from = (timeArr[1]+30)*6,
+						secondDeg_from = (timeArr[2]+30)*6,
+						hourDeg_to = (timeArr[0]-12+18)*30,
+						minuteDeg_to = (timeArr[1]+90)*6,
+						secondDeg_to = (timeArr[2]+90)*6,
+						animateStr = "@keyframes hourHand {from {transform: rotate("+hourDeg_from+"deg);}to {transform: rotate("+hourDeg_to+"deg);}}@keyframes minuteHand {from {transform: rotate("+minuteDeg_from+"deg) translateY(-20px);}to {transform: rotate("+minuteDeg_to+"deg) translateY(-20px);}}@keyframes secondHand {from {transform: rotate("+secondDeg_from+"deg) translateY(-30px);}to {transform: rotate("+secondDeg_to+"deg) translateY(-30px);}}}";
+					hourHand.style.cssText = "transform: rotate("+hourDeg_from+"deg);";
+					minuteHand.style.cssText = "transform: rotate("+minuteDeg_from+"deg) translateY(-20px);";
+					secondHand.style.cssText = "transform: rotate("+secondDeg_from+"deg) translateY(-30px);";
+					loadStylemarkString(animateStr);
+				})();
+				function fnSetTime(){
+					workerTimer.clearTimeout(timer);
+					var myDate = new Date(),
+						hourText = myDate.getHours(),
+						minuteText = myDate.getMinutes(),
+						secondText = myDate.getSeconds();
+					if(hourText!=hour.innerHTML){
+						if(hourText<10){
+							hourText = "0"+hourText;
+						}
+						hour.innerHTML = hourText;
+					}
+					if(minuteText!=minute.innerHTML){
+						if(minuteText<10){
+							minuteText = "0"+minuteText;
+						}
+						minute.innerHTML = minuteText;
+					}
+					if(secondText<10){
+						secondText = "0"+secondText;
+					}
+					second.innerHTML = secondText;
+					timer = workerTimer.setTimeout(fnSetTime,1000);
+				}
+				timer = workerTimer.setTimeout(fnSetTime,1000);
+			}
+		</script>
+	</body>
+</html>

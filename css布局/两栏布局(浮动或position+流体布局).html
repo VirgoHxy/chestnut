@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			li {
+				list-style: none;
+			}
+			html,body {
+				position: relative;
+				min-width: 1226px;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.boder-box {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			.p20 {
+				padding: 20px;
+			}
+			#main-nav {
+				/*float: left;*/
+				/*关键代码*/
+				/*这里也可以用position代替，fixed的话，会跟随页面的滑动一起滑动*/
+				position: fixed;
+				/*position: absolute;*/
+				background: #20222A;
+				width: 200px;/*关键代码*/
+				height: 100%;
+			}
+			.main-nav-list {
+				position: relative;
+			}
+			.main-nav-list li {
+				margin-bottom: 20px;
+				height: 20px;
+				line-height: 20px;
+				color: #bbb;
+			}
+			.main-nav-list b {
+				font-weight: normal;
+			}
+			.main-nav-list span:nth-child(1) {
+				float: left;
+				font-size: 18px;
+				margin-right: 10px;
+			}
+			.main-nav-list span[class*='triangle'] {
+				float: right;
+				font-size: 20px;
+			}
+			#content {
+				height: 100%;
+				/*这里也可以是border padding*/
+				margin-left: 200px;/*关键代码*/
+				/*padding-left: 200px;*/
+				/*border-left: 200px solid transparent;*/
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main-nav" class="boder-box p20">
+			<ul class="main-nav-list">
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+				<li>
+					<span class="icon-home"></span>
+					<b>主页</b>
+					<span class="icon-triangle-down"></span>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<div class="boder-box p20">利用块状元素的流体特性加上float可以自适应布局，但这里有个缺陷就是每个的布局旁边的留白是不一样，所以流体元素的margin或padding或border的值是不一样的</div>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+		</div>
+		<!--这里运用的原理是float+div（display: block;）的流体特性+margin（border或padding）-->
+		<!--这里发现了一个问题，把float改为position:absolute;，出现高度并没有100%铺满父元素（body），这里解决办法是给父元素（body）加上一个position: relative;-->
+		<!--缺陷是屏幕放大后，侧边栏应该采取什么操作 https://www.layui.com/admin/pro/ 模板网页-->
+	</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			html,body {
+				position: relative;
+				min-width: 1226px;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.boder-box {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			.p20 {
+				padding: 20px;
+			}
+			#main-nav {
+				position: fixed;
+				background: #20222A;
+				width: 200px;
+				height: 100%;
+				color: #fff;
+			}
+			#content {
+				height: 100%;
+				margin-left: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main-nav" class="boder-box p20">
+			侧边栏
+		</div>
+		<div id="content">
+			<div class="boder-box p20">
+				主体
+			</div>
+		</div>
+	</body>
+</html>
+-->

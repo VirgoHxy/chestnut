@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<div>123</div>
+		<input type="text" value="我是文字">
+		<br>
+		<img src="img/1.jpg" width="400"/>
+		<script type="text/javascript">
+			var input = document.querySelector('input');
+			var div = document.querySelector('div');
+			var img = document.querySelector('img');
+			//禁止鼠标右键，自定义菜单栏事件
+			input.oncontextmenu = function(){
+				alert('禁止鼠标右键');
+				return false;
+			}
+			//禁止选择，选中动作刚开始，尚未实质性被选中，不支持input和textarea
+			div.onselectstart = function(){
+				alert('禁止选择文字');
+				return false;
+			}			
+			//文本选中时触发，支持所有dom元素
+			//事件顺序onmousedown，onselectstart，onselect，onmouseup，当onmouseup结束时触发onselect绑定的处理程序
+			input.onselect = function(){
+				alert('已经选中');
+			}
+			//禁止拖拽文字
+			input.ondragstart = function(){
+				alert('禁止拖拽文字');
+				return false;
+			}
+			//禁止复制文字
+			input.oncopy = function(){
+				alert('禁止复制文字');
+				return false;
+			}
+			//禁止粘贴文字
+			input.onpaste = function(){
+				alert('禁止粘贴文字');
+				return false;
+			}
+			//禁止剪切文字
+			input.oncut = function(){
+				alert('禁止剪切文字');
+				return false;
+			}
+		</script>
+	</body>
+</html>

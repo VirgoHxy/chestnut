@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#carousel{
+			    position: relative;
+				max-width: 1226px;
+				height: 691px;
+				margin: 0 auto;
+			    overflow: hidden;
+			}
+			.img-list{
+			    list-style: none;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			}
+			.img-list li{
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    opacity: 0;
+			    visibility: hidden;
+			    width: 100%;
+			    transition: all 0.6s linear;
+			    -webkit-transition: all 0.6s linear;
+			}
+			.img-list .show{
+			    opacity: 1;
+			    visibility: visible;
+			}
+			.ctrl-list {
+			    list-style: none;
+			    position: absolute;
+			    bottom: 40px;
+			    right: 40px;
+			    cursor: default;
+			    user-select: none;
+			    -moz-user-select: none;
+			    -webkit-user-select: none;
+			    -ms-user-select: none;
+			}
+			.ctrl-list li {
+				display: inline-block;
+				margin: 0 2px;
+			}
+			.ctrl-list span {
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				border-radius: 6px;
+				background-color: #ddd;
+			    cursor: pointer;
+			}
+			.ctrl-list span:hover {
+				background-color: #aaa;
+			}
+			.ctrl-curr-item {
+				background-color: #ff6700!important;
+			}
+			.carousel-btn {
+			    position: absolute;
+			    z-index: 10;
+			    top: 50%;
+			    margin-top: -50px;
+			    width: 50px;
+			    height: 100px;
+			    line-height: 100px;
+			    text-align: center;
+			    font-size: 50px;
+			    color: #fff;
+			    text-decoration: none;
+			    background-color: rgba(0,0,0,0.2);
+			}
+			.carousel-btn:hover {
+				background-color: rgba(0,0,0,0.4);
+			}
+			.pre-btn{
+			    left: 0;
+			}
+			.next-btn{
+			    right: 0;
+			}
+		</style>
+		<script src="js/worker-timer.js"></script>
+	</head>
+	<body>
+		<div id="carousel">
+			<!--图片列表-->
+		    <ul class="img-list">
+		        <li class="show"><a href="#1"><img src="img/1.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#2"><img src="img/2.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#3"><img src="img/3.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#4"><img src="img/4.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#5"><img src="img/5.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#6"><img src="img/6.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#7"><img src="img/7.jpg" width="1226px" height="691px"/></a></li>
+		    </ul>
+			<!--圆形控制列表-->
+		    <ul class="ctrl-list">
+		        <li><span class="ctrl-curr-item"></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		    </ul>
+		    <!--按钮-->
+		    <a href="javascirpt:;" class="pre-btn carousel-btn icon-left"></a>
+		    <a href="javascirpt:;" class="next-btn carousel-btn icon-right"></a>
+		</div>
+		<script type="text/javascript">
+			window.onload=function(){
+				var carousel = document.getElementById('carousel');
+			    var img_list = document.getElementsByClassName('img-list')[0];
+			    var img_li = img_list.getElementsByTagName('li');
+			    var ctrl_list = document.getElementsByClassName('ctrl-list')[0];
+			    var ctrl_span = ctrl_list.getElementsByTagName('span');
+			    var pre_btn = document.getElementsByClassName('pre-btn')[0];
+			    var next_btn = document.getElementsByClassName('next-btn')[0];
+			    var img_current = 0;
+			    var carouselTimer;
+			    var carouselFlag = preClickFlag = nextClickFlag = true;
+			    var pre_old_msecond = pre_new_msecond = next_old_msecond = next_new_msecond = 0;
+			    var imgNum = img_li.length;
+			    //轮播方法
+				function fnImgCarousel(){
+					workerTimer.clearTimeout(carouselTimer);
+					var old_img = img_current;
+			        img_current++;
+			        if(img_current==imgNum){
+			        	img_current = 0;
+			        }
+			        fnChangeImg(old_img,img_current);
+			        if(carouselFlag){
+			        	carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+			        	carouselFlag = true;
+			        } else {
+			        	workerTimer.clearTimeout(carouselTimer);
+			        	carouselFlag = false;
+			        }
+				}
+			    //轮播
+		    	carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+				//mouseover和mouseout
+				carousel.onmouseover = function(){
+					//停止定时器
+					workerTimer.clearTimeout(carouselTimer);
+			        carouselFlag = false;
+				}
+				carousel.onmouseout = function(){
+					//设置定时器
+					carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+			        carouselFlag = true;
+				}
+			    //显示第几张old_img改变前的图片index值,new_img改变后的图片index值
+			    function fnChangeImg(old_img,new_img){
+			    	//渐进渐出
+			        img_li[old_img].classList.remove('show');
+			        img_li[new_img].classList.add('show');
+			        //图片index值也是控制圆形的index值，切换class
+			        ctrl_span[old_img].classList.remove('ctrl-curr-item');
+			        ctrl_span[new_img].classList.add('ctrl-curr-item');
+			    }
+			    //上一张
+			    pre_btn.onclick = function(){
+			    	var time = new Date();
+			    	if(!preClickFlag){
+			    		pre_new_msecond = time.getTime();
+				    	//获取两次点击的时间，大于700ms才执行
+			    		var tempFlag = pre_new_msecond-pre_old_msecond>700;
+			    	} else {
+				    	pre_new_msecond = time.getTime();
+				    	//第一次点击，永远成立
+			    		var tempFlag = true;
+			    	}
+			    	if (tempFlag){
+						var old_img = img_current;
+						//减减
+				        img_current--;
+				        //第一张的前一张为最后一张
+				        if(img_current<0){
+				        	img_current = img_li.length-1;
+				        }
+				        fnChangeImg(old_img,img_current);
+				        //把前一个pre_new_msecond赋给pre_old_msecond
+			        	pre_old_msecond = pre_new_msecond;
+			    	}
+			        preClickFlag = false;
+			    }
+			    //下一张
+			    next_btn.onclick = function(){
+			    	var time = new Date();
+			    	if(!nextClickFlag){
+				    	next_new_msecond = time.getTime();
+			    		var tempFlag = next_new_msecond-next_old_msecond>700;
+			    	} else {
+				    	next_new_msecond = time.getTime();
+			    		var tempFlag = true;
+			    	}
+			    	if (tempFlag){
+						var old_img = img_current;
+						//加加
+				        img_current++;
+				        //最后一张的后一张为第一张
+				        if(img_current>img_li.length-1){
+				        	img_current = 0;
+				        }
+				        fnChangeImg(old_img,img_current);
+				        //把前一个pre_new_msecond赋给pre_old_msecond
+			        	next_old_msecond = next_new_msecond;
+			    	}
+			        nextClickFlag = false;
+			    }
+			    //圆形点击
+			    for (var i = 0;i<ctrl_span.length;i++) {
+			    	//立即执行函数
+			    	(function(num){
+			    		ctrl_span[num].onclick = function(){
+			    			fnChangeImg(img_current,num);
+			    			//改变img_current值
+			    			img_current = num;
+			    		}
+			    	})(i);
+			    }
+			}
+		</script>
+	</body>
+</html>

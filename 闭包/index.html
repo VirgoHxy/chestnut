@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<button type="button">1</button>
+		<button type="button">2</button>
+		<p>在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。
+		它的作用一个是可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中（这会占用内存，所以在在执行完后清除这个变量或者不要大量使用闭包，只有不想销毁的变量使用闭包）。</p>
+	</body>
+	<script type="text/javascript">
+		var btn1 = document.getElementsByTagName('button')[0];
+		var btn2 = document.getElementsByTagName('button')[1];
+		//内部函数可以访问外部函数，而且不管执行多少次都会弹出16，但这还不是闭包
+		function fooo(x) {
+		    var tmp = 3;
+		    function bar(y) {
+		        console.log(x + y + (++tmp));
+		        /* x从foo(2)中获取，y从bar(10)中获取，tmp从foo(x)中获取
+		         * 2      +        10      +        4 = 16
+		         */
+		    }
+		    bar(10);
+		}
+		//这里return一个内部函数，内部function会关闭外部function的变量直到内部function结束
+		function foo(x) {
+		    var tmp = 3;
+		    return function (y) {
+		    	//tmp并没有被清除
+		    	console.log("tmp"+tmp);
+		        console.log(x + y + (++tmp));
+		        /* 上面的脚本最终也会alert17，虽然bar不直接处于foo的内部作用域，但bar还是能访问x和tmp；
+		         * 但是，由于tmp仍存在于bar闭包的内部，所以它还是会自加1，而且你每次调用bar时它都会自加1.
+		         */
+		    }
+		}
+		var bar = foo(2);//产生了闭包
+		btn1.onclick = function(){
+			fooo(2);
+		}
+		btn2.onclick = function(){
+			//这个函数就体现了闭包的一个作用，让变量一直保持在内存中，不会再函数结束后清除
+			bar(11);
+		}
+		var name = "The Window";
+		var object = {
+			name : "My Object",
+			getNameFunc : function(){
+				return function(){
+					return this.name;
+				};
+			}
+		};
+		alert(object.getNameFunc()());
+		var object = {
+			name : "My Object",
+			getNameFunc : function(){
+				var that = this;
+				return function(){
+					return that.name;
+				};
+			}
+		};
+		alert(object.getNameFunc()());
+	</script>
+</html>

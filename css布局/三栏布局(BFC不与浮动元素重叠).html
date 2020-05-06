@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 777px;
+			}
+			#content {
+				/* overflow: auto、hidden、scroll;可能会产生滑动条或剪切内容
+				 * 所以可以在保证没有剪切的情况下局部使用，不建议整站通用
+				 */
+				display: table-cell;/*关键代码*/
+				width: 9999px;/*关键代码*/
+			}		
+			.fl {
+				float: left;
+			}
+			.fr {
+				float: right;
+			}
+			.w200 {
+				background: #F5F5F5;
+				width: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="w200 fl">left</div>
+		<div class="w200 fr">right</div>
+		<div id="content">
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+			<img src="img/1.jpg" width="100%"/>
+		</div>
+		<!--
+			给content元素加上display: table-cell;，使其变成BFC元素，它就不会与浮动元素重叠，而且形成了
+			自适应布局，新的BFC（content）会根据浮动元素和body（body-浮动元素）来计算它的宽度。
+			如果宽度过小，会将右侧栏挤下去
+			放大缩小问题 模板网页 http://tat.lizhi110.com/
+		-->
+		<script type="text/javascript">
+			window.onload =function(){
+				var left = document.getElementsByClassName('fl')[0];
+				var right = document.getElementsByClassName('fr')[0];
+				left.style.height = document.body.clientHeight+'px';
+				right.style.height = document.body.clientHeight+'px';
+				window.onresize = function(){
+					left.style.height = document.body.clientHeight+'px';
+					right.style.height = document.body.clientHeight+'px';
+				}				
+			}
+		</script>
+	</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 777px;
+			}
+			#content {
+				display: table-cell;
+				width: 9999px;
+			}		
+			.fl {
+				float: left;
+			}
+			.fr {
+				float: right;
+			}
+			.w200h {
+				background: #F5F5F5;
+				width: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="w200 fl">left</div>
+		<div class="w200 fr">right</div>
+		<div id="content">
+		</div>
+		<script type="text/javascript">
+			window.onload =function(){
+				var left = document.getElementsByClassName('fl')[0];
+				var right = document.getElementsByClassName('fr')[0];
+				left.style.height = document.body.clientHeight+'px';
+				right.style.height = document.body.clientHeight+'px';
+				window.onresize = function(){
+					left.style.height = document.body.clientHeight+'px';
+					right.style.height = document.body.clientHeight+'px';
+				}				
+			}
+		</script>
+	</body>
+</html>
+-->

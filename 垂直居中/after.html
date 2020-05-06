@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.ctnr{
+				width: 100px;
+				height: 100px;
+				border: 1px solid #000;
+				font-size:0;
+			}
+			.child1 {
+				vertical-align: middle;/*关键代码*/
+				display: inline-block;/*多行文字居中*/
+				font-size: 14px;/*关键代码*/
+				max-width: 100%;/*多行文字居中*/
+				word-wrap: break-word;/*多行文字居中*/
+			}
+			.ctnr:after{
+				content: '';/*关键代码*/
+				width: 0;/*关键代码*/
+				height: 100%;/*关键代码*/
+				display: inline-block;/*关键代码*/
+				vertical-align: middle;/*关键代码*/
+			}
+			.block {
+				display: block;
+				width: 20px;
+				height: 40px;
+				border: 1px solid #000;
+			}
+			.inline-block {
+				display: inline-block;
+				width: 20px;
+				height: 50px;
+				line-height: 50px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+		适用于文字居中，比line-height复杂，但可单行可多行
+		容器元素中居中的是内联元素
+		:after作用于容器元素，容器元素display可以是inline-block或block
+		display: inline-block;作用于内容元素
+		-->
+		<p>单行内联居中:</p>
+		<div class="ctnr">
+			<span class="child1">1234567</span>
+		</div>
+		<p>多行内联居中:</p>
+		<div class="ctnr">
+			<span class="child1">12345612345677</span>
+		</div>
+		<p>单个或多个内联块状居中:</p>
+		<div class="ctnr">
+			<div class="inline-block child1">1</div>
+			<div class="inline-block child1">2</div>
+			<div class="inline-block child1">3</div>
+		</div>		
+		<p>图片居中:</p>
+		<div class="ctnr">
+			<img src="img/1.png" class="child1"/>
+		</div>
+		<p>单个或多个块状居中（无效）:</p>
+		<div class="ctnr">
+			<div class="block child1">1</div>
+			<div class="block child1">2</div>
+			<div class="block child1">3</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<ul>
+			
+			<li>1</li>
+			
+			<li>2</li>
+			
+			<li>3</li>
+			
+		</ul>
+		<button type='button' onclick='ul.removeChild(ul.childNodes[0])'>删除第一个</button>
+		<button type='button' onclick='ul.removeChild(ul.childNodes[1])'>删除第二个</button>
+		<button type='button' onclick='ul.removeChild(ul.childNodes[2])'>删除第三个</button>
+		<script type="text/javascript">
+			//封装，对已获取的元素进行去空操作
+			function fnClearBlankNodes(ele){
+				var list = ele.childNodes;
+				for (var i = list.length - 1; i >= 0; i--) {
+					//nodeType等于3表示是文本节点，\s表示空白字符，test函数检查是否存在空白字符
+					//元素节点的nodeValue为null，而文本节点的nodeValue为该节点包含的文本
+					if (list[i].nodeType==3 && /\s/.test(list[i].nodeValue)) {
+						ele.removeChild(list[i]);
+					}
+				}
+			}
+			var ul = document.querySelector('ul');
+			fnClearBlankNodes(ul);
+		</script>
+	</body>
+</html>

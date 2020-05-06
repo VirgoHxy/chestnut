@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/browser.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			window.onload = function(){
+				function detectZoom() {
+					var ratio = 0,
+						screen = window.screen,
+						browser = getOSAndBrowser();
+					//console.log(browser);
+					//devicePixelRatio分辨比
+					//window.devicePixelRatio是设备上物理像素和设备独立像素的比例，该属性就可以用于检测网页是否被缩放了
+					//在普通的PC浏览器上，在默认无缩放的情况下其默认值是 1(100%),“ctrl”+“+/-”或“ctrl”+“滚轮”或浏览器菜单栏调整
+					//ie中，window.screen.deviceXDPI返回物理像素,window.screen.logicalXDPI返回设备独立像素
+					if (window.devicePixelRatio !== undefined) {
+						if(browser.indexOf('360')!=-1){
+							//360
+							ratio = window.devicePixelRatio;
+						} else {
+							//chrome、firefox,1.25为100%
+							ratio = window.devicePixelRatio/1.25;
+						}
+						//console.log("chrome/firefox"+ratio);
+					} else if (browser.indexOf('ie')!=-1) {
+						if(screen.deviceXDPI && screen.logicalXDPI) {//ie
+							ratio = screen.deviceXDPI / screen.logicalXDPI;
+							//console.log("ie"+ratio);
+						}
+					} else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+						ratio = window.outerWidth / window.innerWidth;
+						//console.log("another"+ratio);
+					}
+					if (ratio) {
+						ratio = Math.round(ratio * 100);
+						if (ratio%10!=0&&browser.indexOf('firefox')!=-1) {
+							ratio = Math.round(ratio/10)*10;
+							//firefox中有点小问题
+							if (ratio==270) {
+								ratio = 265;
+							}
+							if (ratio==280) {
+								ratio = 285;
+							}
+						}
+						//console.log("finally"+ratio);
+					}
+					return ratio;
+				}
+				window.onresize = function(){
+					alert(detectZoom());	
+				}			
+			}
+		</script>
+	</body>
+</html>

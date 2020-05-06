@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+			background-color: #000;
+			}
+			@keyframes colors {
+				0% {background-color: #39f;}
+				15% {background-color: #F246C9;}
+				30% {background-color: #4453F2;}
+				45% {background-color: #44F262;}
+				60% {background-color: #F257D4;}
+				75% {background-color: #EDF255;}
+				90% {background-color: #F20006;}
+				100% {background-color: #39f;}
+			}
+			@-webkit-keyframes colors {
+				0% {background-color: #39f;}
+				15% {background-color: #F246C9;}
+				30% {background-color: #4453F2;}
+				45% {background-color: #44F262;}
+				60% {background-color: #F257D4;}
+				75% {background-color: #EDF255;}
+				90% {background-color: #F20006;}
+				100% {background-color: #39f;}
+			}
+			.light, .shadow {
+				padding: 1px;
+				animation: colors 20s linear infinite;
+				-webkit-animation: colors 20s linear infinite;
+			}
+			.shadow {
+				/*
+				 * 控制外发光的模糊距离
+				 * padding值+boxShadow的阴影大小值=boxShadow的模糊距离值
+				 * 4+3=7
+				 * boxShadow的颜色为.shadow元素外层的颜色
+				 */
+				padding: 4px;
+				width: 200px;
+			    box-shadow: 0 0 7px 3px #000 inset; 
+			}
+			.demo {
+				height: 200px;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="shadow">
+			<div class="light">
+				<div class="demo"></div>
+			</div>
+		</div>
+	</body>
+</html>

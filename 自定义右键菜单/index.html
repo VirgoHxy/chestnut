@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 0;
+				height: 1000px;
+			}
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.text-menu {
+				position: absolute;
+				z-index: 10;
+				visibility: hidden;
+				padding: 6px 0;
+				width: 200px;
+				font-size: 12px;
+				color: #222;
+				border: 1px solid #bbb;
+				box-shadow: 0px 0px 10px #bbb;
+				background-color: #feffff;
+				cursor: default;
+				user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				-moz-user-select: none;
+			}
+			.menu-item {
+				border-bottom: 1px solid #eee;
+				padding: 4px 0;
+			}
+			.menu-item:first-child {
+				padding: 0;
+				padding-bottom: 4px;
+			}
+			.menu-item:last-child {
+				border-bottom: none;
+				padding: 0;
+				padding-top: 4px;
+			}
+			.menu-item li {
+				padding: 0 20px;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				line-height: 20px;
+			}
+			.menu-item li:hover {
+				background-color: #ddd;
+			}
+			.no-click {
+				background-color: #fff!important;
+				color: #999;
+			}
+			.menu-item span {
+				float: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="text-menu">
+			<div class="menu-item">
+				<ul>
+					<li class='num1'>重新加载<span>ctrl+上箭头</span></li>
+					<li class='num2'>再来一次<span>ctrl+2</span></li>
+					<li class='num3'>再来一瓶<span>ctrl+3</span></li>
+				</ul>
+			</div>
+			<div class="menu-item">
+				<ul>
+					<li class='no-click num10'>点击<span>ctrl+t+r</span></li>
+					<li class='num4'>兼容<span>ctrl+tab</span></li>
+					<li class='num5'>极速<span>ctrl+1</span></li>
+					<li class='num6'>编码<span>ctrl+v</span></li>
+				</ul>
+			</div>
+			<div class="menu-item">
+				<ul>
+					<li class='num7'>新页面<span>ctrl+s</span></li>
+					<li class='num8'>关闭<span>ctrl+c</span></li>
+					<li class='num9'>可以<span>ctrl+左箭头</span></li>
+				</ul>
+			</div>		
+		</div>
+		<script type="text/javascript">
+			var body = document.querySelector('body');
+			var textMenu = document.querySelector('.text-menu');
+			body.oncontextmenu = function(e){
+				var ev = e || window.event,
+					x = e.pageX,
+					y = e.pageY;
+				ev.preventDefault ? ev.preventDefault() : (ev.returnValue=false);
+				textMenu.style.cssText = "top:"+y+"px;left:"+x+"px;visibility: visible;";
+			}
+			body.onclick = function(e){
+				textMenu.style.visibility = "hidden";
+			}
+			body.onblur = function(e){
+				textMenu.style.visibility = "hidden";
+			}
+			textMenu.onclick = function(e){
+				var ev = e || window.event,
+					target = ev.target || ev.srcElement,
+					c = target.className,
+					n = target.nodeName.toLowerCase();
+				if (c!='menu-item'&&n!='ul'){
+					var tempFlag0 = target.nodeName.toLowerCase()=='span';
+					if (tempFlag0){
+						target = target.parentNode;
+					}
+					var tempFlag1 = target.className.indexOf('num')!=-1&&!target.classList.contains('no-click');
+					if (tempFlag1){
+						var tempText = target.innerText,
+							tempText0 = target.childNodes[1].innerText;
+							tempText = tempText.replace(tempText0,'');
+						console.log(tempText);
+						textMenu.style.visibility = "hidden";
+					}
+				}
+				ev.stopPropagation ? ev.stopPropagation() : (ev.cancelBubble=true);
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<button type="button" onclick="fnTimer()">开始</button>
+		<button type="button" onclick="clearTimeout(timer)">停止</button><br>
+		<script type="text/javascript">
+			//JavaScript是一个单线程序的解释器，因此一定时间内只能执行一段代码。为了控制要执行的代码，就有一个JavaScript任务队列，这些任务会按照将它们添加到任务队列的顺序执行。
+			//setTimeout()的第二个参数告诉JavaScript再过多长时间把当前任务添加到队列中，如果队列是空的，那么添加的代码则会立即执行；如果队列不是空的，那么添加的代码会在前面的代码执行完毕后再执行。
+			//setTimeout()会返回一个 ID值，表示超时调用，它可用作clearTimeout()方法的参数，一般用setTimeout()替换setInterval();
+			var timer;
+			var i = 0;
+			//setTimeout模拟setInterval，如果页面切换后，js会为了节省资源，会延迟定时器，一般改为一秒延迟
+			//这里延迟在页面切换的时候会改为1000
+			var flag  = true;
+			function fnTimer(){
+				timer = setTimeout(function fnTime(){
+					var time = new Date();
+					document.body.innerHTML += time.getSeconds()+"."+time.getMilliseconds()+"---"+i+"<br>";	
+					i++;
+					if(flag){
+						timer = setTimeout(fnTime,500);
+					} else {
+						clearTimeout(timer);
+					}
+				},500);
+			}
+		</script>
+	</body>
+</html>

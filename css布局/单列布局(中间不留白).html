@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>单列布局（不留白）</title>
+		<style type="text/css">
+			li {
+				display: inline-block;
+				list-style: none;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 1226px;/*关键代码*/
+				color: #fff;
+				background-color: #f5f5f5;
+			}
+			.layout {
+				position: relative;
+				max-width: 1226px;/*关键代码*/
+				margin: 0 auto;/*关键代码*/
+			}
+			#header {
+				background-color: #333;
+				height: 40px;
+				line-height: 40px;
+				white-space: nowrap;
+				font-size: 12px;
+			}
+			.hd-nav-list {
+				float: left;
+			}
+			.hd-nav-list li {
+				margin-right: 10px;
+			}
+			.hd-info {
+				margin-right: 140px;
+				float: right;
+			}
+			.hd-info li {
+				margin-right: 10px;
+			}
+			.hd-cart {
+				position: absolute;
+				right: 0;
+				background: #424242;
+				padding: 0 20px;
+			}
+			#content {
+				background-color: #fff;
+				color: #000;
+			}
+			img {
+				/*去除图片间隙*/
+				vertical-align: top;
+			}
+			#footer {
+				background-color: #fff;
+				color: #000;
+			}
+			.footer-list {
+				/*确定不会发生剪切 可以用overflow: hidden;来产生BFC*/
+				overflow: hidden;
+				padding: 20px;
+			}
+			.footer-list li {
+				width: 20%;
+				float: left;
+				text-align: center;
+			}
+			.footer-links {
+				border-top: 1px solid #ddd;
+				padding: 20px 0;
+				/*比overflow: hidden;安全点的产生BFC方法*/
+				display: table-cell;
+				width: 9999px;
+			}
+			dl {
+				float: left;
+				width: 13%;
+				height: 112px;
+			}
+			dt {
+				font-size: 18px;
+				margin-bottom: 18px;
+			}
+			dd {
+				font-size: 12px;
+				color: #666;
+				margin-bottom: 10px;
+			}
+			.footer-contact {
+				width: 22%;
+				height: 112px;
+				text-align: center;
+				display: table-cell;
+				vertical-align: middle;
+				padding: 0 40px;
+				border-left: 1px solid #ddd;
+				white-space: pre-line;
+			}
+			.btn {
+				margin: 10px 20px 0 20px;
+				border: 1px solid #ff6700;
+				color: #ff6700;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layout">
+			<div id="header">
+				<ul class="hd-nav-list">
+					<li>小米商城</li>
+					<li>MIUI</li>
+					<li>IoT</li>
+					<li>云服务</li>
+					<li>金融</li>
+					<li>有品</li>
+					<li>小爱开放平台</li>
+					<li>政企服务</li>
+					<li>下载app</li>
+					<li>Select Region</li>
+				</ul>
+				<ul class="hd-info">
+					<li>登录</li>
+					<li>注册</li>
+					<li>消息通知</li>
+				</ul>
+				<div class="hd-cart">购物车（0）</div>
+			</div>
+			<div id="content">
+				<img src="img/1.jpg" width="1226px"/>
+				<img src="img/1.jpg" width="1226px"/>
+				<img src="img/1.jpg" width="1226px"/>
+			</div>
+			<div id="footer">
+				<div class="footer-service">
+					<ul class="footer-list">
+						<li>预约维修服务</li>
+						<li>7天无理由退货</li>
+						<li>15天免费换货</li>
+						<li>满150元包邮</li>
+						<li>520余家售后网点</li>
+					</ul>
+				</div>
+				<div class="footer-links">
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<dl>
+						<dt>特色服务</dt>
+						<dd>F 码通道</dd>
+						<dd>礼物码</dd>
+						<dd>防伪查询</dd>
+					</dl>
+					<div class="footer-contact">
+						400-100-5678
+						周一至周日 8:00-18:00
+						（仅收市话费）
+						<div class="btn">联系客服</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--原理利用块状元素的流体特性，元素宽度铺满浏览器，通过max-width来控制它的最大宽度，通过margin: 0 auto;来控制它居中-->
+		<!--模板网页 https://fkxx12.jz.fkw.com/-->
+	</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 1226px;
+				background-color: #f6f6f6;
+			}
+			.layout {
+				max-width: 1226px;
+				margin: 0 auto;
+			}
+			#header {
+				background-color: #333;
+				color: #fff;
+			}
+			#content {
+				
+			}
+			#footer {
+				background-color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layout">
+			<div id="header">头</div>
+			<div id="content">
+				<img src="img/1.jpg" width="1226px"/>
+				<img src="img/1.jpg" width="1226px"/>
+				<img src="img/1.jpg" width="1226px"/>
+			</div>
+			<div id="footer">尾</div>
+		</div>
+	</body>
+</html>
+-->

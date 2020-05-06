@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.ctnr {
+				position: relative;
+				width: 140px;
+				height: 140px;
+				border: 1px solid #000;
+			}
+			/* line-height+height
+			 * center
+			 */
+			.danhang1 {
+				line-height: 140px;
+				text-align: center;
+			}
+			/* table-cell+middle
+			 * center
+			 */
+			.danhang2 {
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+			}
+			/* after+middle+inline-block
+			 * center
+			 */
+			.danhang3 {
+				text-align: center;
+			}
+			.danhang3:after {
+				display: inline-block;
+				width: 0;
+				height: 100%;
+				vertical-align: middle;
+				content: '';
+			}
+			.danhang3 span {
+				vertical-align: middle;
+				background-color: #ffdd00;
+			}
+			/* translateY+margin
+			 * center
+			 */
+			.danhang4 {
+				text-align: center;
+			}
+			.danhang4 span {
+				display: inline-block;
+				margin-top: 50%;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+				background-color: #ffdd00;
+			}
+			/* translateY+top
+			 * translateY+left
+			 */
+			.danhang5 {
+				position: relative;
+			}
+			.danhang5 span {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+				background-color: #ffdd00;
+			}
+			/* flex+align-items
+			 * flex+justify-content
+			 */
+			.danhang6 {
+				display: flex;
+				display: -webkit-flex;
+				max-width: 140px;
+				justify-content: center;
+				align-items: center;
+				-webkit-justify-content: center;
+				-webkit-align-items: center;	
+				background-color: #ffdd00;			
+			}
+			/* flex+margin
+			 */
+			.danhang7 {
+				display: flex;
+				display: -webkit-flex;			
+			}
+			.danhang7 span {
+				margin: auto;
+				background-color: #ffdd00;
+			}
+			/* absolute
+			 * left+top+bottom+right+margin
+			 * width+height
+			 */
+			.danhang8 {
+				position: relative;
+			}
+			.danhang8 span {
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				width: 80px;
+				height: 20px;
+				background-color: #ffdd00;
+				margin: auto;
+			}
+			/* table-cell+middle
+			 * center
+			 * word-wrap+max-width
+			 */
+			.duohang1 {
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+				max-width: 140px;
+				word-wrap: break-word;
+			}
+			/* margin+translateY+inline-block
+			 * center
+			 * word-wrap+max-width
+			 */
+			.duohang2 {
+				text-align: center;
+			}
+			.duohang2 span {
+				display: inline-block;
+				max-width: 140px;
+				word-wrap: break-word;
+				margin-top: 50%;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+				background-color: #ffdd00;
+			}
+			/* absolute+top+translate
+			 * absolute+left+translate
+			 * word-wrap+max-width
+			 */
+			.duohang3 {
+				position: relative;
+			}
+			.duohang3 span {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				max-width: 140px;
+				word-wrap: break-word;
+				text-align: center;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+				background-color: #ffdd00;
+			}
+			/* flex+align-items
+			 * center
+			 * word-wrap+max-width
+			 */
+			.duohang4 {
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				-webkit-align-items: center;
+				text-align: center;
+			}
+			.duohang4 span {
+				max-width: 140px;
+				word-wrap: break-word;
+				background-color: #ffdd00;
+			}
+			/* flex+margin
+			 */
+			.duohang5 {
+				display: flex;
+				display: -webkit-flex;
+			}
+			.duohang5 span {
+				margin: auto;
+				text-align: center;
+				max-width: 140px;
+				word-wrap: break-word;
+				background-color: #ffdd00;
+			}
+			/* table-cell+middle
+			 * center
+			 */
+			.ib1 {
+				text-align: center;
+				display: table-cell;
+				vertical-align: middle;
+			}
+			/* after+middle+inline-block
+			 * center
+			 */
+			.ib2 {
+				text-align: center;
+			}
+			.ib2:after {
+				display: inline-block;
+				width: 0;
+				height: 100%;
+				vertical-align: middle;
+				content: '';
+			}
+			.ib2 div {
+				vertical-align: middle;
+				background-color: #ffdd00;
+			}
+			/* translateY+margin
+			 * center
+			 */
+			.ib3 {
+				text-align: center;
+			}
+			.ib3 div {
+				margin-top: 50%;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+			}
+			/* translate+margin
+			 */
+			.ib4 div {
+				margin-top: 50%;
+				margin-left: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+			}
+			/* translate+top+left
+			 */
+			.ib5 {
+				position: relative;
+			}
+			.ib5 div {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+			}
+			/* translate+margin
+			 * left+top+bottom+right
+			 */
+			.ib6 {
+				position: relative;
+			}
+			.ib6 div {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+			}
+			/* flex
+			 * align-items
+			 * justify-content
+			 */
+			.ib7 {
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				-webkit-align-items: center;
+				justify-content: center;
+				-webkit-justify-content: center;
+			}
+			/* flex+margin
+			 */
+			.ib8 {
+				display: flex;
+				display: -webkit-flex;
+			}
+			.ib8 div {
+				margin: auto;
+			}
+			/* 加一个居中的外层
+			 */
+			.dib1 {
+				position: absolute;
+				width: 80px;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.inline-block {
+				display: inline-block;
+				width: 40px;
+				height: 60px;
+				background-color: #ffdd00;
+			}
+			/* table-cell+middle
+			 * center
+			 */
+			.pic1 {
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+			}
+			/* after+middle+inline-block
+			 * center
+			 */
+			.pic2 {
+				text-align: center;
+			}
+			.pic2:after {
+				display: inline-block;
+				width: 0;
+				height: 100%;
+				vertical-align: middle;
+				content: '';
+			}
+			.pic2 img {
+				vertical-align: middle;
+			}
+			/* translateY+margin
+			 * center
+			 */
+			.pic3 {
+				text-align: center;
+			}
+			.pic3 img {
+				margin-top: 50%;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+			}
+			/* translate+margin
+			 */
+			.pic4 img {
+				margin-top: 50%;
+				margin-left: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+			}
+			/* translate+top+left
+			 */
+			.pic5 {
+				position: relative;
+			}
+			.pic5 img {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+			}
+			/* translate+margin
+			 * left+top+bottom+right
+			 */
+			.pic6 {
+				position: relative;
+			}
+			.pic6 img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+			}
+			/* translate+margin
+			 * left+top+bottom+right
+			 */
+			.pic7 {
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				-webkit-align-items: center;
+				justify-content: center;
+				-webkit-justify-content: center;
+			}
+			/* flex+margin
+			 */
+			.pic8 {
+				display: flex;
+				display: -webkit-flex;
+			}
+			.pic8 img {
+				margin: auto;
+			}
+			/* background
+			 */
+			.pic9 {
+				background: url(img/1.png) #fff center center no-repeat;
+			}
+			/* table-cell+middle
+			 * center
+			 */
+			.b1 {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.b1 div {
+				margin: 0 auto;
+			}
+			/* margin+translateY
+			 */
+			.b2 div {
+				margin: 0 auto;
+				margin-top: 50%;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+			}
+			/* margin+translateY
+			 */
+			.b3 div {
+				margin-left: 50%;
+				margin-top: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+			}
+			/* translate+top+left
+			 */
+			.b4 {
+				position: relative;
+			}
+			.b4 div {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+			}
+			/* translate+margin
+			 * left+top+bottom+right
+			 */
+			.b5 {
+				position: relative;
+			}
+			.b5 div {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+			}
+			/* flex
+			 * align-items
+			 * justify-content
+			 */
+			.b6 {
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				-webkit-align-items: center;
+				justify-content: center;
+				-webkit-justify-content: center;
+			}
+			/* flex+margin
+			 */
+			.b7 {
+				display: flex;
+				display: -webkit-flex;
+			}
+			.b7 div {
+				margin: auto;
+			}
+			.block {
+				display: block;
+				width: 40px;
+				height: 60px;
+				background-color: #ffdd00;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>定宽定高</h1>
+		<p>单行内联居中:</p>
+		<div class="ctnr danhang1">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang2">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang3">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang4">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang5">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang6">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang7">
+			<span>1234567</span>
+		</div>
+		<div class="ctnr danhang8">
+			<span>1234567</span>
+		</div>
+		
+		<p>多行内联居中:</p>
+		<div class="ctnr duohang1">
+			<span>123123456712345674567</span>
+		</div>
+		<div class="ctnr duohang2">
+			<span>123123456712345674567</span>
+		</div>
+		<div class="ctnr duohang3">
+			<span>123123456712345674567</span>
+		</div>
+		<div class="ctnr duohang4">
+			<span>123123456561123123231237</span>
+		</div>
+		<div class="ctnr duohang5">
+			<span>123123456561123123231237</span>
+		</div>
+		
+		<p>单个内联块状居中:</p>
+		<div class="ctnr ib1">
+			<div class="inline-block">1</div>
+		</div>		
+		<div class="ctnr ib2">
+			<div class="inline-block">1</div>
+		</div>		
+		<div class="ctnr ib3">
+			<div class="inline-block">1</div>
+		</div>			
+		<div class="ctnr ib4">
+			<div class="inline-block">1</div>
+		</div>			
+		<div class="ctnr ib5">
+			<div class="inline-block">1</div>
+		</div>			
+		<div class="ctnr ib6">
+			<div class="inline-block">1</div>
+		</div>			
+		<div class="ctnr ib7">
+			<div class="inline-block">1</div>
+		</div>				
+		<div class="ctnr ib8">
+			<div class="inline-block">1</div>
+		</div>
+		
+		<p>多个内联块状居中:</p>
+		<div class="ctnr ib1">
+			<div class="inline-block">1</div>
+			<div class="inline-block">1</div>
+		</div>		
+		<div class="ctnr ib2">
+			<div class="inline-block">1</div>
+			<div class="inline-block">1</div>
+		</div>		
+		<div class="ctnr ib3">
+			<div class="inline-block">1</div>
+			<div class="inline-block">1</div>
+		</div>	
+		<div class="ctnr ib7">
+			<div class="inline-block">1</div>
+			<div class="inline-block">1</div>
+		</div>				
+		<div class="ctnr ib8">
+			<div class="inline-block">1</div>
+			<div class="inline-block">1</div>
+		</div>				
+		<div class="ctnr">
+			<div class="dib1">
+				<div class="inline-block">1</div><!--
+			 --><div class="inline-block">1</div>
+			</div>
+		</div>
+		
+		<p>图片居中(与内联块级居中方法相同):</p>
+		<div class="ctnr pic1">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic2">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic3">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic4">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic5">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic6">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic7">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic8">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic8">
+			<img src="img/1.png"/>
+		</div>
+		<div class="ctnr pic9"></div>
+		
+		<p>单个块状居中:</p>
+		<div class="ctnr b1">
+			<div class="block">1</div>
+		</div>
+		<div class="ctnr b2">
+			<div class="block">1</div>
+		</div>
+		<div class="ctnr b3">
+			<div class="block">1</div>
+		</div>
+		<div class="ctnr b4">
+			<div class="block">1</div>
+		</div>
+		<div class="ctnr b5">
+			<div class="block">1</div>
+		</div>
+		<div class="ctnr b6">
+			<div class="block">1</div>
+		</div>
+		<div class="ctnr b7">
+			<div class="block">1</div>
+		</div>
+	</body>
+</html>

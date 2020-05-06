@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			body {
+				background-color: #e6e6e6;
+			}
+			.link {
+				display: flex;
+				display: -webkit-flex;
+				flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
+				width: 400px;
+				margin: 40px auto 0 auto;
+			}
+			.link a {
+				flex: 1;
+				padding: 6px 0;
+				margin-right: 5px;
+				text-align: center;
+				background-color: #fff;
+				font-size: 14px;
+				color: #000;
+			}
+			.link a:hover {
+				color: #52cbe6;
+			}
+			.link a:last-child{
+				margin-right: 0px;
+			}
+			.list {
+				height: 200px;
+				margin-top: 40px;
+				text-align: center;
+			}
+			.list li {
+				display: inline-block;
+				width: 200px;
+				height: 100%;
+				border-radius: 104px;
+				text-align: center;
+				background-color: #fff;
+				border: 8px solid #f6f6f6;
+				transition: all .4s ease-out;
+				-webkit-transition all .4s ease-out;
+			}
+			.list li:hover {
+				background-color: #f6f6f6;
+				border-color: #fff;
+				transform: rotate(360deg);
+				-webkit-transform: rotate(360deg);
+				-ms-transform: rotate(360deg);
+			}
+			.list a {
+				display: block;
+				height: 100%;
+				color: #000;
+			}
+			.list span {
+				display: block;
+				height: 50%;
+				color: #e6e6e6;
+				line-height: 130px;
+				font-size: 40px;
+				transition: all .4s ease-out;
+				-webkit-transition all .4s ease-out;
+			}
+			.list li:hover span {
+				font-size: 70px;
+				line-height: 100px;
+				color: #444;
+			}
+			.text {
+				position: relative;
+				height: 50%;
+			}
+			.text h2 {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				font-size: 20px;
+				font-weight: normal;
+				color: #999;
+				transition: all .4s ease-out;
+				-webkit-transition all .4s ease-out;
+			}
+			.list li:hover h2 {
+				display: none;
+			}
+			.text h3 {
+				width: 80%;
+				margin: 0 auto;
+				line-height: 26px;
+				font-size: 22px;
+				font-weight: normal;
+				color: #666;
+				opacity: 0;
+				transition: all .4s ease-out;
+				-webkit-transition all .4s ease-out;
+			}
+			.list li:hover h3 {
+				opacity: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="link">
+			<a href="index.html">1</a>
+			<a href="index1.html">2</a>
+			<a href="index2.html">3</a>
+			<a href="index3.html">4</a>
+			<a href="index4.html">5</a>
+			<a href="index5.html">6</a>
+		</div>
+		<ul class="list">
+			<li>
+				<a href="">
+					<span class="icon-4s-shop"></span>
+					<div class="text">
+						<h2>Old Drivers Drive</h2>
+						<h3>Toy car are driving fast</h3>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<span class="icon-cart"></span>
+					<div class="text">
+						<h2>MA Dady</h2>
+						<h3>Empty your shopping cart</h3>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<span class="icon-follow"></span>
+					<div class="text">
+						<h2>Nothing to lose</h2>
+						<h3>I am forever in your heart</h3>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<span class="icon-log"></span>
+					<div class="text">
+						<h2>Small notebook</h2>
+						<h3>I'm going to tell the teacher</h3>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<span class="icon-global"></span>
+					<div class="text">
+						<h2>Our Earth</h2>
+						<h3>We will always protect her</h3>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</body>
+</html>

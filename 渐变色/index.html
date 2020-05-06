@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/global.css"/>
+		<style type="text/css">
+			.div {
+				position: relative;
+				display: inline-block;
+				width: 200px;
+				height: 200px;
+				border-radius: 20px;
+				line-height: 200px;
+				color: #fff;
+			}
+			.div img {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+			}
+			.demo1 img {
+				transform: translate(-50%,-50%) rotate(0deg);
+			}
+			.demo2 img {
+				transform: translate(-50%,-50%) rotate(45deg);
+			}
+			.demo3 img {
+				transform: translate(-50%,-50%) rotate(90deg);
+			}
+			.demo4 img {
+				transform: translate(-50%,-50%) rotate(180deg);
+			}
+			.demo5 img {
+				transform: translate(-50%,-50%) rotate(270deg);
+			}
+			.demo6 img {
+				transform: translate(-50%,-50%) rotate(315deg);
+			}
+			/*格式
+			 * 角度，颜色+空格+百分比，颜色+空格+百分比...
+			 * 0%-100%
+			 * 0deg是从下往上，顺时针旋转，0-90-180-270-0
+			 */
+			.demo1 {
+				background-color: #08AEEA;
+				background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%);	
+			}
+			.demo2 {
+				background-color: #08AEEA;
+				background-image: linear-gradient(45deg, #08AEEA 0%, #2AF598 100%);	
+			}
+			.demo3 {
+				background-color: #08AEEA;
+				background-image: linear-gradient(90deg, #08AEEA 0%, #2AF598 100%);	
+			}
+			.demo4 {
+				background-color: #08AEEA;
+				background-image: linear-gradient(180deg, #08AEEA 0%, #2AF598 100%);	
+			}
+			.demo5 {
+				background-color: #08AEEA;
+				background-image: linear-gradient(270deg, #08AEEA 0%, #2AF598 100%);	
+			}
+			.demo6 {
+				background-color: #08AEEA;
+				background-image: linear-gradient(315deg, #08AEEA 0%, #2AF598 100%);	
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div demo1">0deg<img src="img/1.png"/></div>
+		<div class="div demo2">45deg<img src="img/1.png"/></div>
+		<div class="div demo3">90deg<img src="img/1.png"/></div>
+		<div class="div demo4">180deg<img src="img/1.png"/></div>
+		<div class="div demo5">270deg<img src="img/1.png"/></div>
+		<div class="div demo6">315deg<img src="img/1.png"/></div>
+		<div class="div demo1">360deg(0deg)<img src="img/1.png"/></div>
+	</body>
+</html>

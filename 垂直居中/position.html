@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.father {
+				position: relative;/*关键代码*/
+				width: 200px;
+				height: 200px;
+				border: 1px solid #000;
+			}
+			/*transform*/
+			.child1 {
+				position: absolute;/*关键代码*/
+				top: 50%;/*关键代码*/
+				left: 50%;/*关键代码*/
+				transform: translate(-50%,-50%);/*关键代码*/
+				max-width: 100%;/*可以让文字换行居中*/
+				word-wrap: break-word;/*可以让文字换行居中*/
+				background-color: #ff6700;
+			}
+			/*margin，需要知道高和宽*/
+			.child2 {
+				position: absolute;/*关键代码*/
+				top: 50%;/*关键代码*/
+				left: 50%;/*关键代码*/
+				width: 80px;
+				height: 30px;/*关键代码*/
+				margin: -15px 0 0 -40px;/*需要知道子元素高度、宽度*//*关键代码*/
+				background-color: #ff6700;
+				word-wrap: break-word;/*可以让文字换行居中*/
+			}
+			/*margin:auto，需要设着高度 宽度*/
+			.child3 {
+				position: absolute;/*关键代码*/
+				top: 0;/*关键代码*/
+				left: 0;/*关键代码*/
+				bottom: 0;/*关键代码*/
+				right: 0;/*关键代码*/
+				width: 50px;
+				height: 100px;
+				word-wrap: break-word;/*可以让文字换行居中*/
+				margin: auto;/*关键代码*/
+				background-color: #ff6700;
+			}
+			.block {
+				display: block;
+				width: 20px;
+				height: 40px;
+				border: 1px solid #000;
+			}
+			.inline-block {
+				display: inline-block;
+				width: 20px;
+				height: 50px;
+				line-height: 50px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+		适用于不需要占位置的单一元素
+		容器元素中居中的是块状元素
+		需要同时设置容器元素和内容元素，容器元素display可以是inline-block或block，position为非static
+		内容元素会因为position: absolute;将转换为block元素
+		-->
+		<p>内联居中（transform）:</p>
+		<div class="father">
+			<span class="child1">1234534566</span>
+		</div>
+		<p>内联居中（margin: 定值;）:</p>
+		<div class="father">
+			<span class="child2">1234567123456712345671234567</span>
+		</div>
+		<p>内联居中（margin: auto;）:</p>
+		<div class="father">
+			<span class="child3">12345123456767</span>
+		</div>
+		<p>单个内联块状居中:</p>
+		<div class="father">
+			<div class="child1 inline-block">1</div>
+		</div>	
+		<p>多个内联块状居中（堆叠在一起）:</p>
+		<div class="father">
+			<div class="child1 inline-block">1</div>
+			<div class="child1 inline-block">2</div>
+			<div class="child1 inline-block">3</div>
+		</div>		
+		<p>图片居中:</p>
+		<div class="father">
+			<img src="img/1.png" class="child1" style="background-color: transparent;"/>
+		</div>
+		<p>单个块状居中:</p>
+		<div class="father">
+			<div class="child1 block"></div>
+		</div>
+		<p>多个块状居中（堆叠在一起）:</p>
+		<div class="father">
+			<div class="child1 block"></div>
+			<div class="child1 block"></div>
+			<div class="child1 block"></div>
+		</div>
+	</body>
+</html>

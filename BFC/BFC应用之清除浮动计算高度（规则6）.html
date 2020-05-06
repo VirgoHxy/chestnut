@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.father {
+				/*display: inline-block、table-cell、table-caption;
+				overflow: auto、scroll、hidden;
+				position: absolute、fixed;
+				float: left、right;*/
+				border: 2px solid #e00;
+				display: inline-block;
+			}
+			.child {
+				float: left;
+				width: 100px;
+				height: 100px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="father">
+			<div class="child">6.计算BFC的高度，float元素的高度也计算在内。</div>
+			<div class="child"></div>
+		</div>
+		<!--为了达到清除浮动，这里让father元素产生BFC，让child浮动元素的高度也计算在内-->
+	</body>
+</html>

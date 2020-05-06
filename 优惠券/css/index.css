@@ -1,0 +1,95 @@
+@charset "UTF-8";
+/**
+ * @authors haoxuyang 1061811549@qq.com
+ * @date    2019-02-25 11:14:59
+ * @version $Id$
+ */
+ html {
+    font-size: 62.5%;
+ }
+ body {
+    background-color: #efeff4;
+ }
+.ticketList {
+    background-color: transparent;
+    list-style: none;
+    padding: 0;
+}
+.ticketList li {
+    position: relative;
+    overflow: hidden;
+    padding: 4px;
+    margin: 15px;
+}
+.ticket-circular {
+    position: absolute;
+    top: 4rem;
+    left: -.6rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: #efeff4;
+    box-shadow: -.2rem 0 .6rem 0 #e1e1e1 inset;
+    border-radius: 1rem;
+}
+.ticket {
+    border-radius: .6rem;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 .1rem .6rem .1rem #e6e6e6;
+    overflow: hidden;
+}
+.ticket-left {
+    position: relative;
+    display: inline-block;
+    width: 65%;
+    padding: 1rem 0 1rem 4rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.ticket-img {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 2rem;
+    height: 2rem;
+    background: transparent url(../img/ticket.png) no-repeat;
+    -webkit-background-size: 2rem;
+    background-size: 2rem;
+}
+.ticket-type {
+    font-size: 1.6rem;
+}
+.ticket-num {
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    color: #444;
+}
+.ticket-right {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    width: 35%;
+    height: 91px;
+    line-height: 91px;
+    background-color: #69B9FE;
+    vertical-align: top;
+    text-align: center;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-bottom-right-radius: .6rem;
+    border-top-right-radius: .6rem;
+}
+.ticket-r1 {
+    background-color: #f3b704;
+}
+.ticket-r2 {
+    background-color: #69B9FE;
+}
+.ticket-r3 {
+    background-color: #FC7967;
+}
+.ticket-r4 {
+    background-color: #75CD5B;
+}

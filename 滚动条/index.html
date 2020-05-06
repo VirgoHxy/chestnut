@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//滑动事件和高度获取
+			var postCont = document.getElementsByClassName('job-post-cont')[0];
+			var postCtnr = document.getElementsByClassName('job-post-ctnr')[0];
+			var slider = document.getElementsByClassName('slider')[0];
+			function sliderFn(){
+				//可以使用offsetHeight
+				var postContH = parseInt(postCont.offsetHeight);
+				var postCtnrH = parseInt(postCtnr.offsetHeight);
+				//比例
+				scale = postCtnrH / postContH;
+			    //滚动条高度
+			    sliderH = postCtnrH*postCtnrH / postContH;
+			    //滑动条移动高度
+			    sliderMoveH = postCtnrH-sliderH;
+			    //内容移动高度
+			    moveH = postContH-postCtnrH;
+			    //设置滚动条高度
+			    slider.style.height = sliderH+"px";
+			}
+			sliderFn();
+			var scrollFunc = function() {
+			    var ev = window.event;
+			    var contTop = parseInt(postCont.offsetTop);
+			    var sliderTop = parseInt(slider.offsetTop);
+			    if (ev.wheelDelta) {
+			    	//向下
+			        if (ev.wheelDelta<0) {
+			        	postCont.style.top = (contTop-24)+"px";
+			            if (Math.abs(parseInt(postCont.offsetTop))>=moveH) {
+			            	postCont.style.top = -moveH+"px";
+			            }
+			        	slider.style.top = (sliderTop+24*scale)+"px";
+			            if (parseInt(slider.offsetTop)>=sliderMoveH) {
+			            	slider.style.top = sliderMoveH+"px"
+			            }
+			        } else {
+			        	postCont.style.top = (contTop+24)+"px";
+			            if (parseInt(postCont.offsetTop)>=0) {
+			        		postCont.style.top = "0";
+			            }
+			        	slider.style.top = (sliderTop-24*scale)+"px";
+			            if (parseInt(slider.offsetTop)<=0) {
+			        		slider.style.top = "0";
+			            }
+			        }
+			    } else if (ev.detail) { //ff
+			    	//向下
+			        if (ev.wheelDelta<0) {
+			        	postCont.style.top = (contTop-24)+"px";
+			            if (Math.abs(postCont.offsetTop)>=moveH) {
+			            	postCont.style.top = -moveH+"px";
+			            }
+			        	slider.style.top = (sliderTop+24*scale)+"px";
+			            if (slider.offsetTop>=sliderMoveH) {
+			            	slider.style.top = sliderMoveH+"px"
+			            }
+			        } else {
+			        	postCont.style.top = (contTop+24)+"px";
+			            if (postCont.offsetTop>=0) {
+			        		postCont.style.top = "0";
+			            }
+			        	slider.style.top = (sliderTop-24*scale)+"px";
+			            if (slider.offsetTop<=0) {
+			        		slider.style.top = "0";
+			            }
+			        }
+			    }
+			}
+			//注册滑动
+			if (postCtnr.addEventListener) {
+			    postCtnr.addEventListener('DOMMouseScroll', scrollFunc, false);
+			}
+			postCtnr.onmousewheel = scrollFunc;
+			//禁止外层滑动
+			$.fn.scrollUnique = function() {
+				return $(this).each(function() {
+					var eventType = 'mousewheel';
+					// navigator.userAgent.indexOf('Firefox') > -1
+					// document.mozHidden !== undefined
+					if(navigator.userAgent.indexOf('Firefox') > -1) {
+						eventType = 'DOMMouseScroll';
+					}
+					// console.log(eventType)
+					$(this).on(eventType, function(event) {
+						// 一些数据
+						var scrollTop = this.scrollTop,
+							scrollHeight = this.scrollHeight,
+							height = this.clientHeight;
+						var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta : -(event.originalEvent.detail || 0);
+						if((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop ? 0 : scrollHeight));
+						//向上滚 || 向下滚
+						//event.preventDefault();
+						var e = window.event || event;
+						if(e.stopPropagation) {
+							e.stopPropagation();
+						} else {
+							e.cancelBubble = true;
+						}
+						if(e.preventDefault) {
+							e.preventDefault();
+						} else {
+							e.returnValue = false;
+						}
+					});
+				});
+			}
+			//禁止滑动，需要依赖jquery，在.job-post-ctnr元素这里阻断了.job-post-cont的mousewheel和DOMMouseScroll事件的冒泡影响，这两个事件最终都会冒泡到document和window
+			$('.job-post-ctnr').eq(index).scrollUnique();				
+		</script>
+	</body>
+</html>

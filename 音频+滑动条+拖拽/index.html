@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<title>音频+滑动条+拖拽</title>
+	<link rel="stylesheet" type="text/css" href="css/global.css" />
+	<link rel="stylesheet" type="text/css" href="css/log-display2.css" />
+	<style type="text/css">
+		/*播放喇叭动画*/
+		.play-ctnr {
+			position: absolute;
+			top: 50%;
+			left: -40px;
+			transform: translateY(-50%);
+			z-index: 1;
+			box-sizing: border-box;
+		}
+		.wifi-symbol {
+			width: 25px;
+			height: 25px;
+			box-sizing: border-box;
+			overflow: hidden;
+			transform: rotate(-45deg);
+		}
+		.wifi-circle {
+			border: 5px solid #009688;
+			border-radius: 50%;
+			position: absolute;
+		}
+		.first {
+			width: 5px;
+			height: 5px;
+			background: #cccccc;
+			top: 20px;
+			left: 20px;
+		}
+		.second {
+			width: 25px;
+			height: 25px;
+			top: 10px;
+			left: 10px;
+			animation: fadeInOut 1s infinite 0.2s;
+		}
+		.third {
+			width: 40px;
+			height: 40px;
+			top: 0;
+			left: 0;
+			animation: fadeInOut 1s infinite 0.4s;
+		}
+		@keyframes fadeInOut {
+			0% {
+				opacity: 0;
+				/*初始状态 透明度为0*/
+			}
+			100% {
+				opacity: 1;
+				/*结尾状态 透明度为1*/
+			}
+		}
+	</style>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/jquery.zclip.js"></script>
+</head>
+<body>
+	<a href="javascript:;" class="show-log">话术日志</a>
+	<div class="log-display2">
+		<div class="log-hd">
+			<h3>通话内容</h3>
+			<div class="id-name">通话识别号：</div>
+			<div class="id-value">123123123</div>
+			<div class="icon-add"></div>
+		</div>
+		<div class="log-bd">
+			<div class="log-info">
+				<h3>通话信息</h3>
+				<ul class="info-list">
+					<li>
+						<div class="info-name">活动名称：</div>
+						<div class="info-value">无</div>
+					</li>
+					<li>
+						<div class="info-name">呼叫时间：</div>
+						<div class="info-value">无</div>
+					</li>
+					<li>
+						<div class="info-name">呼叫结果：</div>
+						<div class="info-value">无</div>
+					</li>
+					<li>
+						<div class="info-name">通话时长：</div>
+						<div class="info-value">无</div>
+					</li>
+				</ul>
+			</div><!--
+		 --><div class="log">
+				<div class="log-play">
+					<div class="ban-click">录音文件错误</div>
+					<div class="video-ctrl">
+						<div class="time-cont">
+							<div class="cache"></div>
+							<div class="time-value">
+								<span class="time-circle"></span>
+							</div>
+						</div>
+						<div class="play-pause">
+							<div class="icon-now-pause"></div>
+						</div>
+						<div class="time-label">00:00/00:00</div>
+						<div class="volume">
+							<div class="icon-voiced"></div>
+							<div class="volume-cont">
+								<div class="volume-value">
+									<span class="volume-circle"></span>
+								</div>
+							</div>
+						</div>
+						<div class="download">
+							<a class="icon-download" href=""></a>
+						</div>
+						<div class="switch">
+							<div class="btn_fath" onclick="toogle(this)">
+								<div class="move" data-state="off"></div>
+								<div class="btnSwitch btn1">ON</div>
+								<div class="btnSwitch btn2 ">OFF</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="log-show">
+					<div class="log-ctnr">
+						<div class="log-cont">
+							<ul class="log-list">
+								<li>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>There are two versions of Migrate</div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												The jQuery Bower package cont Bower package cont
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>There are two versions</div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												The jQuery Bower package
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。</div>
+										</div>
+									</div>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。</div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。</div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。</div>
+										</div>
+									</div>
+									<div class='robot'>
+										<div class='robot-box'>
+											<div class='icon-robot'></div>
+											<div class='box-cont'>百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。</div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+									<div class='human'>
+										<div class='user-box'>
+											<div class='box-cont user-cont'>
+												百度网盘为您提供文件的网络备份、同步和分享服务。空间大、速度快、安全稳固,支持教育网加速,支持手机端。
+												<div class='play-ctnr'>
+													<div class='wifi-symbol'>
+														<div class='wifi-circle first'></div>
+														<div class='wifi-circle second'></div>
+														<div class='wifi-circle third'></div>
+													</div>
+												</div>
+												<b class='icon-now-pause'></b>
+											</div>
+											<div class='icon-user'></div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="slider-ctnr">
+					<div class="slider"></div>
+				</div>
+				<audio id="text-play" src="media/1.mp3"></audio>
+				<!--必须是服务器文件-->
+				<audio id="chat-play" src="https://m10.music.126.net/20181018151431/35eaa6912d9b6597bc486df57c741883/ymusic/bb7a/42ad/4d71/5114d7fc8a339d699a8ca62a3e2679b8.mp3"></audio>
+			</div>
+		</div>
+	</div>
+	<script src="js/log-display2.js"></script>
+	<script>
+		//滑动按钮点击
+		function toogle(th) {
+			var ele = $(th).children(".move");
+			if(ele.attr("data-state") == "on") {
+				ele.animate({
+					left: "0"
+				}, 300, function() {
+					ele.attr("data-state", "off");
+				});
+				$(th).css("transition-delay", "0s");
+				$(th).removeClass("fatn-curr");
+			} else if(ele.attr("data-state") == "off") {
+				ele.animate({
+					left: '34px'
+				}, 300, function() {
+					$(this).attr("data-state", "on");
+				});
+				$(th).css("transition-delay", ".2s");
+				$(th).addClass("fatn-curr");
+			}
+			$('.result').toggle();
+		}	
+//	    setTimeout(function(){
+//	    	//允许flash
+//			var flashFlag;
+//		    if (window.ActiveXObject) {
+//		        flashFlag = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+//		    } else {
+//		        flashFlag = navigator.plugins['Shockwave Flash'];
+//		    }
+//			if(flashFlag){
+//				//点击复制文本
+//				var tipX,tipY=0;
+//				$('.log-display2').mousemove(function (e) {
+//			        var cursX = e.originalEvent.x || e.originalEvent.layerX || 0;
+//			        var cursY = e.originalEvent.y || e.originalEvent.layerY || 0;
+//					var pos = $('.log-display2').position();
+//					tipX = cursX - pos.left;
+//					tipY = cursY - pos.top;
+//					//console.log(cursX);获取鼠标横坐标
+//					//console.log(cursY);获取鼠标纵坐标
+//					//console.log(pos.left);获取log-display2相对于父元素的左偏移
+//					//console.log(pos.top);获取log-display2相对于父元素的上偏移
+//					//console.log(tipX);计算得出提示框的横坐标位置
+//					//console.log(tipY);计算得出提示框的纵坐标位置
+//			    });
+//				$("div[class*='value']").zclip({
+//					path: "js/ZeroClipboard.swf",
+//					copy: function() {
+//						return $(this).text();
+//					},
+//					afterCopy: function() { /* 复制成功后的操作 */
+//						var $copyTip = "<div class='copy-box prompt-box'>复制成功</div>";
+//						$(".log-display2").find(".copy-box").remove().end().append($copyTip);
+//						$('.copy-box').fadeOut(2000).css({"top":tipY+"px","left":tipX+20+"px"});
+//					}
+//				});
+//		    }
+//		},1000)
+	</script>
+</body>
+
+</html>

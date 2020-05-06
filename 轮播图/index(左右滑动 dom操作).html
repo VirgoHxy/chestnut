@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#carousel{
+			    position: relative;
+				max-width: 1226px;
+				height: 691px;
+				margin: 0 auto;
+			    overflow: hidden;
+			}
+			.img-list{
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    list-style: none;
+			    width: 9999px;
+			    height: 100%;
+			}
+			.img-list li{
+			    float: left;
+			}
+			.ctrl-list {
+			    position: absolute;
+			    bottom: 40px;
+			    right: 40px;
+			    list-style: none;
+			    cursor: default;
+			    user-select: none;
+			    -moz-user-select: none;
+			    -webkit-user-select: none;
+			    -ms-user-select: none;
+			}
+			.ctrl-list li {
+				display: inline-block;
+				margin: 0 2px;
+			}
+			.ctrl-list span {
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				border-radius: 6px;
+				background-color: #ddd;
+			    cursor: pointer;
+			}
+			.ctrl-list span:hover {
+				background-color: #aaa;
+			} 
+			.ctrl-curr-item {
+				background-color: #ff6700!important;
+			}
+			.carousel-btn {
+			    position: absolute;
+			    z-index: 10;
+			    top: 50%;
+			    margin-top: -50px;
+			    width: 50px;
+			    height: 100px;
+			    line-height: 100px;
+			    text-align: center;
+			    font-size: 50px;
+			    color: #fff;
+			    text-decoration: none;
+			    background-color: rgba(0,0,0,0.2);
+			}
+			.carousel-btn:hover {
+				background-color: rgba(0,0,0,0.4);
+			}
+			.pre-btn{
+			    left: 0;
+			}
+			.next-btn{
+			    right: 0;
+			}
+		</style>
+		<script src="js/worker-timer.js"></script>
+	</head>
+	<body>
+		<div id="carousel">
+			<!--图片列表-->
+		    <ul class="img-list">
+		        <li><a href="#1"><img src="img/1.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#2"><img src="img/2.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#3"><img src="img/3.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#4"><img src="img/4.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#5"><img src="img/5.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#6"><img src="img/6.jpg" width="1226px" height="691px"/></a></li>
+		        <li><a href="#7"><img src="img/7.jpg" width="1226px" height="691px"/></a></li>
+		    </ul>
+			<!--圆形控制列表-->
+		    <ul class="ctrl-list">
+		        <li><span class="ctrl-curr-item"></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		        <li><span></span></li>
+		    </ul>
+		    <!--按钮-->
+		    <a href="javascirpt:;" class="pre-btn carousel-btn icon-left"></a>
+		    <a href="javascirpt:;" class="next-btn carousel-btn icon-right"></a>
+		</div>
+		<script type="text/javascript">
+			window.onload=function(){
+				var carousel = document.getElementById('carousel');
+			    var img_list = document.getElementsByClassName('img-list')[0];
+			    var img_li = img_list.getElementsByTagName('li');
+			    var ctrl_list = document.getElementsByClassName('ctrl-list')[0];
+			    var ctrl_span = ctrl_list.getElementsByTagName('span');
+			    var pre_btn = document.getElementsByClassName('pre-btn')[0];
+			    var next_btn = document.getElementsByClassName('next-btn')[0];
+			    var img_current = 0;
+			    var carouselTimer,nextTimer,preTimer;
+			    var carouselFlag = true;
+				//left值为carousel的宽
+				var left = carousel.offsetWidth;
+				var imgNum = img_li.length;
+			    //轮播方法
+				function fnImgCarousel(){
+					workerTimer.clearTimeout(carouselTimer);
+					var old_img = img_current;
+			        img_current++;
+			        if(img_current==imgNum){
+			        	img_current = 0;
+			        }
+			        fnChangeImg(old_img,img_current,true,1);
+			        if(carouselFlag){
+						carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+			        	carouselFlag = true;
+			        } else {
+			        	workerTimer.clearTimeout(carouselTimer);
+			        	carouselFlag = false;
+			        }
+				}
+			    //轮播
+		    	carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+				//mouseover和mouseout
+				carousel.onmouseover = function(){
+					//停止定时器
+					workerTimer.clearTimeout(carouselTimer);
+			        carouselFlag = false;
+				}
+				carousel.onmouseout = function(){
+					//设置定时器
+					carouselTimer = workerTimer.setTimeout(fnImgCarousel,4000);
+			        carouselFlag = true;
+				}
+				//去除节点的空格节点
+				function cleanWhitespace(oEelement){
+		            for(var i=0;i<oEelement.childNodes.length;i++){
+		                var node=oEelement.childNodes[i];
+		                if(node.nodeType==3 && !/\S/.test(node.nodeValue)){
+		                    node.parentNode.removeChild(node)
+		                }
+		            }
+		       	}
+				cleanWhitespace(img_list);
+			    //显示第几张old_img改变前的图片index值,new_img改变后的图片index值，nextFlag是判断是下一张还是上一张，num是改变的张数			
+			    function fnChangeImg(old_img,new_img,nextFlag,num){
+    				workerTimer.clearTimeout(preTimer);
+    				workerTimer.clearTimeout(nextTimer);
+					if(nextFlag){
+						//复制节点
+						if(num==1){
+							//下一张按钮，复制第一张，添加到最后一张
+							var first_li = img_list.childNodes[0].cloneNode(true);
+				    		img_list.appendChild(first_li);
+						} else {
+							//圆形按钮，复制前几张，添加到最后
+							for (var i = 0;i<num;i++) {
+								var j = img_list.childNodes[i].cloneNode(true);
+				    			img_list.appendChild(j);
+							}
+						}
+						//next,右按钮
+						nextTimer = workerTimer.setTimeout(function fnTimerNext(){
+							//改变的张数*一张的宽度就是改变left值
+							img_list.style.left = (parseInt(img_list.offsetLeft) - left*num/40)+"px";
+							if (parseInt(img_list.offsetLeft)<=-left*num){
+								//停止定时器
+								workerTimer.clearTimeout(nextTimer);
+				                img_list.style.left = '0px';
+				                //圆形按钮的class
+						        ctrl_span[old_img].classList.remove('ctrl-curr-item');
+						        ctrl_span[new_img].classList.add('ctrl-curr-item');		
+								//删掉最前面的一张或几张
+								for (var i = 0;i<num;i++) {
+									img_list.removeChild(img_list.childNodes[0]);
+								}	                
+							} else {
+								nextTimer = workerTimer.setTimeout(fnTimerNext,16);
+							}
+						},16);
+	    			} else {
+	    				//设置img_list的left为负的改变的张数*一张的宽度
+	    				img_list.style.left = -left*num+"px";
+						//复制节点
+						if(num==1){
+							//上一张按钮，复制最后一张，添加到第一张
+					    	var last_li = img_list.childNodes[img_li.length-1].cloneNode(true);
+					    	img_list.insertBefore(last_li,img_li[0]);
+						} else {
+							//圆形按钮，复制后几张，添加到最前面
+							for (var i = 0;i<num;i++) {
+						    	var last_li = img_list.childNodes[img_li.length-1-i].cloneNode(true);
+						    	img_list.insertBefore(last_li,img_li[0]);
+							}
+						}
+						//pre,左按钮
+						preTimer = workerTimer.setTimeout(function fnTimerPre(){
+							//负的left加，逐渐变为0
+							img_list.style.left = (parseInt(img_list.offsetLeft) + left*num/40)+"px";
+							if (parseInt(img_list.offsetLeft)>=0){
+								//停止定时器
+								workerTimer.clearTimeout(preTimer);
+				                img_list.style.left = '0px';
+						        if(new_img==imgNum){
+						        	new_img = 0;
+						        }
+						        ctrl_span[old_img].classList.remove('ctrl-curr-item');
+						        ctrl_span[new_img].classList.add('ctrl-curr-item');
+						        //删除后面复制过的节点
+								for (var i = 0;i<num;i++) {
+									img_list.removeChild(img_list.childNodes[img_li.length-1]);
+								}
+							} else {
+								preTimer = workerTimer.setTimeout(fnTimerPre,16);
+							}
+						},16);   
+	    			}
+				}
+			    //上一个
+			    pre_btn.onclick = function(){
+					//点击时，删除节点要做完才能执行
+			    	if (img_li.length==imgNum){
+						var old_img = img_current;
+				        img_current--;
+				        if(img_current<0){
+				        	img_current = img_li.length-1;
+				        }
+				        fnChangeImg(old_img,img_current,false,1);		
+			    	}
+			    }
+			    //下一个
+			    next_btn.onclick = function(){
+					//点击时，删除节点要做完才能执行
+			    	if (img_li.length==imgNum){
+						var old_img = img_current;
+				        img_current++;
+				        if(img_current>img_li.length-1){
+				        	img_current = 0;
+				        }
+				        fnChangeImg(old_img,img_current,true,1);
+			    	}
+			   	}
+				//圆形点击
+			    ctrl_list.addEventListener('click',function(e){
+			    	var ev = e || window.event;
+			    	var target = ev.target || ev.srcElement;
+			    	//点击的是span，点击的不包含class，imgLi的个数是7个
+			    	if(target.nodeName.toLowerCase()=="span"&&!target.classList.contains('ctrl-curr-item')&&img_li.length==imgNum){
+			    		var ctrl_num = [].indexOf.call(ctrl_span, target);
+		    			var nextFlag = ctrl_num > img_current;
+	    				var img_num = Math.abs(ctrl_num - img_current);
+						fnChangeImg(img_current,ctrl_num,nextFlag,img_num);
+	    				img_current = ctrl_num;
+			    	}
+			    });
+			}
+		</script>
+	</body>
+</html>

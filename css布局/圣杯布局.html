@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 888px;
+			}
+			#header {
+				background-color: #333;
+				height: 40px;
+				color: #fff;
+			}
+			#content {
+				padding: 0 200px;
+				display: table-cell;
+				width: 9999px;
+			}
+			#content div {
+				position: relative;
+				float: left;
+			}
+			#left {
+				left: -200px;
+				margin-left: -100%;
+				width: 200px;
+				background: #efefef;
+			}
+			#middle {
+				width: 100%;
+			}
+			#right {
+				left: 200px;
+				margin-left: -200px;
+				width: 200px;
+				background: #efefef;
+			}
+			#footer {
+				background-color: #fafafa;
+				height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			header
+		</div>
+		<div id="content">
+			<div id="middle">
+				<img src="img/1.jpg" width="100%"/>
+				<img src="img/1.jpg" width="100%"/>
+				<img src="img/1.jpg" width="100%"/>
+			</div>
+			<div id="left">
+				left
+			</div>
+			<div id="right">
+				right
+			</div>
+		</div>
+		<div id="footer">
+			footer
+		</div>
+		<!--
+			圣杯布局的原理(也算是三栏布局)
+			BFC，让content元素成为BFC元素，让content元素计算浮动元素的高度
+			注意两边的浮动元素都在middle元素后边，左边的通过margin-left: -100%;left: -200px(左边的宽度负值);，右边的通过margin-left: -200px(右边的宽度负值);left: 200px(右边的宽度);
+		-->
+		<!--模板网页 https://segmentfault.com/-->
+		<script type="text/javascript">
+			window.onload =function(){
+				var left = document.getElementById('left');
+				var right = document.getElementById('right');
+				var middle = document.getElementById('middle');
+				left.style.height = middle.clientHeight+'px';
+				right.style.height = middle.clientHeight+'px';
+				window.onresize = function(){
+					left.style.height = middle.clientHeight+'px';
+					right.style.height = middle.clientHeight+'px';
+				}				
+			}
+		</script>
+	</body>
+</html>

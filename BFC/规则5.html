@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.pre {
+				white-space: pre-wrap;
+			}
+		</style>
+	</head>
+	<body>
+		<iframe src="BFC应用之防止margin重叠（规则2）.html" width="100%" height="400px"></iframe>
+		<iframe src="规则3.html" width="100%" height="400px"></iframe>
+		<iframe src="规则4.html" width="100%" height="400px"></iframe>
+		<iframe src="BFC应用之清除浮动计算高度（规则6）.html" width="100%" height="400px"></iframe>
+		<div class="pre">
+上面四个例子都体现了规则5：5.BFC的区域是页面上一个隔离的独立的容器，BFC区域外的元素不会影响容器内的元素，反之，容器内的元素也不会影响BFC区域外的元素；
+为了防止BFC影响其他元素或者说不让其他元素影响BFC区域：
+BFC元素和其他元素垂直方向的margin不会发生重叠，重叠的margin会影响BFC布局，因为两个元素间margin是取最大的那个值（都为正值）；
+BFC元素为了不让浮动的子元素影响其他元素，会计算浮动元素的高度，从而隔离开其他元素，也会达到清除浮动的效果；
+BFC元素外存在其他浮动元素，BFC元素会通过变窄，不与浮动元素发生重叠；
+		</div>
+	</body>
+</html>

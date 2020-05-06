@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jquery做的滑动按钮开关</title>
+	</head>
+	<style>
+		/*滑动按钮*/
+		.switch {
+			width: 60px;
+			height: 26px;
+			border-radius: 13px;
+			border: 1px solid #999;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+		}
+		.btn_fath {
+			width: 60px;
+			height: 26px;
+			border-radius: 18px;
+			position: relative;
+			cursor: pointer;
+			background-color: #828282;
+		}
+		.fatn-curr {
+			background-color: #009688;
+		}
+		.btn1 {
+			float: left;
+		}
+		.btn2 {
+			float: right;
+		}
+		.btnSwitch {
+			height: 26px;
+			width: 30px;
+			border: none;
+			color: #fff;
+			line-height: 26px;
+			font-size: 12px;
+			text-align: center;
+			z-index: 1;
+		}
+		.move {
+			z-index: 100;
+			width: 28px;
+			border-radius: 14px;
+			height: 28px;
+			position: absolute;
+			top: -1px;
+			cursor: pointer;
+			border: 1px solid #828282;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			background-color: #f1eff0;
+			box-shadow: 1px 2px 2px 1px #fff inset, 0 0 5px 1px #999;
+		}
+		.on .move {
+			left: 60px;
+		}
+	</style>
+	<body>
+		<div class="switch">
+			<div class="btn_fath" onclick="toogle(this)">
+				<div class="move" data-state="off"></div>
+				<div class="btnSwitch btn1">ON</div>
+				<div class="btnSwitch btn2 ">OFF</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+		<script type="text/javascript">
+			//滑动点击
+			function toogle(th) {
+				var ele = $(th).children(".move");
+				if(ele.attr("data-state") == "on") {
+					ele.animate({
+						left: "0"
+					}, 300, function() {
+						ele.attr("data-state", "off");
+					});
+					$(th).css("transition-delay","0s");
+					$(th).removeClass("fatn-curr");
+				} else if(ele.attr("data-state") == "off") {
+					ele.animate({
+						left: '34px'
+					}, 300, function() {
+						$(this).attr("data-state", "on");
+					});
+					$(th).css("transition-delay",".2s");
+					$(th).addClass("fatn-curr");
+				}
+			}
+		</script>
+	</body>
+</html>

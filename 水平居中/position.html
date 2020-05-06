@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.ctnr {
+				position: relative;/*关键代码*/
+				width: 100px;
+				height: 100px;
+				border: 1px solid #000;
+			}
+			.child {
+				position: absolute;/*关键代码*/
+				left: 50%;/*关键代码*/
+				transform: translateX(-50%);/*关键代码*//*不需要知道宽度，效果与margin相同*/
+				-webkit-transform: translateX(-50%);/*关键代码*/
+				max-width: 100%;/*多行文本居中*/
+				word-wrap: break-word;/*多行文本居中*/
+			}
+			.children {
+				position: absolute;/*关键代码*/
+				width: 40px;/*关键代码*/
+				left: 0;/*关键代码*/
+				right: 0;/*关键代码*/
+				margin: auto;/*关键代码*//*不需要知道宽度，但需要设置宽度*/
+			}
+			.child1 {
+				position: absolute;/*关键代码*/
+				left: 50%;/*关键代码*/
+				margin-left: -10px;/*关键代码*//*需要知道宽度*/
+			}
+			.child2 {
+				position: absolute;
+				left: 50%;
+				margin-left: -41px;/*需要知道宽度*/
+			}
+			.child3 {
+				position: absolute;
+				left: 50%;
+				margin-left: -20px;/*需要知道宽度*/
+			}
+			.block {
+				display: block;
+				width: 40px;
+				height: 40px;
+				border: 1px solid #000;
+			}
+			.inline-block {
+				display: inline-block;
+				width: 20px;
+				height: 40px;
+				line-height: 50px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+		适用于不需要占位置的单一元素
+		容器元素中居中的是块状元素
+		需要同时设置容器元素和内容元素，容器元素display可以是inline-block或block，position为非static
+		内容元素会因为position: absolute;将转换为block元素
+		-->
+		<p>单行内联居中:</p>
+		<div class="ctnr">
+			<span class="child">1234567</span>
+		</div>
+		<p>多行内联居中:</p>
+		<div class="ctnr">
+			<span class="child">123123456712345674567</span>
+		</div>
+		<p>单个内联块状居中（多个堆叠）:</p>
+		<div class="ctnr">
+			<div class="inline-block child1">1</div>
+		</div>		
+		<p>图片居中:</p>
+		<div class="ctnr">
+			<img src="img/1.png" class="child2"/>
+		</div>
+		<p>单个块状居中（多个堆叠）:</p>
+		<div class="ctnr">
+			<div class="block child3">1</div>
+		</div>
+		<div class="ctnr">
+			<div class="block children">1</div>
+		</div>
+	</body>
+</html>

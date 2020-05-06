@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<style type="text/css">
+			body {
+				background-color: #999;
+			}
+			.list {
+				position: relative;
+				width: 240px;
+				height: 60px;
+				margin: 100px auto;
+				font-size: 14px;
+				color: #444;
+				cursor: pointer;
+				perspective: 500px;
+				-webkit-perspective: 500px;
+			}
+			.hd {
+				position: relative;
+				z-index: 10;
+				height: 60px;
+				background-color: #ffcbe1;
+				border-bottom: 1px solid #fff;
+				color: #000;
+				transition: all .2s ease-out;
+				-webkit-transition: all .2s ease-out;
+				transform-origin: 50% 0;
+				-webkit-transform-origin: 50% 0;
+				-ms-transform-origin: 50% 0;
+			}
+			.active {
+				transform: rotateX(60deg);
+				-webkit-transform-origin: rotateX(60deg);
+				-ms-transform-origin: rotateX(60deg);
+			}
+			.text {
+				float: left;
+				width: 75%;
+				height: 100%;
+				line-height: 60px;
+				padding-left: 20px;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			.btn {
+				display: inline-block;
+				width: 25%;
+				height: 100%;
+				line-height: 60px;
+				text-align: center;
+				border-left: 1px solid #fff;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			.opt-list {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 60px;
+			}
+			.opt-list li {
+				top: 0;
+				width: 100%;
+				height: 100%;
+				line-height: 60px;
+				border-bottom: 1px solid #fff;
+				padding-left: 20px;
+				background-color: #ffcbe1;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				transition: top .4s ease-out;
+			}
+			.opt-list li {
+				position: absolute;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+			.opt-list li:nth-child(1) {
+				top: 0;
+				z-index: 9;
+				width: 240px;
+			}
+			.opt-list li:nth-child(2) {
+				top: 2px;
+				z-index: 8;
+				width: 238px;
+			}
+			.opt-list li:nth-child(3) {
+				top: 4px;
+				z-index: 7;
+				width: 236px;
+			}
+			.opt-list li:nth-child(4) {
+				top: 6px;
+				z-index: 6;
+				width: 234px;
+			}
+			.opt-list li:nth-child(5) {
+				top: 8px;
+				z-index: 5;
+				width: 232px;
+			}
+			.hide li {
+				width: 240px!important;
+			}
+			.hide li:nth-child(1) {
+				top: 60px;
+			}
+			.hide li:nth-child(2) {
+				top: 120px;
+			}
+			.hide li:nth-child(3) {
+				top: 180px;
+			}
+			.hide li:nth-child(4) {
+				top: 240px;
+			}
+			.hide li:nth-child(5) {
+				top: 300px;
+			}
+			.opt-list li:hover {
+				background-color: #ffa3bc;
+				color: #fff;
+			}
+			.opt-selected {
+				background-color: #f9b1cf!important;
+				color: #f1f1f1!important;
+			}
+			.list span {
+				padding-right: 10px;
+				font-size: 18px;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="list">
+			<div class="hd">
+				<div class="text"><span class="icon-follow"></span>I love</div><div class="btn icon-triangle-down"></div>
+			</div>
+			<ul class="opt-list">
+				<li class="opt-selected"><span class="icon-follow "></span>I love</li>
+				<li><span class="icon-user"></span>you</li>
+				<li><span class="icon-cart"></span>more than</li>
+				<li><span class="icon-global"></span>all</li>
+				<li><span class="icon-home"></span>you konw</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var list = document.getElementsByClassName('list')[0],
+				hd = document.getElementsByClassName('hd')[0],
+				text = document.getElementsByClassName('text')[0],
+				btn = document.getElementsByClassName('btn')[0],
+				optList = document.getElementsByClassName('opt-list')[0],
+				optionLi = document.querySelectorAll('.opt-list li'),
+				tempFLag = true;
+			list.onmousedown= function(e){
+				var ev = e || window.event,
+					target = ev.target || ev.srcElement,
+					classList = target.classList,
+					tagName = target.tagName.toLowerCase();
+				if(classList.contains('btn')&&tempFLag){
+					optList.classList.toggle('hide');
+					btn.classList.toggle('icon-triangle-down');
+					btn.classList.toggle('icon-triangle-up');
+					hd.classList.add('active');
+					tempFLag = false;
+					setTimeout(function(){
+						hd.classList.remove('active');
+						tempFLag = true;
+					},200);
+				}
+				if(tagName=="span"||tagName=="li"){
+					if(target.parentNode.tagName.toLowerCase()=="li"){
+						target = target.parentNode;
+					}
+					if(target.tagName.toLowerCase()=="li"){
+						for (var i = optionLi.length - 1; i >= 0; i--) {
+						    optionLi[i].classList.remove('opt-selected');
+						}
+						target.classList.add('opt-selected');
+						text.innerHTML = target.innerHTML;
+						optList.classList.remove('hide');
+						hd.classList.add('active');
+						setTimeout(function(){
+							hd.classList.remove('active');
+							tempFLag = true;
+						},200);
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

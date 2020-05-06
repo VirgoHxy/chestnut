@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.ctnr {
+				display: flex;/*关键代码*/
+				display: -webkit-flex;/*关键代码*/
+				width: 100px;
+				height: 100px;
+				border: 1px solid #000;
+				justify-content: center;/*关键代码*/
+				align-items: center;/*关键代码*/
+				-webkit-justify-content: center;/*关键代码*/
+				-webkit-align-items: center;/*关键代码*/	
+			}
+			.child {
+				/*margin: auto;/*关键代码*/
+				max-width: 100%;/*多行文字居中*/
+				word-wrap: break-word;/*多行文字居中*/
+			}
+			.block {
+				display: block;
+				width: 20px;
+				height: 40px;
+				border: 1px solid #000;
+			}
+			.inline-block {
+				display: inline-block;
+				width: 20px;
+				height: 50px;
+				line-height: 50px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+		适用于大部分居中,而且自动水平居中,但兼容还存在一些问题
+		容器元素中居中的是任意元素
+		容器元素display是flex
+		内容元素为margin: auto;
+		或者
+		容器元素display是flex，并应用justify-content和align-items
+		-->
+		<p>单行内联居中:</p>
+		<div class="ctnr">
+			<span class="child">1234567</span>
+		</div>
+		<p>多行内联居中:</p>
+		<div class="ctnr">
+			<span class="child">121234567123456734567</span>
+		</div>
+		<p>单个或多个内联块状居中:</p>
+		<div class="ctnr">
+			<div class="inline-block child">1</div>
+			<div class="inline-block child">2</div>
+			<div class="inline-block child">3</div>
+		</div>		
+		<p>图片居中:</p>
+		<div class="ctnr">
+			<img src="img/1.png" width="81px" height="54px" class="child"/>
+		</div>
+		<p>单个或多个块状居中（无效）:</p>
+		<div class="ctnr">
+			<div class="block child"></div>
+			<div class="block child"></div>
+			<div class="block child"></div>
+		</div>
+	</body>
+</html>

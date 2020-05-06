@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/browser.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">	
+			window.onload = function(){
+				//打印出系统型号+浏览器类别版本
+				//经测试，ie中没有问题（版本+类别）
+				//chrome没有问题（类别，版本没有测试，但最新版没有问题），firefox没有问题（类别，版本没有测试，但最新版没有问题）
+				//360（类别），猎豹浏览器（类别），搜狗浏览器（类别）
+				document.write(getOSAndBrowser());
+			}
+		</script>
+	</body>
+</html>

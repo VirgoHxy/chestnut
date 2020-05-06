@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			#demo {
+				width: 200px;
+				height: 200px;
+				background: #009688;
+				color: #fff;
+			}
+			div[id^='btn'] {
+				display: block;
+				width: 100px;
+				border: 1px solid #000;
+			}
+			.float {
+				float: left;
+			}
+			.absolute {
+				position: absolute;
+			}
+			.father {
+				border: 4px solid #e00;
+				width: 500px;
+			}
+			.father:nth-child(16) {
+				/* 给浮动的父元素加一个overflow（除了visible），就可以让撑起浮动元素的高度，这里是产生了BFC，在BFC区域里，浮动元素的高度也在计算之内
+				 * 这里给了一个思路，产生BFC，也可以让浮动元素撑起父元素高度
+				 * BFC：display:inline-block table-cell table-caption;overflow（除了visible）;position:absolute fixed;
+				 */
+				/*overflow: auto;*/
+				display: inline-block;
+				/*position: absolute;
+				top: 100px;*/
+			}
+			.child {
+				float: left;
+				width: 100px;
+				height: 100px;
+				border: 1px solid #000;
+			}
+			.text {
+				width: 300px;
+				height: 50px;
+				border: 4px solid #00e;
+				/* 给受影响的元素添加，可消除浮动对它的影响
+				 * 添加在受影响的元素，建议使用
+				 */
+				/*clear: both;*/
+			}
+			.bottom-text {
+				width: 500px;
+				height: 30px;
+				border: 4px solid #0e0;
+			}
+			.clear {
+				/*必须为块级元素*/
+				/*display: inline-block;不可以*/
+				clear: both;
+			}
+			.clearfix:after {
+				content: '.';
+				height: 0;
+				display: block;
+				clear: both;
+			}
+		</style>
+	</head>
+	<body>
+		<span id="demo">
+			float: left;/position: absolute;可以让行内元素转变为块状元素，并让元素脱离文档流，但float仍会占据<b>行内元素</b>的位置，absolute会覆盖文档流中的其他元素。
+		</span>
+		<div id="btn">加入/移除float: left;</div>
+		<div id="btn1">加入/移除position: absolute;</div>
+		<script type="text/javascript">
+			var btn = document.getElementById('btn');
+			var btn1 = document.getElementById('btn1');
+			var demo = document.getElementById('demo');
+			var clickNum = click1Num = 2;
+			btn.addEventListener('click',function(){
+				if(clickNum%2==0){
+					demo.classList.add('float');
+				} else {
+					demo.classList.remove('float');
+				}
+				clickNum++;
+			});
+			btn1.addEventListener('click',function(){
+				if(click1Num%2==0){
+					demo.classList.add('absolute');
+				} else {
+					demo.classList.remove('absolute');
+				}
+				click1Num++;
+			});
+		</script>
+		<br><br><br><br><br><br><br><br><br><br><br>
+		<div class="father">
+			<!--float元素使自己脱离文档流-->
+			<div class="child">float</div>
+			<!--
+				清除浮动其实仅仅针对需要清除浮动的元素本身而言；
+				这里的高度为text元素撑开的，如果没有该元素，将没有高度；
+				text元素加了clear: both;，它告诉浏览器我的两边不能有浮动元素，但这时浮动元素已经确定了位置
+				就将text元素放在了浮动元素的下方；
+				加入clear: both;后，父元素也加上了浮动元素的高度；
+			-->
+			<div class="text">一二三四五，上山打老虎，老虎没打着，打到小松鼠</div>
+		</div>
+		<div class="bottom-text">
+			一二三四五，上山打老虎，老虎没打着，打到小松鼠
+		</div>
+		<!--加clearfix样式与加clear元素起到的效果一样，原理也一样-->
+		<div class="father clearfix">
+			<!--
+				这里text元素在浮动元素的上方，这里就不是单纯的清除浮动了，而是清除浮动给我们带来的影响；
+				因为这里text元素的两边都没有浮动元素，它没有受到浮动的影响；这里只是解决我们的问题；
+			-->
+			<div class="text">一二三四五，上山打老虎，老虎没打着，打到小松鼠</div>
+			<div class="child">float</div>
+			<!--<div class="clear"></div>-->
+			<!--
+				加了一个带clear的元素在浮动元素下面
+				与上面一样，浮动元素定位了，clear元素只能放在浮动元素的下方，clear元素又没有高度，就让父元素加上了浮动元素的高度
+			-->
+		</div>
+		<div class="bottom-text">
+			一二三四五，上山打老虎，老虎没打着，打到小松鼠
+		</div>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				color: #fff;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.dis-flex {
+				display: flex;
+				display: -webkit-flex;
+			}
+			.flex1 {
+				flex: 1;
+				background: #f6f6f6;
+				color: #000;
+			}
+			.flex8 {
+				flex: 8;
+			}
+		</style>
+	</head>
+	<body>
+		<!--除了flex的兼容问题，没有其他大的问题 模板网页 http://tat.lizhi110.com/-->
+		<div id="page" class="dis-flex">
+			<div id="left" class="flex1">
+				left
+			</div>
+			<div id="content" class="flex8">
+				<img src="img/1.jpg" width="100%"/>
+				<img src="img/1.jpg" width="100%"/>
+				<img src="img/1.jpg" width="100%"/>
+			</div>
+			<div id="right" class="flex1">
+				right
+			</div>
+		</div>
+	</body>
+</html>

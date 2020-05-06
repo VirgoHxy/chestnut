@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/cssshake.css"/>
+		<script src="js/jquery-1.11.1.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+		<style type="text/css">
+			#wrapper {
+				position: relative;
+				width: 400px;
+				margin: 100px auto;
+				color: #444;
+			}
+			#wrapper>div {
+				left: 0;
+				border: 1px solid #066a7544;
+				padding: 20px;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				border-radius: 4px;
+				box-shadow: 0 0 10px 3px #f2f2f2 inset;
+				background-color: #fcfcfc;
+				transition: all .4s ease-out;
+				-webkit-transition: all .4s ease-out;
+			}
+			#wrapper .fadeout {
+				visibility: hidden;
+				opacity: 0;
+				left: -20px;
+			}
+			#wrapper h1 {
+				text-align: center;
+				font-size: 32px;
+				color: #066a75;
+				background: -webkit-repeating-linear-gradient(-45deg,#066a75,#4699a2 40px);
+				-webkit-text-fill-color: transparent;
+				-webkit-background-clip: text;
+			}
+			#wrapper h1:after {
+				content: '';
+				display: block;
+				width: 90%;
+				height: 1px;
+				margin: 12px auto 0 auto;
+				background: #066a75 linear-gradient(90deg,#fff 0%,#066a75 50%,#fff 100%);
+			}
+			#wrapper h1 span {
+				font-size: 38px;
+			}
+			#wrapper form {
+				position: relative;
+				margin-top: 14px;
+				font-size: 14px;
+			}
+			#wrapper form p {
+				position: relative;
+				margin-bottom: 16px;
+			}
+			#wrapper form label {
+				line-height: 30px;
+			}
+			#wrapper input {
+				width: 100%;
+				height: 30px;
+				padding: 6px 0 6px 26px;
+				border: 1px solid #aaa;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-shadow: 0px 0px 4px 1px #eee inset;
+				outline: none;
+				font-size: 14px;
+				color: #444;
+			}
+			#wrapper input:hover {
+				border: 1px solid #666;
+			}
+			#wrapper input:focus {
+				background-color: #f6f6f6;
+				border: 1px solid #54c8d4;
+			}
+			#wrapper input[type='submit'] {
+				position: absolute;
+				bottom: -44px;
+				right: 0;
+				width: 100px;
+				height: 40px;
+				box-shadow: none;
+				padding: 0;
+				background-color: #3d9db3;
+				border: none;
+				border-radius: 4px;
+				color: #fff;
+				font-size: 16px;
+				cursor: pointer;
+				transition: all .3s ease-out;
+				-webkit-transition: all .3s ease-out;
+			}
+			#wrapper #tel-form input[type='submit'] {
+				bottom: -60px;
+			}
+			#wrapper input[type='submit']:hover, #wrapper input[type='submit']:focus {
+				background-color: #4ab3c6;
+			}
+			.tip {
+				position: absolute;
+				left: -10px;
+				bottom: -40px;
+				z-index: 10;
+				padding: 10px 6px;
+				border: 1px solid #066a7544;
+				border-radius: 4px;
+				font-size: 12px;
+				background-color: #fff;
+			}
+			.tip:hover {    
+				-webkit-animation-play-state: paused;
+			    -ms-animation-play-state: paused;
+			    animation-play-state: paused;
+			}
+			.gap-triangle {
+				position: absolute;
+				width: 0;
+				height: 0;
+				border: 10px solid transparent;
+			}
+			.up-gap-triangle1 {
+				top: -21px;
+				left: 26px;
+				border-bottom-color: #066a7566;
+			}
+			.up-gap-triangle2 {
+				top: -20px;
+				left: 26px;
+				border-bottom-color: #fff;
+			}
+			#wrapper form [class^='icon'] {
+				position: absolute;
+				font-size: 20px;
+				color: #066a75;
+			}
+			#wrapper span[class^='icon'] {
+				bottom: 5px;
+				left: 4px;
+			} 
+			#wrapper i[class^='icon'] {
+				bottom: 0;
+				right: 0;
+				padding: 5px 8px;
+				font-style: normal;
+				cursor: pointer;
+			}
+			#wrapper div[class$='foot'] {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				text-align: right;
+				padding: 10px 0;
+				border-radius: 4px;
+				background: repeating-linear-gradient(-45deg, #fff,#fff 15px,#f4f4f4 15px,#f4f4f4 30px,#fff 30px);
+			}
+			.foot-ctnr {
+				padding: 0 20px;
+				color: #444;
+			}
+			.foot-btn {
+				border: 1px solid #999;
+				padding: 6px 10px;
+				border-radius: 4px;
+				font-weight: bold;
+				background-color: #fff;
+				color: #3d9db3;
+				cursor: pointer;
+				outline: none;
+				transition: all .3s ease-out;
+				-webkit-transition: all .3s ease-out;
+			}
+			.foot-btn:hover, .foot-btn:focus {
+				background-color: #3d9db3;
+				color: #fff;
+			}
+			.login {
+				position: relative;
+			}
+			.login-hd {
+				position: relative;
+				text-align: center;
+			}
+			.login-hd div {
+				display: inline-block;
+				margin-top: 14px;
+				padding: 6px 20px;
+				cursor: pointer;
+				font-size: 14px;
+			}
+			.login-hd div:nth-child(2) {
+				margin-right: 40px;
+			}
+			.login-hd div:nth-child(3) {
+				margin-left: 40px;
+			}
+			.login-hd>span {
+				position: absolute;
+				bottom: 1px;
+				left: 48px;
+				width: 80px;
+				height: 2px;
+				background-color: #3d9db3;
+				transition: left .2s ease-out;
+				-webkit-transition: left .2s ease-out;
+			}
+			.login-hd .l-tel{
+				left: 228px;
+			}
+			.login-bd, .register-bd {
+				padding-bottom: 80px;
+			}
+			.keepPwd label {
+				font-size: 12px;
+			}
+			#wrapper .keepPwd {
+				margin: -12px 0 0 0;
+			}
+			#wrapper .keepPwd input {
+				width: 14px;
+				height: 14px;
+				color: #999;
+				vertical-align: middle;
+			}
+			#tel-form .vcode {
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				height: 30px;
+				line-height: 30px;
+				padding: 0 10px;
+				cursor: pointer;
+				color: #3d9db3;
+			}
+			#tel-form .no-click {
+				color: #999;
+				cursor: default;
+			}
+			.login-foot .main-select {
+				float: left;
+				height: 26px;
+			}
+			.main-select a {
+				font-size: 22px;
+				line-height: 26px;
+				margin-right: 16px;
+				cursor: pointer;
+			}
+			.main-select li:nth-child(3) a {
+				color: #D32727;
+			}
+			.register {
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+			#wrapper .register-btn {
+				bottom: -60px!important;
+			}
+			.warn {
+				position: absolute;
+				left: 20px;
+				bottom: 50px;
+				width: 60%;
+				height: 48px;
+				line-height: 16px;
+				overflow: hidden;
+				color: #f00;
+			}
+			.reg-warn {
+				bottom: 30px;
+			}
+		</style>
+		<style type="text/css">
+			.ui-menu .ui-menu-item {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="login">
+				<div class="login-hd">
+					<h1><span>L</span>OGIN</h1>
+					<div>账号登录</div>
+					<div>免密登录</div>
+					<span></span>
+				</div>
+				<div class="login-bd">
+					<form action="" method="post" id='user-form'>
+						<p>
+							<label for="userId">请输入你的账号</label>
+							<span class="icon-user"></span>
+							<input type="text" name="userId" id="userId" placeholder="账号" autocomplete="off" />
+						</p>
+						<p>
+							<label for="userPwd">请输入你的密码</label>
+							<span class="icon-pwd"></span>
+							<input type="password" name="userPwd" id="userPwd" placeholder="密码" />
+							<i class="icon-eyes-close"></i>
+						</p>
+						<p class="keepPwd">
+							<input type="checkbox" name="keepPwd" id="keepPwd" />
+							<label for="keepPwd">记住密码</label>
+						</p>
+						<input class="login-btn" type="submit" value="登录"/>
+					</form>
+					<form action="" method="post" id='tel-form' style='display: none;'>
+						<p>
+							<label for="telId">请输入你的手机号</label>
+							<span class="icon-mobile-phone3"></span>
+							<input type="text" name="telId" id="telId" placeholder="手机号" autocomplete="off" />
+						</p>
+						<p>
+							<label for="telCode">请输入你的验证码</label>
+							<span class="icon-chat2"></span>
+							<input type="text" name="telCode" id="telCode" placeholder="验证码" autocomplete="off" />
+							<span class="vcode">获取验证码</span>
+						</p>
+						<input class="login-btn" type="submit" value="登录"/>
+					</form>
+				</div>
+				<div class="login-foot">
+					<div class="foot-ctnr">
+						<ul class="main-select">
+							<li><a href="" class="icon-qq"></a></li>
+							<li><a href="" class="icon-wechat"></a></li>
+							<li><a href="" class="icon-mobile-phone2"></a></li>
+						</ul>
+						还没有注册账号？
+						<button type="button" class="foot-btn reg-btn">点我注册</button>
+					</div>
+				</div>
+			</div>
+			<div class="register fadeout">
+				<div class="register-hd">
+					<h1><span>R</span>EGISTER</h1>
+				</div>
+				<div class="register-bd">
+					<form action="" method="post" id='register-form'>
+						<p>
+							<label for="userId-reg">请输入你的手机号</label>
+							<span class="icon-user"></span>
+							<input type="text" name="userId-reg" id="userId-reg" placeholder="手机号" autocomplete="off" />
+						</p>
+						<p>
+							<label for="userPwd-reg">请输入你的密码</label>
+							<span class="icon-pwd"></span>
+							<input type="password" name="userPwd-reg" id="userPwd-reg" placeholder="密码" autocomplete="off" />
+							<i class="icon-eyes-close"></i>
+						</p>
+						<p>
+							<label for="userPwd2-reg">请再次输入你的密码</label>
+							<span class="icon-pwd"></span>
+							<input type="password" name="userPwd2-reg" id="userPwd2-reg" placeholder="密码" autocomplete="off" />
+						</p>
+						<input class="register-btn" type="submit" value="注册"/>
+					</form>
+				</div>
+				<div class="register-foot">
+					<div class="foot-ctnr">
+						已经有了账号？
+						<button type="button" class="foot-btn login-btn">去登录</button>
+					</div>
+				</div>
+			</div>
+			<p class="warn"></p>
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var wrapper = document.getElementById('wrapper'),
+					login = document.getElementsByClassName('login')[0],
+					loginType = document.querySelector('.login-hd>span'),
+					userForm = document.getElementById('user-form'),
+			    	userId = document.getElementById('userId'),
+			   		userPwd = document.getElementById('userPwd'),
+			   		keepPwd = document.getElementById('keepPwd'),
+					telForm = document.getElementById('tel-form'),
+					telId = document.getElementById('telId'),
+					register = document.getElementsByClassName('register')[0],
+					registerForm = document.getElementById('register-form'),
+					warn = document.getElementsByClassName('warn')[0],
+					activeTimer;
+				function clearBlankNodes(ele){
+					var list = ele.childNodes;
+					for (var i = list.length - 1; i >= 0; i--) {
+						if (list[i].nodeType==3 && /\s/.test(list[i].nodeValue)) {
+							ele.removeChild(list[i]);
+						}
+					}
+				}
+				function fnTip(form,num,text){
+					var p = form.getElementsByTagName('p')[num],
+						tip = document.createElement('div'),
+						div = p.childNodes[p.childNodes.length-1];
+					p.normalize();
+					if(div.nodeName.toLowerCase()!="div"){
+						tip.className = 'tip shake-horizontal';
+						tip.innerHTML = text+'<div class="gap-triangle up-gap-triangle1"></div><div class="gap-triangle up-gap-triangle2"></div>';
+						p.appendChild(tip);
+						setTimeout(function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(div.nodeName.toLowerCase()=="div"){
+								p.removeChild(div);
+							}
+						},4000);
+					} else {
+						div.classList.add('shake-constant');
+						setTimeout(function(){
+							div.classList.remove('shake-constant');
+						},400);
+					}
+				}
+				function fnBlur(form,n,ph1,ph2,text1,text2,text3){
+					var p = registerForm.getElementsByTagName('p')[n],
+						div = p.childNodes[p.childNodes.length-1],
+						value = form.elements[n].value;
+					if(n==0){
+						form.elements[n].placeholder = ph1;
+						if(value==''){
+							fnTip(form,n,text1);
+						} else {
+							if(!/^1[34578]\d{9}$/.test(value)){
+								fnTip(form,n,text2);
+							} else {
+								if(div.nodeName.toLowerCase()=="div"){
+									p.removeChild(div);
+								}
+							}
+						}
+					} else {
+						form.elements[n].placeholder = ph2;
+						if(value==''){
+							fnTip(form,n,text3);
+						}
+					}
+				}
+				wrapper.onclick = function(e){
+					var ev = e || window.event,
+						target = ev.target || ev.srcElement,
+						classList = target.classList,
+						className = target.className,
+						tagName = target.tagName.toLowerCase();
+					//login
+					if(className.indexOf('icon')!=-1){
+						var parent = target.parentNode;
+						clearBlankNodes(parent);
+						var input = parent.childNodes[2],
+							i = parent.childNodes[3];
+						input.focus();
+						if(tagName=='i'&&className.indexOf('eyes')!=-1){
+							if(input.type=='password'){
+								input.type = "text";
+							} else {
+								input.type = 'password';
+							}
+							i.classList.toggle('icon-eyes-close');
+							i.classList.toggle('icon-eyes-open');
+						}
+					}
+					if(target.textContent=='账号登录'||target.innerHTML=='账号登录'){
+						if(loginType.classList.contains('l-tel')){
+							loginType.classList.remove('l-tel');
+						}
+						userForm.style.display = 'block';
+						telForm.style.display = 'none';
+						userForm.elements[0].focus();
+						for (var i = 0; i < 2; i++) {
+							telForm.elements[i].value = '';
+						}
+						warn.innerHTML = '';
+					}
+					if(target.textContent=='免密登录'||target.innerHTML=='免密登录'){
+						if(!loginType.classList.contains('l-tel')){
+							loginType.classList.add('l-tel');
+						}
+						userForm.style.display = 'none';
+						telForm.style.display = 'block';
+						telForm.elements[0].focus();
+						if(!keepPwd.checked==true){
+							for (var i = 0; i < 2; i++) {
+								userForm.elements[i].value = '';
+							}
+						}
+						warn.innerHTML = '';
+						//location.href = 'https://my.onlyid.net/auth?client_id=5c3ae400a5043c4e88a3866e&redirect_uri=http://127.0.0.1:8020/%E7%99%BB%E9%99%86%E6%B3%A8%E5%86%8C/welcome.html?__hbt=1547364443416';
+					}
+					if(classList.contains('vcode')&&!classList.contains('no-click')){
+						if(telForm.elements[0].value==''){
+							fnTip(telForm,0,'请填写手机号！');
+						} else {
+							if(/^1[34578]\d{9}$/.test(telForm.elements[0].value)){
+								var	i = 60;
+								classList.add('no-click');
+								telForm.elements[1].focus();
+								activeTimer = setTimeout(activeTime,1000);
+								function activeTime(){
+									clearTimeout(activeTimer);
+									if(i>0){
+										setTimeout(function(){
+											target.innerHTML = i+' s';
+										},1000);
+										i--;
+										setTimeout(activeTime,1000);
+									} else {
+										target.innerHTML = '获取验证码';
+										classList.remove('no-click');
+									}
+								}
+							} else {
+								fnTip(telForm,0,'请填写正确的手机号！');
+							}
+						}
+					}
+					if(classList.contains('foot-btn')){
+						login.classList.toggle('fadeout');
+						register.classList.toggle('fadeout');
+						setTimeout(function(){
+							if(classList.contains('login-btn')){
+								userForm.elements[0].focus();
+							} else {
+								registerForm.elements[0].focus();
+							}							
+						},400);
+						warn.classList.toggle('reg-warn');
+						warn.innerHTML = '';
+					}
+				}
+				//账号登录
+				userForm.onsubmit = function(e){
+					var ev = e || window.event,
+					userId = userForm.elements[0].value,
+					userPwd = userForm.elements[1].value,
+					flag = true,text,tempFlag = /^1[34578]\d{9}$/.test(userId);
+					if(userId=''||!tempFlag){
+						userForm.elements[0].focus();
+						text = '输入的账号不正确，请重新输入！';
+					} else {
+						userForm.elements[1].focus();
+						if(userPwd!=''){
+					        flag = false;
+						} else {
+							text = '输入的密码不正确，请重新输入！'; 
+						}
+					}
+					if(flag){
+						if(warn.innerHTML==''){
+							warn.innerHTML = text;
+							setTimeout(function(){
+								warn.innerHTML = '';
+							},3000);
+						}
+						ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+					}					
+				}
+				for (var i = 0; i < 2; i++) {
+					(function(n){
+						var num = n,
+							p = userForm.getElementsByTagName('p')[n];
+						p.normalize();
+						userForm.elements[n].oninput = function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(div.nodeName.toLowerCase()=="div"&&userForm.elements[n].value!=''){
+								p.removeChild(div);
+							}
+							if(n==0){
+								var userId = getCookie('userId'),
+							    	availableTags = [
+								    	userId
+								    ];
+							    $("#userId").autocomplete({
+							    	source: availableTags
+							    });
+								if(keepPwd.checked){
+									userForm.elements[1].value = '';
+									keepPwd.checked = false;
+								}
+							}
+						}						
+						userForm.elements[n].onfocus = function(){
+							userForm.elements[n].placeholder = '';
+						}
+						userForm.elements[n].onblur = function(){
+							fnBlur(userForm,num,'账号','密码','请填写账号！','请填写正确的账号！','请填写密码！');
+						}
+					})(i);
+				}
+				//手机登录
+				telForm.onsubmit = function(e){
+					var ev = e || window.event,
+					telId = telForm.elements[0].value,
+					code = telForm.elements[1].value,
+					flag = true,text,tempFlag = /^1[34578]\d{9}$/.test(telId);
+					if(telId=''||!tempFlag){
+						telForm.elements[0].focus();
+						text = '输入的手机号不正确，请重新输入！';
+					} else {
+						telForm.elements[1].focus();
+						if(code!=''){
+					        flag = false;
+						} else {
+							text = '输入的验证码有误，请重新输入！'; 
+						}
+					}
+					if(flag){
+						if(warn.innerHTML==''){
+							warn.innerHTML = text;
+							setTimeout(function(){
+								warn.innerHTML = '';
+							},3000);
+						}
+						ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+					}
+				}
+				for (var i = 0; i < 2; i++) {
+					(function(n){
+						var num = n,
+							p = telForm.getElementsByTagName('p')[n];
+						p.normalize();
+						telForm.elements[n].oninput = function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(div.nodeName.toLowerCase()=="div"&&telForm.elements[n].value!=''){
+								p.removeChild(div);
+							}
+							if(n==0){
+								var telId = getCookie('telId'),
+							    	availableTags = [
+								    	telId
+								    ];
+							    $("#telId").autocomplete({
+							    	source: availableTags
+							    });
+							}
+						}
+						telForm.elements[n].onfocus = function(){
+							telForm.elements[n].placeholder = '';
+						}
+						telForm.elements[n].onblur = function(){
+							fnBlur(telForm,num,'手机号','验证码','请填写手机号！','请填写正确的手机号！','请填写验证码！');
+						}
+					})(i);
+				}
+				//注册
+				registerForm.onsubmit = function(e){
+					var ev = e || window.event,
+					userId = registerForm.elements[0].value,
+					pwd1 = registerForm.elements[1].value,
+					pwd2 = registerForm.elements[2].value,
+					flag = true,text,tempFlag = /^1[34578]\d{9}$/.test(userId);
+					for (var i = 0; i < 3; i++) {
+						if(registerForm.elements[i].value==''){
+							if(!tempFlag){
+								registerForm.elements[0].focus();
+							} else {
+								registerForm.elements[i].focus();
+							}
+							break;
+						}
+					}
+					if(tempFlag){
+						if(!/\s/.test(pwd1)&&pwd1!=''){
+							if(pwd1==pwd2){
+					        	//保存账号密码到cookie，有效期7天
+						        setCookie('userId', registerForm.elements[0].value, 7);
+						        setCookie('userPwd', registerForm.elements[1].value, 7);
+						        flag = false;
+							} else {
+								text = '两次密码输入不一致，请重新输入！'; 
+							}
+						} else {
+							text = '输入的密码为空或包含非法字符，请重新输入！'; 
+						}
+					} else {
+						text = '输入的手机号不正确，请重新输入！';
+					}
+					if(flag){
+						if(warn.innerHTML==''){
+							warn.innerHTML = text;
+							setTimeout(function(){
+								warn.innerHTML = '';
+							},3000);
+						}
+						ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+					}
+				}
+				for (var i = 0; i < 3; i++) {
+					(function(n){
+						var num = n,
+							p = registerForm.getElementsByTagName('p')[n];
+						p.normalize();
+						registerForm.elements[n].oninput = function(){
+							var div = p.childNodes[p.childNodes.length-1];
+							if(n==2) {
+								var i = document.createElement('i'),
+									pwd1 = registerForm.elements[1].value,
+									pwd2 = this.value,
+									iconWarn = document.getElementsByClassName('icon-warn')[0],
+									iconFinish = document.getElementsByClassName('icon-finish')[0];
+								if(!/\s/.test(pwd1)){
+									if(pwd2.length<pwd1.length) {
+										if(iconWarn){
+											p.removeChild(iconWarn);
+										}
+										if(iconFinish){
+											p.removeChild(iconFinish);
+										} 
+									} else if(pwd2.length==pwd1.length) {
+										if(pwd2==pwd1){
+											if(iconWarn){
+												p.removeChild(iconWarn);
+											}
+											if(!iconFinish){
+												i.className = 'icon-finish';
+												i.innerHTML = "<span class='path1'></span><span class='path2'></span>";
+												p.appendChild(i);
+											}
+										} else {
+											if(iconFinish){
+												p.removeChild(iconFinish);
+											} 
+											if(!iconWarn){
+												i.className = 'icon-warn';
+												p.appendChild(i);
+											}
+										}									
+									} else {
+										if(iconFinish){
+											p.removeChild(iconFinish);
+										} 
+										if(!iconWarn){
+											i.className = 'icon-warn';
+											p.appendChild(i);
+										}
+									}
+								} else {
+									if(iconFinish){
+										p.removeChild(iconFinish);
+									} 
+									if(!iconWarn){
+										i.className = 'icon-warn';
+										p.appendChild(i);
+									}
+								}
+							}
+							if(div.nodeName.toLowerCase()=="div"){
+								p.removeChild(div);
+							}
+						}
+						registerForm.elements[n].onfocus = function(){
+							registerForm.elements[n].placeholder = '';
+						}
+						registerForm.elements[n].onblur = function(){
+							fnBlur(registerForm,num,'手机号','密码','请填写手机号！','请填写正确的手机号！','请填写密码！');
+						}
+					})(i);
+				}
+				userForm.elements[0].focus();
+				//记住密码
+			    //页面初始化时，如果密码cookie存在则填充
+			    if(getCookie('userPwd')&&getCookie('userId')) {
+			        userPwd.value = getCookie('userPwd');
+			        userId.value = getCookie('userId');
+			        keepPwd.checked = true;
+			    }
+			    //复选框勾选状态发生改变时，如果未勾选则清除cookie
+			    keepPwd.onchange = function() {
+			        if(!this.checked) {
+			            //delCookie('userId');
+			            delCookie('userPwd');
+			        }
+			    }
+			    //表单提交事件触发时，如果复选框是勾选状态则保存cookie
+			    userForm.addEventListener('submit',function() {
+			        //保存账号到cookie，有效期7天
+			        setCookie('userId', userId.value, 7);
+			        if(keepPwd.checked) {
+			            //保存密码到cookie，有效期7天
+			            setCookie('userPwd', userPwd.value, 7);
+			        }
+			    });
+			    telForm.addEventListener('submit',function() {
+			        //保存账号到cookie，有效期7天
+			        setCookie('telId', telId.value, 7);
+			    });
+			    //设置cookie
+				function setCookie(cname,cvalue,exdays) {
+					var d = new Date();
+					d.setTime(d.getTime()+(exdays*24*60*60*1000));
+					var expires = "expires="+d.toGMTString();
+					document.cookie = cname + "=" + cvalue + "; " + expires;
+				}
+			    //获取cookie
+				function getCookie(cname) {
+					var name = cname + "=",
+						ca = document.cookie.split(';');
+					for(var i=0; i<ca.length; i++) {
+						var c = ca[i].trim();
+				    	if (c.indexOf(name)==0) {
+				    		return c.substring(name.length,c.length);
+				    	}
+				  	}
+				  	return "";
+				}
+			    //删除cookie
+			    function delCookie(cname) {
+			        setCookie(cname, null, -1);
+			    }
+			}
+  	</script>
+	</body>
+</html>

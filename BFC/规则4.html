@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+				height: 1000px;
+				color: #fff;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.demo {
+				overflow: hidden;
+				height: 100%;
+				background: #009688;
+			}
+			.float-left {
+				float: left;
+				background: #444400;
+				width: 200px;
+				height: 600px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="float-left">left</div>
+		<div class="demo">4.BFC的区域不会与flaot-box发生重叠；</div>
+		<!--
+			给demo元素加上overflow: hidden;，使其变成BFC元素，它就不会与浮动元素重叠，而且形成了
+			自适应布局，新的BFC（demo）会根据浮动元素和旧的BFC元素（body）来计算它的宽度。
+		-->
+	</body>
+</html>

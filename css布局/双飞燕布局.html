@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			html,body {
+				min-width: 700px;
+			}
+			#header {
+				background-color: #333;
+				height: 40px;
+				color: #fff;
+			}
+			#middle, #left, #right {
+				float: left;
+				min-height: 100px;
+			}
+			#middle {
+				width: 100%;
+				background-color: #e6e6e6;
+			}
+			#middle-inner {
+				margin: 0 200px;
+				min-height: 100px;
+			}
+			#left {
+				margin-left: -100%;
+				width: 200px;
+				background: #efefef;
+			}
+			#right {
+				margin-left: -200px;
+				width: 200px;
+				background: #efefef;
+			}
+			#footer {
+				clear: both;
+				background-color: #fafafa;
+				height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			header
+		</div>
+		<div id="middle">
+			<div id="middle-inner">
+				middle
+			</div>
+		</div>
+		<div id="left">
+			left
+		</div>
+		<div id="right">
+			right
+		</div>
+		<div id="footer">
+			footer
+		</div>
+		<!--
+			双飞燕布局的原理（呈现的效果与圣杯布局一样,也算是三栏布局）
+			注意两边的浮动元素都在middle元素后边，左边的通过margin-left: -100%;，右边的通过margin-left: -200px(右边的宽度负值);
+			middle元素通过嵌套一个子元素，在子元素上设置margin，让真正的内容显示在中间
+			clear: both;清除浮动元素对footer元素的影响
+			双飞燕的区别在于：多了一层标签，去除了position定位，将margin设置在middle的子元素上
+			模板网页 https://segmentfault.com/
+		-->
+	</body>
+</html>

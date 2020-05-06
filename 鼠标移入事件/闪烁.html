@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			ul {
+				list-style: none;
+			}
+			li {
+				width: 200px;
+				height: 20px;
+				margin: 20px;
+				background-color: #009688;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<script type="text/javascript">
+			var ul = document.getElementsByTagName('ul')[0];
+			var li = ul.getElementsByTagName('li');
+			for (var i = 0;i<li.length;i++) {
+				(function(num){
+					li[num].onmouseenter = function(){
+						//涉及到插入html元素，就会发生闪烁
+						//var div = document.createElement('div');
+						//div.innerHTML = "好好好好好好好"+num+"好好好好好好好";
+						//li[num].appendChild(div);
+						//闪烁，将onmouseover换为onmouseenter，onmouseout换为onmouseleave
+						li[num].innerHTML = '<div>好好好好好好好'+num+'好好好好好好好</div>';
+						//不闪烁
+						//li[num].innerHTML = num;
+					}
+					li[num].onmouseleave = function(){
+						//var div = li[num].getElementsByTagName('div')[0];
+						//li[num].removeChild(div);
+						li[num].innerHTML = "";
+					}
+				})(i);
+			}
+		</script>
+	</body>
+</html>

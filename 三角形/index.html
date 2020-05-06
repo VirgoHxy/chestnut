@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/global.css"/>
+		<style type="text/css">
+			/*总结
+			 * border实现三角的原理是均分原理，中心到四个角，分为四个部分
+			 * 三角形的朝向由方向相反的border决定，例如：箭头向左的三角形由border-right来实现，其他颜色为透明
+			 * 缺口三角形由两个三角形堆叠形成，粗细右两个的对叠位置决定
+			 */
+			/*向上三角，由border-bottom决定*/
+			.up-triangle {
+				position: absolute;
+				top: -20px;
+				left: 10px;
+				width: 0;
+				height: 0;
+				border-color: transparent transparent #009688 transparent;
+				border-style: solid;
+				border-width: 20px;
+			}
+			/*向右三角，由border-left决定*/
+			.right-triangle {
+				position: absolute;
+				top: 0;
+				left: 70px;
+				width: 0;
+				height: 0;
+				border-color: transparent transparent transparent #009688;
+				border-style: solid;
+				border-width: 20px;
+			}			
+			/*向下三角，由border-left决定*/
+			.bottom-triangle {
+				position: absolute;
+				top: 0;
+				left: 170px;
+				width: 0;
+				height: 0;
+				border-color: #009688 transparent transparent transparent;
+				border-style: solid;
+				border-width: 20px;
+			}
+			/*向左三角，由border-right决定*/
+			.left-triangle {
+				position: absolute;
+				top: 0;
+				left: 100px;
+				width: 0;
+				height: 0;
+				border-color: transparent #009688 transparent transparent;
+				border-style: solid;
+				border-width: 20px;
+			}
+			div[class^='icon-triangle'] {
+				color: #009688;
+				font-size: 50px;
+				display: inline-block;
+			}
+			.demo {
+				position: relative;
+				width: 100px;
+				height: 50px;
+				border: 1px solid #444;
+				margin: 0 20px 20px 20px;
+			}
+			.gap-triangle {
+				position: absolute;
+				width: 0;
+				height: 0;
+				border: 10px solid transparent;
+			}
+			/*向右缺口三角*/
+			.right-gap-triangle1 {
+				top: 10px;
+				/*距离是border宽度的两倍加上0.5 如果加1的话 颜色很深*/
+				right: -20.5px;
+				border-left-color: #000;
+			}
+			.right-gap-triangle2 {
+				top: 10px;
+				/*控制粗细 距离是border宽度的两倍*/
+				right: -20px;
+				border-left-color: #fff;
+			}
+			/*向左缺口三角*/
+			.left-gap-triangle1 {
+				top: 10px;
+				/*距离是border宽度的两倍加上1*/
+				left: -21px;
+				border-right-color: #000;
+			}
+			.left-gap-triangle2 {
+				top: 10px;
+				left: -20px;
+				border-right-color: #fff;
+			}
+			/*向上缺口三角*/
+			.up-gap-triangle1 {
+				/*距离是border宽度的两倍加上1*/
+				top: -21px;
+				left: 10px;
+				border-bottom-color: #000;
+			}
+			.up-gap-triangle2 {
+				/*控制粗细 距离是border宽度的两倍*/
+				top: -20px;
+				left: 10px;
+				border-bottom-color: #fff;
+			}
+			/*向下缺口三角*/
+			.down-gap-triangle1 {
+				/*距离是border宽度的两倍加上1*/
+				bottom: -21px;
+				left: 10px;
+				border-top-color: #000;
+			}
+			.down-gap-triangle2 {
+				/*控制粗细 距离是border宽度的两倍*/
+				bottom: -20px;
+				left: 10px;
+				border-top-color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- border -->
+		<div class="right-triangle"></div>
+		<div class="left-triangle"></div>
+		<div class="up-triangle"></div>
+		<div class="bottom-triangle"></div>
+		<br><br>
+		<!-- 图标字体iconFont -->
+		<div class="icon-triangle-down"></div>
+		<div class="icon-triangle-right"></div>
+		<div class="icon-triangle-left"></div>
+		<div class="icon-triangle-up"></div>
+		<!-- 缺口三角 -->
+		<div class="demo">
+			<div class="gap-triangle left-gap-triangle1"></div>
+			<div class="gap-triangle left-gap-triangle2"></div>
+		</div>
+		<div class="demo">
+			<div class="gap-triangle right-gap-triangle1"></div>
+			<div class="gap-triangle right-gap-triangle2"></div>
+		</div>
+		<div class="demo">
+			<div class="gap-triangle up-gap-triangle1"></div>
+			<div class="gap-triangle up-gap-triangle2"></div>
+		</div>
+		<div class="demo">
+			<div class="gap-triangle down-gap-triangle1"></div>
+			<div class="gap-triangle down-gap-triangle2"></div>
+		</div>
+	</body>
+</html>

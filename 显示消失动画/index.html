@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset-mall-min.css"/>
+		<style type="text/css">
+			body, html {
+				background-color: #444;
+			}
+			.nav {
+				margin: 120px auto;
+				text-align: center;
+			}
+			.nav a {
+				display: inline-block;
+				width: 40px;
+				height: 20px;
+				line-height: 20px;
+				border: 1px solid #fff;
+				color: #fff;
+			}
+			.list {
+				margin: 120px auto;
+				text-align: center;
+			}
+			.list li {
+				position: relative;
+			}
+			.img-ctnr {
+				position: relative;
+				display: inline-block;
+				width: 56px;
+				height: 56px;
+				overflow: hidden;
+				margin-right: 10px;
+				border: 2px solid #fff;
+				border-radius: 30px;
+				cursor: pointer;
+			}
+			.img-ctnr img {
+				position: absolute;
+				top: 0;
+				left: 50%;
+				margin-left: -50px;
+				width: 100px;
+				height: 100%;
+			}
+			.text {
+				position: absolute;
+				top: -70px;
+				left: 50%;
+				margin-left: -47px;
+				width: 80px;
+				height: 30px;
+				line-height: 30px;
+				transition: all .3s ease-out;
+				-webkit-transition: all .3s ease-out;
+				visibility: hidden;
+				opacity: 0;
+				border: 2px solid #fff;
+				border-radius: 4px;
+				background-color: #e9fffe;
+				color: #498ea5;
+			}
+			.text:before {
+				content: '';
+				position: absolute;
+				bottom: -20px;
+				left: 50%;
+				margin-left: -10px;
+				width: 0;
+				height: 0;
+				border-color: #fff transparent transparent transparent;
+				border-style: solid;
+				border-width: 10px;
+			}
+			.img-ctnr:hover~span {
+				top: -50px;
+				visibility: visible;
+				opacity: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="nav">
+			<a href="index.html">1</a>
+			<a href="index1.html">2</a>
+			<a href="index2.html">3</a>
+			<a href="index3.html">4</a>
+		</div>
+		<ul class="list">
+			<li>
+				<div class="img-ctnr">
+					<img src="img/1.jpg" alt="天空"/>
+				</div>
+				<span class="text">天空</span>
+			</li>
+			<li>
+				<div class="img-ctnr">
+					<img src="img/2.jpg" alt="日落"/>
+				</div>
+				<span class="text">日落</span>
+			</li>
+			<li>
+				<div class="img-ctnr">
+					<img src="img/3.jpg" alt="汪汪"/>
+				</div>
+				<span class="text">汪汪</span>
+			</li>
+			<li>
+				<div class="img-ctnr">
+					<img src="img/4.jpg" alt="喵喵"/>
+				</div>
+				<span class="text">喵喵</span>
+			</li>
+		</ul>
+	</body>
+</html>

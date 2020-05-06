@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<button type="button" onclick="fnTimer()">开始</button>
+		<button type="button" onclick="cancelAnimationFrame(timer)">停止</button><br>
+		<script type="text/javascript">
+			//该方法适合一次完成的操作，例如：返回顶部
+			(function() {
+			    var lastTime = 0;
+			    var vendors = ['webkit', 'moz'];
+			    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+			        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+			        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // name has changed in Webkit
+			                                      window[vendors[x] + 'CancelRequestAnimationFrame'];
+			    }
+			    if (!window.requestAnimationFrame) {
+			        window.requestAnimationFrame = function(callback, element) {
+			            var currTime = new Date().getTime();
+			            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+			            var id = window.requestAnimationFrame(function() {
+			                callback(currTime + timeToCall);
+			            }, timeToCall);
+			            lastTime = currTime + timeToCall;
+			            return id;
+			        };
+			    }
+			    if (!window.cancelAnimationFrame) {
+			        window.cancelAnimationFrame = function(id) {
+			            cancelAnimationFrame(id);
+			        };
+			    }
+			}());
+			var timer;
+			var i = 0;
+			function fnTimer(){
+				timer = requestAnimationFrame(function fnTime(){
+					var time = new Date();
+					document.body.innerHTML += time.getSeconds()+"."+time.getMilliseconds()+"---"+i+"<br>";	
+					i++;
+					console.log(i<20);
+					if(i<20){
+						timer = requestAnimationFrame(fnTime,500);
+					} else {
+						cancelAnimationFrame(timer);
+					}
+				},500);
+			}
+		</script>
+	</body>
+</html>
