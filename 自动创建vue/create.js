@@ -38,7 +38,7 @@ function template(name) {
 </template>
 <script>
 export default {
-  name: "${name}",
+  name: "${name.substring(0, 1).toLocaleUpperCase() + name.substring(1)}",
   data() {
     return {
       
