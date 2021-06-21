@@ -14,14 +14,9 @@
     let xhr = new XMLHttpRequest();
 
     // 2. 配置它：从 URL /article/.../load GET-request
-    xhr.open('POST', 'url');
-    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.open('GET', 'http://resources.it-wy.cn/test/img/parking.jpg');
     // 3. 通过网络发送请求
-    xhr.send(JSON.stringify({
-      PageIndex: 0,
-      PageSize: 1000,
-      ProjectID: "87ca3ab4-5efe-44b5-8c8f-a46f9ede1d0d"
-    }));
+    xhr.send();
 
     // 4. 当接收到响应后，将调用此函数
     xhr.onload = function () {
