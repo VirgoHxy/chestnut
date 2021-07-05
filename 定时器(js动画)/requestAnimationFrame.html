@@ -1,0 +1,91 @@
+<!doctype html>
+<style>
+  #elem {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    color: #fff;
+    line-height: 200px;
+    text-align: center;
+  }
+</style>
+<div id="elem"></div>
+
+<script>
+  /**
+   * 通用的动画函数
+   * 
+   * @param {Function} param.timing 时序函数 类似CSS属性 transition-timing-function
+   * @param {Function} param.draw 获取动画完成状态并绘制的函数 0是开始 1是结束
+   * @param {Function} param.duration 持续时间(毫秒)
+   */
+  function animate({ timing, draw, duration }) {
+
+    let start = performance.now();
+
+    requestAnimationFrame(function animate(time) {
+      // timeFraction 从 0 增加到 1
+      let timeFraction = (time - start) / duration;
+      if (timeFraction > 1) timeFraction = 1;
+
+      // 计算当前动画状态
+      let progress = timing(timeFraction);
+
+      draw(progress); // 绘制
+
+      if (timeFraction < 1) {
+        requestAnimationFrame(animate);
+      }
+
+    });
+  }
+
+  let demo = function (p, flag) {
+    animate({
+      duration: 2000,
+      timing(timeFraction) {
+        // 匀速
+        // return timeFraction;
+
+        // 加速
+        // return Math.pow(timeFraction, 5)
+
+        // 弓箭(有一段相反运动)
+        // return ((x = 1) => {
+        //   return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
+        // })()
+
+        // 弹簧
+        for (let a = 0, b = 1, result; 1; a += b, b /= 2) {
+          if (timeFraction >= (7 - 4 * a) / 11) {
+            return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+          }
+        }
+      },
+      draw(progress) {
+        // if (!flag) {
+        //   elem.style.borderRadius = (progress * p) / 2 + '%';
+        //   elem.innerHTML = (progress * p) / 2 + '%';
+        // } else {
+        //   elem.style.borderRadius = (100 - progress * p) / 2 + '%';
+        //   elem.innerHTML = (100 - progress * p) / 2 + '%';
+        // }
+        // if (progress == 1) {
+        //   setTimeout(() => { demo(100, !flag) }, 1000)
+        // }
+        if (!flag) {
+          elem.style.bottom = (progress * p) + '%';
+          elem.innerHTML = (progress * p) + '%';
+        } else {
+          elem.style.bottom = (100 - progress * p) + '%';
+          elem.innerHTML = (100 - progress * p) + '%';
+        }
+        if (progress == 1) {
+          setTimeout(() => { demo(100, !flag) }, 1000)
+        }
+      }
+    })()
+  };
+  demo(100)
+</script>
