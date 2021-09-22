@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shadow dom</title>
+  <style>
+    /* 对shadow dom无效 */
+    div,
+    P {
+      width: 200px;
+      height: 200px;
+      background-color: blue;
+      color: #fff;
+      line-height: 200px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="elem">0</div>
+  <p>1</p>
+  <!-- 同时存在light dom 和 shadow dom 只会显示shadow dom -->
+  <show-hello name="John" id="hello">disaply none</show-hello>
+  <show-hello name="Ben">disaply none</show-hello>
+  <closed-show-hello name="Jack" id="closed">disaply none</closed-show-hello>
+  <script>
+    customElements.define('show-hello', class extends HTMLElement {
+      connectedCallback() {
+        // 可以通过elem.shadowRoot访问
+        const shadow = this.attachShadow({ mode: 'open' });
+        shadow.innerHTML = `<p>
+          Hello, ${this.getAttribute('name')}
+        </p>`;
+      }
+    });
+    customElements.define('closed-show-hello', class extends HTMLElement {
+      connectedCallback() {
+        // 无法访问
+        const shadow = this.attachShadow({ mode: 'closed' });
+        shadow.innerHTML = `<p>
+          Hello, ${this.getAttribute('name')}
+        </p>`;
+      }
+    });
+    // 只对light dom查询
+    console.log(document.querySelectorAll("div").length); // 1
+    console.log(document.querySelectorAll("p").length); // 1
+    console.log(document.querySelectorAll("show-hello").length); // 2
+    // 只对hello下的shadow dom查询
+    console.log(hello.shadowRoot); // #shadow-root (open)
+    console.log(hello.shadowRoot.querySelectorAll("p").length); // 1
+    console.log(hello.shadowRoot.querySelectorAll("div").length); // 0
+    hello.shadowRoot.innerHTML += "<br>";
+    // closed
+    console.log(closed.shadowRoot); // undefined
+  </script>
+</body>
+
+</html>
