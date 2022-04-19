@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="ctnr">
+    <date-time year="numeric" month="numeric" day="numeric" hour="numeric" minute="numeric" second="numeric">
+    </date-time>
+    <date-time year="numeric" month="numeric" day="numeric" hour="numeric" minute="numeric" second="numeric">
+    </date-time>
+    <button is="hello-button">点击我有弹窗</button>
+  </div>
+  <script>
+    // 一些基础属性和方法
+    class MyElement extends HTMLElement {
+      constructor() {
+        super();
+        // 元素在这里创建
+      }
+
+      connectedCallback() {
+        // 在元素被添加到文档之后，浏览器会调用这个方法
+        //（如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用）
+      }
+
+      disconnectedCallback() {
+        // 在元素从文档移除的时候，浏览器会调用这个方法
+        // （如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用）
+      }
+
+      static get observedAttributes() {
+        return [/* 属性数组，这些属性的变化会被监视 */];
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        // 当上面数组中的属性发生变化的时候，这个方法会被调用
+      }
+
+      adoptedCallback() {
+        // 在元素被移动到新的文档的时候，这个方法会被调用
+        // （document.adoptNode 会用到, 非常少见）
+      }
+
+      // 还可以添加更多的元素方法和属性
+    }
+  </script>
+  <script>
+    // 全新标签
+    class TimeFormatted extends HTMLElement {
+
+      render() { // (1)
+        let date = new Date(this.getAttribute('datetime') || Date.now());
+        this.innerHTML = new Intl.DateTimeFormat("default", {
+          year: this.getAttribute('year') || undefined,
+          month: this.getAttribute('month') || undefined,
+          day: this.getAttribute('day') || undefined,
+          hour: this.getAttribute('hour') || undefined,
+          minute: this.getAttribute('minute') || undefined,
+          second: this.getAttribute('second') || undefined,
+          timeZoneName: this.getAttribute('time-zone-name') || undefined,
+        }).format(date);
+      }
+
+      connectedCallback() { // (2)
+        console.log(this.innerHTML)
+        if (!this.rendered) {
+          this.render();
+          this.rendered = true;
+          this.classList.add("dateTimeClass");
+          setInterval(() => {
+            let ele = document.querySelectorAll(".dateTimeClass");
+            for (let index = 0; index < ele.length; index++) {
+              const element = ele[index];
+              element.setAttribute('datetime', new Date());
+            }
+          }, 1000); // (5
+        }
+      }
+
+      static get observedAttributes() { // (3)
+        return ['datetime', 'year', 'month', 'day', 'hour', 'minute', 'second', 'time-zone-name'];
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) { // (4)
+        this.render();
+      }
+
+    }
+
+    customElements.define("date-time", TimeFormatted);
+    
+    // 已有元素继承
+    class HelloButton extends HTMLButtonElement {
+      constructor() {
+        super();
+        this.addEventListener('click', () => alert("Hello World!"));
+      }
+    }
+    customElements.define("hello-button", HelloButton, {extends: 'button'});
+  </script>
+  <script>
+    let dateTime = document.createElement("date-time");
+    let style = document.createElement("style");
+    dateTime.setAttribute("year", "numeric");
+    dateTime.setAttribute("month", "numeric");
+    dateTime.setAttribute("day", "numeric");
+    dateTime.setAttribute("hour", "numeric");
+    dateTime.setAttribute("minute", "numeric");
+    dateTime.setAttribute("second", "numeric");
+    ctnr.appendChild(dateTime);
+    style.innerHTML = `.dateTimeClass {
+      display: block;
+    }`
+    document.head.appendChild(style);
+    setTimeout(() => {
+      document.querySelectorAll(".dateTimeClass")[1].remove();
+    }, 2000)
+  </script>
+
+</body>
+
+</html>

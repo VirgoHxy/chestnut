@@ -1,0 +1,165 @@
+<!doctype html>
+<script src="https://cdn.jsdelivr.net/npm/idb@3.0.2/build/idb.min.js"></script>
+
+<button onclick='searchBook()'>Search book</button>
+<button onclick='searchPriceBook()'>Search lowest price book</button>
+<button onclick="list()">Refresh book</button></li>
+<br>
+<button onclick='addBook()'>Add a book</button>
+<button onclick='clearBooks()'>Clear books</button>
+
+<p>Books list:</p>
+
+<ul id="listElem"></ul>
+
+<script>
+  let db;
+
+  init();
+
+  async function init() {
+    db = await idb.openDb('pBooksDb', 1, db => {
+      if (!db.objectStoreNames.contains('books')) { // 如果没有 “books” 数据
+        let books = db.createObjectStore('books', {
+          keyPath: 'name'
+        });
+        books.createIndex('price_idx', 'price');
+      }
+    });
+    db._db.onversionchange = function () {
+      db.close();
+      // 版本变化
+      alert('请您重新加载页面!');
+    };
+    list();
+  }
+
+  function setList(list) {
+    listElem.innerHTML = list.map(book => `<li>
+      name: ${book.name}, price: ${book.price}, stock: ${book.stock}
+      <button onclick='deleteBook(${book.name})'>Delete book</button>
+      <button onclick='editBook(${JSON.stringify(book)})'>Edit book</button>
+    </li>`).join('');
+  }
+
+  async function list() {
+    let tx = db.transaction('books');
+    let bookStore = tx.objectStore('books');
+    let books = await bookStore.getAll();
+    if (books.length) {
+      setList(books);
+    } else {
+      listElem.innerHTML = '<li>No books yet. Please add books.</li>'
+    }
+  }
+
+  async function searchBook() {
+    let name = prompt('Book name?');
+    if (name == undefined) {
+      alert('name 是必填的!');
+      return;
+    }
+    let tx = db.transaction('books');
+    let bookStore = tx.objectStore('books');
+    try {
+      let book = await bookStore.get(name);
+      if (book) {
+        setList([book])
+      } else {
+        listElem.innerHTML = '<li>No books yet. Please refresh.'
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function searchPriceBook() {
+    let price = prompt('Book lowest price?') || 9999;
+    let tx = db.transaction('books');
+    let bookStore = tx.objectStore('books');
+    let priceIndex = bookStore.index('price_idx');
+    try {
+      let books = await priceIndex.getAll(IDBKeyRange.upperBound(Number(price)));
+      if (books.length) {
+        setList(books);
+      } else {
+        listElem.innerHTML = '<li>No books yet. Please refresh.'
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function addBook() {
+    let name = prompt("Book name?");
+    let price = prompt('Book price?');
+    let stock = prompt('Book stock?');
+    if ((name == null || name == "") || (price == null || price == "") || (stock == null || stock == "")) {
+      alert('name,price,stock 是必填的!');
+      return;
+    }
+    let tx = db.transaction('books', 'readwrite');
+    try {
+      await tx.objectStore('books').add({ name, price: Number(price), stock: Number(stock) });
+      await list();
+    } catch (err) {
+      if (err.name == 'ConstraintError') {
+        alert('同名称的书本已存在!');
+        await addBook();
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  async function editBook(param) {
+    let name = prompt('Book name?', param.name);
+    let price = +prompt('Book price?', param.price);
+    let stock = +prompt('Book stock?', param.stock);
+    if (name == undefined || price == undefined || stock == undefined) {
+      alert('name,price,stock 是必填的!');
+      return;
+    }
+    let tx = db.transaction('books', 'readwrite');
+    let bookStore = tx.objectStore('books');
+    try {
+      await bookStore.delete(String(name));
+      await bookStore.add({ name, price: Number(price), stock: Number(stock) });
+      await list();
+    } catch (err) {
+      if (err.name == 'ConstraintError') {
+        alert('同名称的书本已存在!');
+        event.preventDefault(); // 中止事务
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  async function deleteBook(paramName) {
+    let name = paramName ? paramName : prompt('Book name?');
+    if (name == undefined) {
+      alert('name 是必填的!');
+      return;
+    }
+    let tx = db.transaction('books', 'readwrite');
+    let bookStore = tx.objectStore('books');
+    await bookStore.delete(String(name));
+    await list();
+  }
+
+  async function clearBooks() {
+    let tx = db.transaction('books', 'readwrite');
+    await tx.objectStore('books').clear();
+    await list();
+  }
+
+  window.addEventListener('unhandledrejection', async (event) => {
+    alert("Error: " + event.reason.message);
+    if (event.reason.name == 'VersionError') {
+      // 数据库为新 代码版本为旧 代码无法打开 删除后重新加载
+      await idb.deleteDb('pBooksDb');
+      alert('请您重新加载页面!');
+    }
+  });
+</script>
