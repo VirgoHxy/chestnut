@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>上传文件</title>
+  </head>
+  <body>
+    <div>
+      <input type="file" name="" id="input">
+      <img src="" alt=""  id="img">
+    </div>
+    <script>
+      document.querySelector("#input").onchange = async function(e) {
+        let files = e.target.files;
+        if (files) {
+          let type = files[0].type;
+          let result = files[0] && await readBlob(files[0], type);
+          if (type.indexOf("image") != -1) {
+            img.src = result;
+          } else {
+            console.log(result);
+          }
+        }
+      }
+
+      /**
+       * 读取文件内容(必须在浏览器环境下运行)
+       *
+       * @param {Blob} blob 文件
+       */
+      function readBlob(blob, type) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            resolve(e.target.result);
+          };
+          type.indexOf("image") != -1 ? reader.readAsDataURL(blob) : reader.readAsText(blob);
+        });
+      }
+    </script>
+  </body>
+</html>

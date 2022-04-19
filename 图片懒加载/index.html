@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    p {
+      margin-top: 500px;
+    }
+    img {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>
+    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>    <div>
+      <img data-src="1.jpg" />
+    </div>
+    <p></p>
+  </div>
+  <script>
+    function showImg() {
+      let scollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      let img = document.querySelectorAll('img');
+      for (let index = 0; index < img.length; index++) {
+        const element = img[index];
+        const showFlag = !(element.offsetTop - scollTop > clientHeight) && element.offsetTop + element.clientHeight > scollTop;
+        console.log('element.offsetTop', element.offsetTop);
+        console.log('scollTop', scollTop);
+        console.log('clientHeight', clientHeight);
+        if (!element.src && showFlag) {
+          element.src = element.dataset.src;
+        }
+      }
+    }
+    window.onscroll = showImg;
+    showImg();
+  </script>
+</body>
+</html>
